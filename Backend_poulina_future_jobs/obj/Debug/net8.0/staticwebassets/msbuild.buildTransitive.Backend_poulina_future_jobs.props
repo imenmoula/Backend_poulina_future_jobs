@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Backend_poulina_future_jobs.props" />
+</Project>
