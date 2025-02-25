@@ -5,6 +5,25 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/UserProfile": {
+      "get": {
+        "tags": [
+          "AccountEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/register": {
       "post": {
         "tags": [
@@ -342,7 +361,7 @@
     "/api/signup": {
       "post": {
         "tags": [
-          "Backend_poulina_future_jobs"
+          "IdentityUserEndpoints"
         ],
         "requestBody": {
           "content": {
@@ -364,7 +383,7 @@
     "/api/signin": {
       "post": {
         "tags": [
-          "Backend_poulina_future_jobs"
+          "IdentityUserEndpoints"
         ],
         "requestBody": {
           "content": {
