@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Backend_poulina_future_jobs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -33,7 +34,7 @@ namespace Backend_poulina_future_jobs.Controllers
             return app;
 
         }
-
+        [AllowAnonymous]
         public static async Task<IResult> CreatUser(
                                           UserManager<AppUser> userManager,
                                           [FromBody] UserRegistrationModel userRegistrationModel)
@@ -59,7 +60,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
 
 
-
+        [AllowAnonymous]
         public static async Task<IResult> SignIn(
                                       UserManager<AppUser> userManager,
                                       IConfiguration configuration, // Ajout de IConfiguration pour accéder aux paramètres
@@ -78,7 +79,7 @@ namespace Backend_poulina_future_jobs.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim("User Id", user.Id.ToString())
+                new Claim("userID", user.Id.ToString()) // Assurez-vous que cette ligne est présente
                     }),
                     Expires = DateTime.UtcNow.AddDays(10), // Correction de "Expire" ? "Expires"
                     SigningCredentials = new SigningCredentials(

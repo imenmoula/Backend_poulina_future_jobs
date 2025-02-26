@@ -46,16 +46,17 @@ namespace Backend_poulina_future_jobs.Extensions
                                       config["AppSettings:JWTSecret"]!)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    //ValidateLifetime = true,
+                    //ClockSkew = TimeSpan.Zero
                 };
             });
-            //services.AddAuthorization(options =>
-            //{
-            //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-            //      .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-            //      .RequireAuthenticatedUser()
-            //      .Build();
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                  .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                  .RequireAuthenticatedUser()
+                  .Build();
+            });
 
             //    options.AddPolicy("HasLibraryID", policy => policy.RequireClaim("libraryID"));
             //    options.AddPolicy("FemalesOnly", policy => policy.RequireClaim("gender", "Female"));
