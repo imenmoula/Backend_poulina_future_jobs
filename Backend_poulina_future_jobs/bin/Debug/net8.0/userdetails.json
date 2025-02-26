@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "fullname": "Admin User",
+        "email": "admin@gmail.com",
+        "password": "admin123",
+        "role": "Admin"
+    },
+    {
+        "id": 2,
+        "fullname": "John Doe",
+        "email": "recruteur@gmail.com",
+        "password": "recruteur123",
+        "role": "Recruteur",
+        "poste": "Développeur",
+        "filiale": "Tunis"
+    },
+    {
+        "id": 3,
+        "fullname": "Jane Smith",
+        "email": "candidat@gmail.com",
+        "password": "candidat123",
+        "role": "Candidat"
+    }
+]

@@ -15,6 +15,10 @@ namespace Backend_poulina_future_jobs.Controllers
         public string Email { get; set; }
         public string Password { get; set; }
         public string FullName { get; set; }
+        public String Role { get; set; }
+        public string Poste { get; set; }
+        public int? filialeId { get; set; } 
+
     }
 
     public class LoginModel
@@ -34,30 +38,54 @@ namespace Backend_poulina_future_jobs.Controllers
             return app;
 
         }
+
+
         [AllowAnonymous]
         public static async Task<IResult> CreatUser(
-                                          UserManager<AppUser> userManager,
-                                          [FromBody] UserRegistrationModel userRegistrationModel)
+                              UserManager<AppUser> userManager,
+                              RoleManager<IdentityRole> roleManager, // Ajout du RoleManager
+                              [FromBody] UserRegistrationModel userRegistrationModel)
         {
+            // Vérifier si le rôle existe avant d'ajouter l'utilisateur
+            if (!await roleManager.RoleExistsAsync(userRegistrationModel.Role))
+            {
+                return Results.BadRequest(new { message = "Role does not exist" });
+            }
 
+            // Création d'un nouvel utilisateur
             AppUser user = new AppUser()
             {
                 UserName = userRegistrationModel.Email,
                 Email = userRegistrationModel.Email,
                 FullName = userRegistrationModel.FullName,
+                Poste = userRegistrationModel.Poste,
+                filialeId = userRegistrationModel.filialeId,
             };
-            var result = await userManager.CreateAsync(
-                user,
-                userRegistrationModel.Password);
 
-            if (result.Succeeded)
-                return Results.Ok(result);
-            else
+            var result = await userManager.CreateAsync(user, userRegistrationModel.Password);
+
+            // Vérifier si l'utilisateur a bien été créé
+            if (!result.Succeeded)
+            {
                 return Results.BadRequest(result);
+            }
 
+            // Recharger l'utilisateur après la création
+            user = await userManager.FindByEmailAsync(userRegistrationModel.Email);
+            if (user == null)
+            {
+                return Results.BadRequest(new { message = "User creation failed" });
+            }
 
+            // Ajouter l'utilisateur au rôle
+            var roleResult = await userManager.AddToRoleAsync(user, userRegistrationModel.Role);
+            if (!roleResult.Succeeded)
+            {
+                return Results.BadRequest(new { message = "Failed to assign role" });
+            }
+
+            return Results.Ok(new { message = "User registered successfully" });
         }
-
 
 
         [AllowAnonymous]

@@ -13,6 +13,7 @@ namespace Backend_poulina_future_jobs.Extensions
         {
             //services from identity core 
             services.AddIdentityApiEndpoints<AppUser>()
+                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>();
             return services;
 

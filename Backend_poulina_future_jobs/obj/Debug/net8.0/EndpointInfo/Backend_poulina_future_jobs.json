@@ -727,6 +727,19 @@
           "fullName": {
             "type": "string",
             "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "poste": {
+            "type": "string",
+            "nullable": true
+          },
+          "filialeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
