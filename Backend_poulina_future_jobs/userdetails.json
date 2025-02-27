@@ -1,25 +1,41 @@
 [
     {
-        "id": 1,
-        "fullname": "Admin User",
-        "email": "admin@gmail.com",
-        "password": "admin123",
-        "role": "Admin"
-    },
-    {
-        "id": 2,
-        "fullname": "John Doe",
-        "email": "recruteur@gmail.com",
-        "password": "recruteur123",
+        "email": "recruteur@example.com",
+        "password": "Recruteur@123",
+        "fullName": "Recruteur User",
         "role": "Recruteur",
-        "poste": "Développeur",
-        "filiale": "Tunis"
+        "poste": "HR expert",
+        "filialeId": 2,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIyYjY0NjExNy1mZmI1LTQ4NTAtOGU4My1iZTQwNTIxZDNmZjEiLCJuYmYiOjE3NDA2NTE4MjEsImV4cCI6MTc0MTUxNTgyMSwiaWF0IjoxNzQwNjUxODIxfQ.G3WRo-s-tUAzhziIBa7o7hZHEB_lJ5NGQnpFjTlXv9s"
     },
     {
-        "id": 3,
-        "fullname": "Jane Smith",
-        "email": "candidat@gmail.com",
-        "password": "candidat123",
-        "role": "Candidat"
+        "email": "admin@example.com",
+        "password": "Admin@123",
+        "fullName": "Admin User",
+        "role": "Admin",
+        "poste": "Manager",
+        "filialeId": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIyYjY0NjExNy1mZmI1LTQ4NTAtOGU4My1iZTQwNTIxZDNmZjEiLCJuYmYiOjE3NDA2NTM0NzMsImV4cCI6MTc0MTUxNzQ3MywiaWF0IjoxNzQwNjUzNDczfQ.8F54jbc67gwdZHbqIerrjVEbp92SbP4DiR7EsAj4a2w"
+
+    },
+   
+    {
+        "email": "mi@gmail.com",
+        "password": "mi2002$",
+        "fullName": "mamouna$",
+        "role": "Admin",
+        "poste": "dev",
+        "filialeId": 3,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI5MTNhNWMzZC0yN2RjLTRlNDEtYjA2MC04NGRlNzRjOTY3MDYiLCJuYmYiOjE3NDA2NTkxNTIsImV4cCI6MTc0MTUyMzE1MiwiaWF0IjoxNzQwNjU5MTUyfQ.pz3w4VwSc0_FkiYMlGQeexXLmaFxnv0yM76fmRBap2A"
+    },
+    {
+        "email": "dadou@gmail.com",
+        "password": "041995$",
+        "fullName": "dadou",
+        "role": "Recruteur",
+        "poste": "hr",
+        "filialeId": 4,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJiNDFjOWQ3MS0zNTdiLTRjNGEtODgwNS1mMWM0NmY4ZTYzOWYiLCJuYmYiOjE3NDA2NTg0NjksImV4cCI6MTc0MTUyMjQ2OSwiaWF0IjoxNzQwNjU4NDY5fQ.s1lX1bRyhQE3liWMJjdPTc3rpql-ByqAPjmqElsaPm8"
     }
+
 ]

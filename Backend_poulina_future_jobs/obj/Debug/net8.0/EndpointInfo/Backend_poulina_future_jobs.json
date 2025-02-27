@@ -17,6 +17,25 @@
         }
       }
     },
+    "/api/AdminOnly": {
+      "get": {
+        "tags": [
+          "AuthorizationDemoEndpoints"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/register": {
       "post": {
         "tags": [
@@ -347,6 +366,63 @@
           },
           "404": {
             "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/AdminOrRecruteur": {
+      "get": {
+        "tags": [
+          "Backend_poulina_future_jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Recruteur": {
+      "get": {
+        "tags": [
+          "Backend_poulina_future_jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Candidate": {
+      "get": {
+        "tags": [
+          "Backend_poulina_future_jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }

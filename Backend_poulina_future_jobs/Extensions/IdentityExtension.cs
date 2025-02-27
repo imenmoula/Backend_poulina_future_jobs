@@ -3,6 +3,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Backend_poulina_future_jobs.Extensions
@@ -56,16 +57,10 @@ namespace Backend_poulina_future_jobs.Extensions
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                   .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                   .RequireAuthenticatedUser()
-                  .Build();
+                .Build();
             });
-
-            //    options.AddPolicy("HasLibraryID", policy => policy.RequireClaim("libraryID"));
-            //    options.AddPolicy("FemalesOnly", policy => policy.RequireClaim("gender", "Female"));
-            //    options.AddPolicy("Under10", policy => policy.RequireAssertion(context =>
-            //    Int32.Parse(context.User.Claims.First(x => x.Type == "age").Value) < 10));
-
-            //});
-
+            //Options.AddPolicy("IsHRExpert", policy => policy.RequireClaim("poste", "HR expert"));
+            //Options.AddPolicy("IsManager", policy => policy.RequireClaim("poste", "Manager"));
 
             return services;
         }

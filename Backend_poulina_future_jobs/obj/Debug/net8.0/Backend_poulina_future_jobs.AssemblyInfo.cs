@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Backend_poulina_future_jobs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+14943675850cbfba8aaf73b4d710fa04cc9da822")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+750e4df5178da637217c4b3c3abdf21905d814bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("Backend_poulina_future_jobs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Backend_poulina_future_jobs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
