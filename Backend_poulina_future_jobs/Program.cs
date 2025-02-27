@@ -33,7 +33,7 @@ builder.Services.AddSwaggerExplorer()
 var app = builder.Build();
 app.ConfigureSwaggerExplorer()
    .ConfigureCors(builder.Configuration)
-   .AddIdentityAuthMiddelwares();
+   .AddIdentityAuthMiddlewares();
 
 
 app.MapControllers();
