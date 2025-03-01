@@ -370,25 +370,6 @@
         }
       }
     },
-    "/api/AdminOrRecruteur": {
-      "get": {
-        "tags": [
-          "Backend_poulina_future_jobs"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Recruteur": {
       "get": {
         "tags": [

@@ -35,7 +35,16 @@
         "role": "Recruteur",
         "poste": "hr",
         "filialeId": 4,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiJiNDFjOWQ3MS0zNTdiLTRjNGEtODgwNS1mMWM0NmY4ZTYzOWYiLCJuYmYiOjE3NDA2NTg0NjksImV4cCI6MTc0MTUyMjQ2OSwiaWF0IjoxNzQwNjU4NDY5fQ.s1lX1bRyhQE3liWMJjdPTc3rpql-ByqAPjmqElsaPm8"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGFkb3VAZ21haWwuY29tIiwidXNlcklkIjoiYjQxYzlkNzEtMzU3Yi00YzRhLTg4MDUtZjFjNDZmOGU2MzlmIiwicG9zdGUiOiJociIsImp0aSI6ImVmOWVlNDZhLTNmOGEtNGE3Zi1iZWZhLWRjZmUxZmM0MzM2MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJlY3J1dGV1ciIsImZpbGlhbGVJZCI6IjQiLCJleHAiOjE3NDE1NTM1Njh9.OC4E_7jndh3h1w9wcJNuTbP8KYxOmKfxLvYeT8zaHHk"
+    }
+    {
+        "email": "test123@example.com",
+        "password": "Password123",
+        "fullName": "Test User",
+        "role": "Admin",
+        "poste": "Déve",
+        "filialeId": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdDEyM0BleGFtcGxlLmNvbSIsInVzZXJJZCI6ImEzN2ZjZDVlLTliMzQtNDU2ZC1iYjYwLTFiOTZiMmI3OTAyOCIsInBvc3RlIjoiRMOpdmUiLCJqdGkiOiJkODRmYWUxNi0xYzk0LTQyNjMtOTU4OS1hNzI3YzRkMmQzODIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImZpbGlhbGVJZCI6IjEiLCJleHAiOjE3NDE1NTMzNTF9.EaN5TmUypdro04ynMJZNgMH8aXPeTuUlZWldY5UN7SE"
     }
 
 ]
