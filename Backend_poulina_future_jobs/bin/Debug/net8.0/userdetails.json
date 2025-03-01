@@ -8,16 +8,7 @@
         "filialeId": 2,
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIyYjY0NjExNy1mZmI1LTQ4NTAtOGU4My1iZTQwNTIxZDNmZjEiLCJuYmYiOjE3NDA2NTE4MjEsImV4cCI6MTc0MTUxNTgyMSwiaWF0IjoxNzQwNjUxODIxfQ.G3WRo-s-tUAzhziIBa7o7hZHEB_lJ5NGQnpFjTlXv9s"
     },
-    {
-        "email": "admin@example.com",
-        "password": "Admin@123",
-        "fullName": "Admin User",
-        "role": "Admin",
-        "poste": "Manager",
-        "filialeId": 1,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIyYjY0NjExNy1mZmI1LTQ4NTAtOGU4My1iZTQwNTIxZDNmZjEiLCJuYmYiOjE3NDA2NTM0NzMsImV4cCI6MTc0MTUxNzQ3MywiaWF0IjoxNzQwNjUzNDczfQ.8F54jbc67gwdZHbqIerrjVEbp92SbP4DiR7EsAj4a2w"
-
-    },
+    
    
     {
         "email": "mi@gmail.com",
