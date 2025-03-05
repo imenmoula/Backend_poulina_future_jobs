@@ -44,6 +44,12 @@ app.MapGroup("/api")
     .MapAccountEndpoints()
     .MapAuthorizationDemoEndpoints();
 
+/*************************/
+// Configuration d'Identity
+//builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>()
+//    .AddEntityFrameworkStores<AppDbContext>()
+//    .AddDefaultTokenProviders();
+/*//////////////////*/
 
 app.Run();
 

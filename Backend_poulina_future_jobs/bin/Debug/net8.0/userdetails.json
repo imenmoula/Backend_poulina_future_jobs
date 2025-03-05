@@ -1,41 +1,33 @@
 [
     {
-        "email": "recruteur@example.com",
-        "password": "Recruteur@123",
-        "fullName": "Recruteur User",
-        "role": "Recruteur",
-        "poste": "HR expert",
-        "filialeId": 2,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIyYjY0NjExNy1mZmI1LTQ4NTAtOGU4My1iZTQwNTIxZDNmZjEiLCJuYmYiOjE3NDA2NTE4MjEsImV4cCI6MTc0MTUxNTgyMSwiaWF0IjoxNzQwNjUxODIxfQ.G3WRo-s-tUAzhziIBa7o7hZHEB_lJ5NGQnpFjTlXv9s"
-    },
-    
-   
-    {
-        "email": "mi@gmail.com",
+        "email": "MoulaImen@gamil.com",
         "password": "mi2002$",
-        "fullName": "mamouna$",
+        "fullName": "Moula Imen",
+        "nom": "Moula",
+        "prenom": "Imen",
         "role": "Admin",
-        "poste": "dev",
-        "filialeId": 3,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI5MTNhNWMzZC0yN2RjLTRlNDEtYjA2MC04NGRlNzRjOTY3MDYiLCJuYmYiOjE3NDA2NTkxNTIsImV4cCI6MTc0MTUyMzE1MiwiaWF0IjoxNzQwNjU5MTUyfQ.pz3w4VwSc0_FkiYMlGQeexXLmaFxnv0yM76fmRBap2A"
+        "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTW91bGFJbWVuQGdhbWlsLmNvbSIsInVzZXJJZCI6ImUyZjVkYTQ0LTA4YzQtNDQwNi0yMmQ0LTA4ZGQ1YmFkM2M1OSIsImp0aSI6ImZkYjZmOTgyLTM2NDQtNDBjMS1hNzRhLWIxOWMwY2NjZjI5ZSIsIkZ1bGxOYW1lIjoiTW91bGEgSW1lbiIsIk5vbSI6Ik1vdWxhIiwiUHJlbm9tIjoiSW1lbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzQyMDE5NDc2fQ.fdvWTRv6bwv3dWx1hBv2haEbd3VcnGSNNAdAP8AMay4"
     },
     {
-        "email": "dadou@gmail.com",
-        "password": "041995$",
-        "fullName": "dadou",
+        "email": "test12@gmail.com",
+        "password": "test12$",
+        "fullName": "test12",
+        "nom": "Test",
+        "prenom": "12",
         "role": "Recruteur",
-        "poste": "hr",
-        "filialeId": 4,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGFkb3VAZ21haWwuY29tIiwidXNlcklkIjoiYjQxYzlkNzEtMzU3Yi00YzRhLTg4MDUtZjFjNDZmOGU2MzlmIiwicG9zdGUiOiJociIsImp0aSI6ImVmOWVlNDZhLTNmOGEtNGE3Zi1iZWZhLWRjZmUxZmM0MzM2MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJlY3J1dGV1ciIsImZpbGlhbGVJZCI6IjQiLCJleHAiOjE3NDE1NTM1Njh9.OC4E_7jndh3h1w9wcJNuTbP8KYxOmKfxLvYeT8zaHHk"
-    }
+        "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdDEyQGdtYWlsLmNvbSIsInVzZXJJZCI6ImFmYTcyOWU3LTA4YzItNGUwOS0yMmQ4LTA4ZGQ1YmFkM2M1OSIsImp0aSI6IjQ4YmVlMDRhLWIwMjEtNDMzZS1iOWMxLTJkOTkxNjRkNzFhZiIsIkZ1bGxOYW1lIjoidGVzdDEyIiwiTm9tIjoiVGVzdCIsIlByZW5vbSI6IjEyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiUmVjcnV0ZXVyIiwiZXhwIjoxNzQyMDIwOTk5fQ.RkN9hqQiYcDOIvbs6S-42TGIAX-4AYKj6XGfAPBPm8E"
+    },
     {
-        "email": "test123@example.com",
-        "password": "Password123",
-        "fullName": "Test User",
-        "role": "Admin",
-        "poste": "Déve",
-        "filialeId": 1,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdDEyM0BleGFtcGxlLmNvbSIsInVzZXJJZCI6ImEzN2ZjZDVlLTliMzQtNDU2ZC1iYjYwLTFiOTZiMmI3OTAyOCIsInBvc3RlIjoiRMOpdmUiLCJqdGkiOiJkODRmYWUxNi0xYzk0LTQyNjMtOTU4OS1hNzI3YzRkMmQzODIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImZpbGlhbGVJZCI6IjEiLCJleHAiOjE3NDE1NTMzNTF9.EaN5TmUypdro04ynMJZNgMH8aXPeTuUlZWldY5UN7SE"
+        "email": "alya@gmail.com",
+        "password": "alya1972$",
+        "fullName": "Charrada Alya",
+        "nom": "Charrada",
+        "prenom": "aLya",
+        "role": "Candidate",
+        "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWx5YUBnbWFpbC5jb20iLCJ1c2VySWQiOiI3OTI3MmJiYi1iNGM5LTRhYmEtMjJkNy0wOGRkNWJhZDNjNTkiLCJqdGkiOiJlNDkzYjZmOC04MGZmLTRlYjEtYmM3My02ZGQyMTgyYzcwNzIiLCJGdWxsTmFtZSI6IkNoYXJyYWRhIEFseWEiLCJOb20iOiJDaGFycmFkYSIsIlByZW5vbSI6ImFseWEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NDIwMjA1NDB9.KdyCYHwZTNy2fvz9ESgvt46ri9BTn1lpUnbTmLbUEKI"
+
     }
+
+
 
 ]

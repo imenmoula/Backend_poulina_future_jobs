@@ -97,7 +97,7 @@ namespace Backend_poulina_future_jobs.Extensions
         public static IServiceCollection AddIdentityHandlersAndStores(this IServiceCollection services)
         {
             services.AddIdentityApiEndpoints<AppUser>()
-                    .AddRoles<IdentityRole>()
+                    .AddRoles<IdentityRole<Guid>>()
                     .AddEntityFrameworkStores<AppDbContext>();
             return services;
         }
