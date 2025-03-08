@@ -294,3 +294,4 @@ C:\Users\LENOVO\OneDrive\Bureau\Platforme_2025\Backend_poulina_future_jobs\Backe
 C:\Users\LENOVO\OneDrive\Bureau\Platforme_2025\Backend_poulina_future_jobs\Backend_poulina_future_jobs\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\LENOVO\OneDrive\Bureau\Platforme_2025\Backend_poulina_future_jobs\Backend_poulina_future_jobs\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\LENOVO\OneDrive\Bureau\Platforme_2025\Backend_poulina_future_jobs\Backend_poulina_future_jobs\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\LENOVO\OneDrive\Bureau\Platforme_2025\Backend_poulina_future_jobs\Backend_poulina_future_jobs\bin\Debug\net8.0\Backend_poulina_future_jobs.staticwebassets.runtime.json

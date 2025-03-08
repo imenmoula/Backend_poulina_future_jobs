@@ -1,12 +1,125 @@
 {
   "Version": 1,
-  "Hash": "EdVpFf4Ht1sqwU6AeTgbTds2XAahIbW8D1eajSSkdbc=",
+  "Hash": "OpjNiuROhVRgnvagjHtHBbBHHvbsPsBq20PdZ5DJ9Po=",
   "Source": "Backend_poulina_future_jobs",
   "BasePath": "_content/Backend_poulina_future_jobs",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "Backend_poulina_future_jobs\\wwwroot",
+      "Source": "Backend_poulina_future_jobs",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb#[.{fingerprint}]?.avif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "55atm2lvu6",
+      "Integrity": "mQa6656vLzkacltPtDROaFha+9WQisv6PqCLeyFdeX4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb.55atm2lvu6.avif",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19153"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mQa6656vLzkacltPtDROaFha+9WQisv6PqCLeyFdeX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 08 Mar 2025 14:19:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "55atm2lvu6"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mQa6656vLzkacltPtDROaFha+9WQisv6PqCLeyFdeX4="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19153"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mQa6656vLzkacltPtDROaFha+9WQisv6PqCLeyFdeX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 08 Mar 2025 14:19:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-mQa6656vLzkacltPtDROaFha+9WQisv6PqCLeyFdeX4="
+        }
+      ]
+    }
+  ]
 }

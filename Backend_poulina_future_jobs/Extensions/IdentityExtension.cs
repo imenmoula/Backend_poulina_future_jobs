@@ -151,6 +151,9 @@ namespace Backend_poulina_future_jobs.Extensions
         {
             app.UseAuthentication();
             app.UseAuthorization();
+            // app.UseHttpsRedirection();
+            // app.UseRouting();
+            // app.UseCors("AllowAngularApp");
             return app;
         }
     }

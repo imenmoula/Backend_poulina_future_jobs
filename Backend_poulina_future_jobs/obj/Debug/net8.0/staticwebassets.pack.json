@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",
+      "PackagePath": "staticwebassets\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Backend_poulina_future_jobs.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Backend_poulina_future_jobs.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Backend_poulina_future_jobs.props",
+      "PackagePath": "build\\Backend_poulina_future_jobs.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Backend_poulina_future_jobs.props",
+      "PackagePath": "buildMultiTargeting\\Backend_poulina_future_jobs.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Backend_poulina_future_jobs.props",
+      "PackagePath": "buildTransitive\\Backend_poulina_future_jobs.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,22 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>55atm2lvu6</Fingerprint>
+      <Integrity>mQa6656vLzkacltPtDROaFha+9WQisv6PqCLeyFdeX4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif'))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>

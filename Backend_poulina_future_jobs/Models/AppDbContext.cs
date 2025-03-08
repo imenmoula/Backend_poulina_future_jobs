@@ -9,18 +9,16 @@ namespace Backend_poulina_future_jobs.Models
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Departement> Departements { get; set; }
         public DbSet<Filiale> Filiales { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Departement>()
-                .HasOne(d => d.Filiale)
-                .WithMany(f => f.Departements)
-                .HasForeignKey(d => d.IdFiliale)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configuration pour générer automatiquement les GUID
+            modelBuilder.Entity<Filiale>()
+                .Property(f => f.IdFiliale)
+                .HasDefaultValueSql("NEWID()"); // Utilise la fonction SQL NEWID() pour générer un GUID
         }
+
     }
 }
