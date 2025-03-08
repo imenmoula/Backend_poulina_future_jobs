@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OpjNiuROhVRgnvagjHtHBbBHHvbsPsBq20PdZ5DJ9Po=",
+  "Hash": "GQRRV26KPyaL8oNe2tjBS6vq0DV7HH5Z8PZnQd0KmsE=",
   "Source": "Backend_poulina_future_jobs",
   "BasePath": "_content/Backend_poulina_future_jobs",
   "Mode": "Default",
@@ -16,6 +16,27 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5i4tj1zkti",
+      "Integrity": "DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg"
+    },
     {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",
       "SourceId": "Backend_poulina_future_jobs",
@@ -39,6 +60,88 @@
     }
   ],
   "Endpoints": [
+    {
+      "Route": "uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.5i4tj1zkti.jpg",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31805"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 08 Mar 2025 23:45:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5i4tj1zkti"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "31805"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 08 Mar 2025 23:45:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY="
+        }
+      ]
+    },
     {
       "Route": "uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb.55atm2lvu6.avif",
       "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif",

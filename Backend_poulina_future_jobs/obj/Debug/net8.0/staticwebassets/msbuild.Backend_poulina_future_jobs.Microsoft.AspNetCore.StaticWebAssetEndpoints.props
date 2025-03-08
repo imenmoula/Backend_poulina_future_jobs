@@ -1,5 +1,17 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/Backend_poulina_future_jobs/uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.5i4tj1zkti.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5i4tj1zkti"},{"Name":"integrity","Value":"sha256-DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY="},{"Name":"label","Value":"_content/Backend_poulina_future_jobs/uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"31805"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY=\u0022"},{"Name":"Last-Modified","Value":"Sat, 08 Mar 2025 23:45:44 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Backend_poulina_future_jobs/uploads/1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"31805"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022DYMnXOCNnNpNAZ5sDrDNDE3K2tnG/vYGVB88vGj4JDY=\u0022"},{"Name":"Last-Modified","Value":"Sat, 08 Mar 2025 23:45:44 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Backend_poulina_future_jobs/uploads/4282831b-9eac-4e8f-b764-fb86abdfa8fb.55atm2lvu6.avif">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

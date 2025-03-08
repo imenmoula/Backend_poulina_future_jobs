@@ -12,7 +12,7 @@ namespace Backend_poulina_future_jobs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Policy = "AdminOnly")] // Apply authorization to the entire controller
+    [AllowAnonymous]
 
     public class FilialesController : ControllerBase
     {
@@ -54,7 +54,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // PUT: api/Filiales/5
         [HttpPut("{id}")]
-        //[Authorize(Policy = "AdminOnly")]
+        [AllowAnonymous]
 
         public async Task<IActionResult> PutFiliale(Guid id, Filiale filiale)
         {
@@ -85,7 +85,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // POST: api/Filiales
         [HttpPost]
-        //[Authorize(Policy = "AdminOnly")]
+        [AllowAnonymous]
         public async Task<ActionResult<Filiale>> PostFiliale(Filiale filiale)
         {
             filiale.IdFiliale = Guid.NewGuid();
@@ -98,7 +98,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // DELETE: api/Filiales/5
         [HttpDelete("{id}")]
-        //[Authorize(Policy = "AdminOnly")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteFiliale(Guid id)
         {
             var filiale = await _context.Filiales.FindAsync(id);
@@ -120,36 +120,49 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
 
-        //[HttpPost("upload-photo")]
-        //public async Task<IActionResult> UploadPhoto(IFormFile file)
-        //{
-        //    if (file == null || file.Length == 0)
-        //    {
-        //        return BadRequest(new { message = "Aucun fichier n'a été sélectionné." });
-        //    }
+        
+            // Endpoint pour uploader une image
+            [HttpPost("upload-photo")]
+        [AllowAnonymous]
 
-        //    // Vérification de l'extension du fichier (optionnel)
-        //    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-        //    var fileExtension = Path.GetExtension(file.FileName).ToLower();
-        //    if (!allowedExtensions.Contains(fileExtension))
-        //    {
-        //        return BadRequest(new { message = "Le format du fichier est invalide. Formats autorisés : .jpg, .jpeg, .png, .gif." });
-        //    }
+        public async Task<IActionResult> UploadPhoto(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Aucun fichier sélectionné.");
+            }
 
-        //    // Générer un nom unique pour le fichier
-        //    var fileName = Path.GetRandomFileName() + fileExtension;
-        //    var filePath = Path.Combine(_uploadsFolder, fileName);
+            // Définir le chemin d'enregistrement de l'image
+            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath); // Crée le dossier s'il n'existe pas
+            }
 
-        //    // Enregistrer le fichier sur le serveur
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
+            // Créer un nom de fichier unique pour éviter les conflits
+            var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + System.Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadPath, fileName);
 
-        //    // Retourner l'URL du fichier uploadé
-        //    var fileUrl = Path.Combine("/uploads", fileName).Replace("\\", "/");
-        //    return Ok(new { photoUrl = fileUrl, message = "Photo téléchargée avec succès !" });
-        //}
+            // Sauvegarder le fichier sur le serveur
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Construire l'URL du fichier ou une réponse de succès
+            var fileUrl = Path.Combine("/uploads", fileName); // URL relative à l'emplacement des fichiers téléchargés
+
+            // Retourner une réponse de succès avec l'URL de la photo
+            return Ok(new
+            {
+                Message = "Téléchargement de la photo réussi!",
+                Url = fileUrl
+            });
+        }
 
     }
 }
+
+
+
+
