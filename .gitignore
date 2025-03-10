@@ -1,1 +1,29 @@
 .vs/ 
+
+# Ignore .NET build output directories
+bin/
+obj/
+
+# Ignore specific file types
+*.dll
+*.exe
+*.pdb
+*.log
+*.json
+
+# Ignore runtime and temporary files
+*.tmp
+*.bak
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore environment files (if any)
+.env
+
+# Ignore NuGet packages (if used)
+packages/
+
+# Ignore any specific debug files
+bin/Debug/
