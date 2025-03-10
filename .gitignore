@@ -26,4 +26,4 @@ obj/
 packages/
 
 # Ignore any specific debug files
-bin/Debug/
+Debug/
