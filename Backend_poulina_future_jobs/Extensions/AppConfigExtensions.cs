@@ -12,32 +12,18 @@ namespace Backend_poulina_future_jobs.Extensions
         {
             app.UseCors(options =>
             options.WithOrigins("http://localhost:4200")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader()
+                   .AllowCredentials()
 
-                    );
-
+                     );
 
             return app;
 
+
         }
 
-        //public static WebApplication ConfigureCors(this WebApplication app, IConfiguration config)
-        //{
-        //    // Vous pouvez lire les origines depuis la configuration si nécessaire
-        //    var allowedOrigins = config.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? new[] { "http://localhost:4200" };
 
-        //    app.UseCors(builder =>
-        //    {
-        //        builder.WithOrigins(allowedOrigins)
-        //               .AllowAnyMethod()
-        //               .AllowAnyHeader()
-        //               .AllowCredentials();
-        //    });
-
-        //    return app;
-        //}
 
 
 

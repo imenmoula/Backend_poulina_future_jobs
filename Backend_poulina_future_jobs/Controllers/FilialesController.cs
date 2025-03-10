@@ -118,12 +118,9 @@ namespace Backend_poulina_future_jobs.Controllers
         {
             return _context.Filiales.Any(e => e.IdFiliale == id);
         }
-
-
-
-        // Endpoint pour uploader une image
         [HttpPost("upload-photo")]
         [AllowAnonymous]
+
         public async Task<IActionResult> UploadPhoto(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -131,32 +128,27 @@ namespace Backend_poulina_future_jobs.Controllers
                 return BadRequest("Aucun fichier sélectionné.");
             }
 
-            // Valider l'extension du fichier
-            var allowedExtensions = new[] { ".png", ".jpg", ".jpeg", ".jfif" };
-            var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
-            if (!allowedExtensions.Contains(fileExtension))
-            {
-                return BadRequest("Type de fichier non pris en charge. Utilisez uniquement .png, .jpg, .jpeg ou .jfif.");
-            }
-
+            // Définir le chemin d'enregistrement de l'image
             var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
             if (!Directory.Exists(uploadPath))
             {
-                Directory.CreateDirectory(uploadPath);
+                Directory.CreateDirectory(uploadPath); // Crée le dossier s'il n'existe pas
             }
 
-            // Générer un nom de fichier plus court
-            var fileName = $"img_{Guid.NewGuid().ToString().Substring(0, 8)}{fileExtension}";
+            // Créer un nom de fichier unique pour éviter les conflits
+            var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + System.Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadPath, fileName);
 
+            // Sauvegarder le fichier sur le serveur
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            var baseUrl = $"{Request.Scheme}://{Request.Host}/api/Images/";
-            var fileUrl = fileName; // Retourner uniquement le nom du fichier
+            // Construire l'URL du fichier ou une réponse de succès
+            var fileUrl = Path.Combine("/uploads", fileName); // URL relative à l'emplacement des fichiers téléchargés
 
+            // Retourner une réponse de succès avec l'URL de la photo
             return Ok(new
             {
                 Message = "Téléchargement de la photo réussi!",
@@ -165,7 +157,15 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
     }
+
+
+
+
+
+
+
 }
+
 
 
 

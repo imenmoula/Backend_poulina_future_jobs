@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 namespace Backend_poulina_future_jobs.Models
 {
-    
-
    
         public class Filiale
         {

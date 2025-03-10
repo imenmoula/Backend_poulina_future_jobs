@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\uploads\\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif"
     },
     {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\img_00bc5849.png",
+      "PackagePath": "staticwebassets\\uploads\\img_00bc5849.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\img_a5d21c90.jpg",
+      "PackagePath": "staticwebassets\\uploads\\img_a5d21c90.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Backend_poulina_future_jobs.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

@@ -53,7 +53,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
                 return app;
             }
-
+       
             public static async Task<IResult> CreatUser(
                 UserManager<AppUser> userManager,
                 RoleManager<IdentityRole<Guid>> roleManager,
@@ -105,7 +105,8 @@ namespace Backend_poulina_future_jobs.Controllers
                 return Results.Ok(new { message = "Utilisateur enregistré avec succès" });
             }
 
-            public static async Task<IResult> SignIn(
+        
+        public static async Task<IResult> SignIn(
                 UserManager<AppUser> userManager,
                 IConfiguration configuration,
                 [FromBody] LoginModel loginModel)
