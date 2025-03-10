@@ -13,6 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Backend_poulina_future_jobs.Extensions;
 using Backend_poulina_future_jobs.Controllers;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,20 @@ app.ConfigureSwaggerExplorer()
    .ConfigureCors(builder.Configuration)
    .AddIdentityAuthMiddlewares();
 
+// IMPORTANT: Serve static files from wwwroot/uploads BEFORE authentication middleware is applied.
+// This ensures that static files (images) can be served anonymously.
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
+    RequestPath = "/uploads"
+});
+
+// You can also serve other static files from wwwroot without restrictions.
+app.UseStaticFiles();
+
+// Then configure CORS middleware if needed.
+app.UseCors("AllowAngular");
 
 
 app.MapControllers();
@@ -59,8 +74,7 @@ app.MapGroup("/api")
     .MapAccountEndpoints()
     .MapAuthorizationDemoEndpoints();
 
-app.UseStaticFiles();
-app.UseCors("AllowAngular");
+
 
 
 app.Run();

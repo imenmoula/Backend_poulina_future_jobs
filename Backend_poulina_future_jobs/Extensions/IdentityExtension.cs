@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Backend_poulina_future_jobs.Extensions
@@ -67,10 +68,7 @@ namespace Backend_poulina_future_jobs.Extensions
         {
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseHttpsRedirection();
-            //app.UseStaticFiles(); // Sert les fichiers statiques depuis wwwroot
-            //app.UseRouting();
-            //app.UseCors("AllowAngular");
+            
             return app;
         }
     }
