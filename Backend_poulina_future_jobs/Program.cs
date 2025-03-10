@@ -20,10 +20,17 @@ var builder = WebApplication.CreateBuilder(args);
 
  builder.Services.AddControllers();
 
-//builder.Services.AddControllers().AddJsonOptions(options =>
-//{
-//    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-//});
+// Configurer CORS au niveau des services (optionnel, mais recommandé)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", builder =>
+    {
+        builder.WithOrigins("http://localhost:4200")
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
+    });
+});
 
 ///les principale  extention    auth,identity,dbcontext
 builder.Services.AddSwaggerExplorer()
@@ -47,7 +54,10 @@ app.MapGroup("/api")
     .MapIdentityUserEndpoints()
     .MapAccountEndpoints()
     .MapAuthorizationDemoEndpoints();
+// Configurer le pipeline HTTP
+app.UseStaticFiles(); // Pour servir les images depuis wwwroot/uploads
 
+// Utiliser la méthode d'extension ConfigureCors
 /*************************/
 // Configuration d'Identity
 //builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>()

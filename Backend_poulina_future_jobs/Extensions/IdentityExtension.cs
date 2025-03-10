@@ -151,8 +151,9 @@ namespace Backend_poulina_future_jobs.Extensions
         {
             app.UseAuthentication();
             app.UseAuthorization();
-            // app.UseHttpsRedirection();
-            // app.UseRouting();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles(); // Sert les fichiers statiques depuis wwwroot
+            //app.UseRouting();
             // app.UseCors("AllowAngularApp");
             return app;
         }

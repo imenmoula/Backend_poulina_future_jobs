@@ -1,2 +1,3 @@
 wwwroot\uploads\1_92836a79-2fa9-416a-a5ef-9e3bf7fbd4c1.jpg
+wwwroot\uploads\2_f0116ef1-1c73-4e3e-b6e5-1ecfeb8f55ee.jpg
 wwwroot\uploads\4282831b-9eac-4e8f-b764-fb86abdfa8fb.avif
