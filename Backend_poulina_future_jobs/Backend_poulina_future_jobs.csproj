@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LongPathsEnabled>true</LongPathsEnabled>
-	  <!-- <InvariantGlobalization>false</InvariantGlobalization> -->
+	  <InvariantGlobalization>false</InvariantGlobalization> 
   </PropertyGroup>
 
   <ItemGroup>

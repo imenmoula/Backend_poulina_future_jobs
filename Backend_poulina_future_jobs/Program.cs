@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
  builder.Services.AddControllers();
 
-// Configurer CORS au niveau des services (optionnel, mais recommandé)
+// Configurer CORS au niveau des services (optionnel, mais recommandï¿½)
 
 
 ///les principale  extention    auth,identity,dbcontext
@@ -59,6 +59,8 @@ app.MapGroup("/api")
     .MapAccountEndpoints()
     .MapAuthorizationDemoEndpoints();
 
+app.UseStaticFiles();
+app.UseCors("AllowAngular");
 
 
 app.Run();

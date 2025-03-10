@@ -146,8 +146,8 @@ namespace Backend_poulina_future_jobs.Controllers
             }
 
             // Construire l'URL du fichier ou une réponse de succès
-            var fileUrl = Path.Combine("/uploads", fileName); // URL relative à l'emplacement des fichiers téléchargés
-
+            //var fileUrl = Path.Combine("/uploads", fileName); // URL relative à l'emplacement des fichiers téléchargés
+            var fileUrl = $"/uploads/{fileName}";
             // Retourner une réponse de succès avec l'URL de la photo
             return Ok(new
             {
