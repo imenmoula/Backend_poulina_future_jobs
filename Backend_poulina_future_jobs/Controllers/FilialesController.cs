@@ -118,9 +118,10 @@ namespace Backend_poulina_future_jobs.Controllers
         {
             return _context.Filiales.Any(e => e.IdFiliale == id);
         }
+
+
         [HttpPost("upload-photo")]
         [AllowAnonymous]
-
         public async Task<IActionResult> UploadPhoto(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -128,44 +129,33 @@ namespace Backend_poulina_future_jobs.Controllers
                 return BadRequest("Aucun fichier sélectionné.");
             }
 
-            // Définir le chemin d'enregistrement de l'image
             var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
             if (!Directory.Exists(uploadPath))
             {
-                Directory.CreateDirectory(uploadPath); // Crée le dossier s'il n'existe pas
+                Directory.CreateDirectory(uploadPath);
             }
 
-            // Créer un nom de fichier unique pour éviter les conflits
-            var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + System.Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadPath, fileName);
 
-            // Sauvegarder le fichier sur le serveur
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            // Construire l'URL du fichier ou une réponse de succès
-            //var fileUrl = Path.Combine("/uploads", fileName); // URL relative à l'emplacement des fichiers téléchargés
-            var fileUrl = $"/uploads/{fileName}";
-            // Retourner une réponse de succès avec l'URL de la photo
+            // Construire l'URL complète de l'image
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            var fileUrl = $"{baseUrl}/uploads/{fileName}";
+
             return Ok(new
             {
-                Message = "Téléchargement de la photo réussi!",
+                Message = "Téléchargement réussi!",
                 Url = fileUrl
             });
         }
 
     }
-
-
-
-
-
-
-
 }
-
 
 
 
