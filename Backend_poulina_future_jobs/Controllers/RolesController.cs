@@ -47,39 +47,44 @@ namespace Backend_poulina_future_jobs.Controllers
         // PUT: api/Roles/5
         [HttpPut("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> PutAppRole(Guid id, AppRole appRole)
+        public async Task<IActionResult> PutAppRole(Guid id, AppRole updatedRole)
         {
-            if (id != appRole.Id)
+            var existingRole = await _context.Roles.FindAsync(id);
+            if (existingRole == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(appRole).State = EntityState.Modified;
+            existingRole.Name = updatedRole.Name;
+            existingRole.NormalizedName = updatedRole.Name.ToUpper();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AppRoleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            // Assurer que ConcurrencyStamp reste null après modification
+            existingRole.ConcurrencyStamp = null;
+
+            _context.Roles.Update(existingRole);
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
+
+
 
         // POST: api/Roles
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult<AppRole>> PostAppRole(AppRole appRole)
         {
+            if (string.IsNullOrEmpty(appRole.Name))
+            {
+                return BadRequest("Le nom du rôle est requis.");
+            }
+
+            // Normaliser le nom du rôle
+            appRole.NormalizedName = appRole.Name.ToUpper();
+
+            // Forcer ConcurrencyStamp à null
+            appRole.ConcurrencyStamp = null;
+
             _context.Roles.Add(appRole);
             await _context.SaveChangesAsync();
 

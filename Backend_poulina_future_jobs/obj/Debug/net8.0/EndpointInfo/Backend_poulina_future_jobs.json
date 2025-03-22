@@ -99,17 +99,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AppUser"
+                "$ref": "#/components/schemas/UpdateUserModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AppUser"
+                "$ref": "#/components/schemas/UpdateUserModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AppUser"
+                "$ref": "#/components/schemas/UpdateUserModel"
               }
             }
           }
@@ -1291,153 +1291,6 @@
         },
         "additionalProperties": false
       },
-      "AppUser": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "normalizedUserName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "normalizedEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "passwordHash": {
-            "type": "string",
-            "nullable": true
-          },
-          "securityStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "concurrencyStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean"
-          },
-          "twoFactorEnabled": {
-            "type": "boolean"
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean"
-          },
-          "accessFailedCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fullName": {
-            "type": "string",
-            "nullable": true
-          },
-          "nom": {
-            "type": "string",
-            "nullable": true
-          },
-          "prenom": {
-            "type": "string",
-            "nullable": true
-          },
-          "photo": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateNaissance": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "adresse": {
-            "type": "string",
-            "nullable": true
-          },
-          "ville": {
-            "type": "string",
-            "nullable": true
-          },
-          "pays": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "niveauEtude": {
-            "type": "string",
-            "nullable": true
-          },
-          "diplome": {
-            "type": "string",
-            "nullable": true
-          },
-          "universite": {
-            "type": "string",
-            "nullable": true
-          },
-          "specialite": {
-            "type": "string",
-            "nullable": true
-          },
-          "cv": {
-            "type": "string",
-            "nullable": true
-          },
-          "linkedIn": {
-            "type": "string",
-            "nullable": true
-          },
-          "github": {
-            "type": "string",
-            "nullable": true
-          },
-          "portfolio": {
-            "type": "string",
-            "nullable": true
-          },
-          "entreprise": {
-            "type": "string",
-            "nullable": true
-          },
-          "poste": {
-            "type": "string",
-            "nullable": true
-          },
-          "userRoles": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GuidIdentityUserRole"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateDepartementDTO": {
         "type": "object",
         "properties": {
@@ -1537,56 +1390,7 @@
             "type": "string",
             "nullable": true
           },
-          "dateNaissance": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "adresse": {
-            "type": "string",
-            "nullable": true
-          },
-          "ville": {
-            "type": "string",
-            "nullable": true
-          },
-          "pays": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "niveauEtude": {
-            "type": "string",
-            "nullable": true
-          },
-          "diplome": {
-            "type": "string",
-            "nullable": true
-          },
-          "universite": {
-            "type": "string",
-            "nullable": true
-          },
-          "specialite": {
-            "type": "string",
-            "nullable": true
-          },
-          "cv": {
-            "type": "string",
-            "nullable": true
-          },
-          "linkedIn": {
-            "type": "string",
-            "nullable": true
-          },
-          "github": {
-            "type": "string",
-            "nullable": true
-          },
-          "portfolio": {
+          "phoneNumber": {
             "type": "string",
             "nullable": true
           },
@@ -1734,20 +1538,6 @@
           "concurrencyStamp": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "GuidIdentityUserRole": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "roleId": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -2005,6 +1795,52 @@
           "idFiliale": {
             "type": "string",
             "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateUserModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "prenom": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "photo": {
+            "type": "string",
+            "nullable": true
+          },
+          "entreprise": {
+            "type": "string",
+            "nullable": true
+          },
+          "poste": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

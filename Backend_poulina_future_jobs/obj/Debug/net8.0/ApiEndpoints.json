@@ -74,7 +74,7 @@
       },
       {
         "Name": "updatedUser",
-        "Type": "Backend_poulina_future_jobs.Models.AppUser",
+        "Type": "Backend_poulina_future_jobs.Controllers.AppUsersController\u002BUpdateUserModel",
         "IsRequired": true
       }
     ],
@@ -782,7 +782,7 @@
         "IsRequired": true
       },
       {
-        "Name": "appRole",
+        "Name": "updatedRole",
         "Type": "Backend_poulina_future_jobs.Models.AppRole",
         "IsRequired": true
       }
