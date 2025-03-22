@@ -15,7 +15,10 @@ namespace Backend_poulina_future_jobs.Extensions
         {
             services.AddIdentityApiEndpoints<AppUser>()
                     .AddRoles<IdentityRole<Guid>>()
-                    .AddEntityFrameworkStores<AppDbContext>();
+                    .AddEntityFrameworkStores<AppDbContext>()
+                    .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
+            .AddDefaultTokenProviders();
+
             return services;
         }
 
@@ -45,6 +48,8 @@ namespace Backend_poulina_future_jobs.Extensions
                         ValidateIssuer = false,
                         ValidateAudience = false,
                         ValidateLifetime = true,
+                       ValidIssuer = config["AppSettings:Issuer"], // Ajouter l'issuer
+                        ValidAudience = config["AppSettings:Audience"],
                         ClockSkew = TimeSpan.Zero
                     };
                 });

@@ -10,10 +10,11 @@ namespace Backend_poulina_future_jobs.Extensions
             IConfiguration config)
         {
 
-         services.AddDbContext<AppDbContext>(options =>
-                    options.UseSqlServer(config.GetConnectionString("DevDB")));
+            services.AddDbContext<AppDbContext>(options =>
+                       options.UseSqlServer(config.GetConnectionString("DevDB")));
             return services;
 
         }
+        
     }
 }

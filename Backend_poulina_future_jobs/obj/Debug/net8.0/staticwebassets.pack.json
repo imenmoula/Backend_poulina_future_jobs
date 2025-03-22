@@ -1,24 +1,116 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\.gitignore",
+      "PackagePath": "staticwebassets\\uploads\\.gitignore"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\10_24a14938-5c36-48e9-884a-e864612d0a79.png",
       "PackagePath": "staticwebassets\\uploads\\10_24a14938-5c36-48e9-884a-e864612d0a79.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\10_5db9a643-48e8-4066-8b14-b772a26d7bdd.png",
+      "PackagePath": "staticwebassets\\uploads\\10_5db9a643-48e8-4066-8b14-b772a26d7bdd.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_27299550-3ff6-4b3a-9efd-084cfabbc5c3.png",
+      "PackagePath": "staticwebassets\\uploads\\1_27299550-3ff6-4b3a-9efd-084cfabbc5c3.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_3ec22c16-f964-45ff-88a7-a28409800984.jpg",
+      "PackagePath": "staticwebassets\\uploads\\1_3ec22c16-f964-45ff-88a7-a28409800984.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_71a61161-626a-4775-9444-964fca590078.jpg",
+      "PackagePath": "staticwebassets\\uploads\\1_71a61161-626a-4775-9444-964fca590078.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_75266da2-b397-415b-907d-411c1af19371.png",
+      "PackagePath": "staticwebassets\\uploads\\1_75266da2-b397-415b-907d-411c1af19371.png"
     },
     {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_cc6bbaec-34bb-4230-ae8c-3f31548f38e6.png",
       "PackagePath": "staticwebassets\\uploads\\1_cc6bbaec-34bb-4230-ae8c-3f31548f38e6.png"
     },
     {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\1_f3c1d85d-7a18-4542-9d63-d848edb3e6f9.png",
+      "PackagePath": "staticwebassets\\uploads\\1_f3c1d85d-7a18-4542-9d63-d848edb3e6f9.png"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\2_0ce1f3ad-b322-4cd8-afc2-40b94bacc384.jpg",
       "PackagePath": "staticwebassets\\uploads\\2_0ce1f3ad-b322-4cd8-afc2-40b94bacc384.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\2_3e0b0c55-1e3e-4d7d-ac6c-6cc7287dcbd7.avif",
+      "PackagePath": "staticwebassets\\uploads\\2_3e0b0c55-1e3e-4d7d-ac6c-6cc7287dcbd7.avif"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\2_6f63e5f9-d190-41b0-a582-ca811c97c48d.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2_6f63e5f9-d190-41b0-a582-ca811c97c48d.jpg"
     },
     {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\7_762c8f77-1efe-43c2-b4ee-f12aa262d273.png",
       "PackagePath": "staticwebassets\\uploads\\7_762c8f77-1efe-43c2-b4ee-f12aa262d273.png"
     },
     {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\7_80420eac-ff68-4703-b3d8-a3213bcd7185.png",
+      "PackagePath": "staticwebassets\\uploads\\7_80420eac-ff68-4703-b3d8-a3213bcd7185.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\9187604_c344d687-aa33-49ae-9107-433cb1620f1b.png",
+      "PackagePath": "staticwebassets\\uploads\\9187604_c344d687-aa33-49ae-9107-433cb1620f1b.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Capture d’écran 2024-04-26 213627_54f749ef-7fd0-4413-b8e6-6fd27a32a1dc.png",
+      "PackagePath": "staticwebassets\\uploads\\Capture d’écran 2024-04-26 213627_54f749ef-7fd0-4413-b8e6-6fd27a32a1dc.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Capture d’écran 2024-04-26 213627_e332d1b7-2423-4e48-b1d9-75b29a798dfe.png",
+      "PackagePath": "staticwebassets\\uploads\\Capture d’écran 2024-04-26 213627_e332d1b7-2423-4e48-b1d9-75b29a798dfe.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_3a022be5-f765-4f01-b11d-a37a85bc9932.png",
+      "PackagePath": "staticwebassets\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_3a022be5-f765-4f01-b11d-a37a85bc9932.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_9dfed905-911a-45a4-8317-f5bd47ce32da.png",
+      "PackagePath": "staticwebassets\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_9dfed905-911a-45a4-8317-f5bd47ce32da.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_f5a8eaae-e46f-4d2d-952a-78302452fab2.png",
+      "PackagePath": "staticwebassets\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_f5a8eaae-e46f-4d2d-952a-78302452fab2.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\LGA_JAUNE_671a8c01-1d63-445b-8a4a-4f2ba579f5f3.png",
+      "PackagePath": "staticwebassets\\uploads\\LGA_JAUNE_671a8c01-1d63-445b-8a4a-4f2ba579f5f3.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\LGA_JAUNE_775ae73d-6881-4365-9fd1-83d4847c4e0b.png",
+      "PackagePath": "staticwebassets\\uploads\\LGA_JAUNE_775ae73d-6881-4365-9fd1-83d4847c4e0b.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\LGA_JAUNE_daee512c-3101-4988-9af7-585bd3817690.png",
+      "PackagePath": "staticwebassets\\uploads\\LGA_JAUNE_daee512c-3101-4988-9af7-585bd3817690.png"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Poulina-Group-Holding_9fd6543d-ab27-4720-aa23-4a266368bd12.jpg",
       "PackagePath": "staticwebassets\\uploads\\Poulina-Group-Holding_9fd6543d-ab27-4720-aa23-4a266368bd12.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avantages-inconvenients-metier-de-comptable_96ce4848-a905-41b5-ba8f-6f3cd97a0320.jpg",
+      "PackagePath": "staticwebassets\\uploads\\avantages-inconvenients-metier-de-comptable_96ce4848-a905-41b5-ba8f-6f3cd97a0320.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_0413cb19-1bcd-4726-9350-e95877d6e2b2.png",
+      "PackagePath": "staticwebassets\\uploads\\avatar_0413cb19-1bcd-4726-9350-e95877d6e2b2.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_14a2c898-07a2-415e-be67-269cf38121f7.png",
+      "PackagePath": "staticwebassets\\uploads\\avatar_14a2c898-07a2-415e-be67-269cf38121f7.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\creation-site-web-gratuit_b46746e0-4404-4090-a949-2c79b891be6e.webp",
+      "PackagePath": "staticwebassets\\uploads\\creation-site-web-gratuit_b46746e0-4404-4090-a949-2c79b891be6e.webp"
     },
     {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\dog_1825b0db-cb66-4e98-8466-f03ff7b3eb1c.jpg",
@@ -29,6 +121,14 @@
       "PackagePath": "staticwebassets\\uploads\\dog_402fc84a-dd0a-40b9-9fb6-40a694a747e4.jpg"
     },
     {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\event_3cd72f78-b381-4b29-a8f5-a48b75cdba1e.avif",
+      "PackagePath": "staticwebassets\\uploads\\event_3cd72f78-b381-4b29-a8f5-a48b75cdba1e.avif"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\event_43ea6fa3-2493-486a-829d-caaa377d5977.avif",
+      "PackagePath": "staticwebassets\\uploads\\event_43ea6fa3-2493-486a-829d-caaa377d5977.avif"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\event_9fbf73c8-1bcd-4cec-9bb0-966426cfa437.avif",
       "PackagePath": "staticwebassets\\uploads\\event_9fbf73c8-1bcd-4cec-9bb0-966426cfa437.avif"
     },
@@ -37,8 +137,52 @@
       "PackagePath": "staticwebassets\\uploads\\event_c0f7a19d-c69a-4aa7-8704-eeb31ef9fcd7.avif"
     },
     {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\event_cb2185bd-1ff2-4ba6-9020-ad85bb01943d.avif",
+      "PackagePath": "staticwebassets\\uploads\\event_cb2185bd-1ff2-4ba6-9020-ad85bb01943d.avif"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images (4)_57beeb90-f7da-4c63-8389-af2cb3a7bdc1.jfif",
+      "PackagePath": "staticwebassets\\uploads\\images (4)_57beeb90-f7da-4c63-8389-af2cb3a7bdc1.jfif"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images_97b97e77-c8b0-4dbc-aed3-6c8e9358eb3f.png",
+      "PackagePath": "staticwebassets\\uploads\\images_97b97e77-c8b0-4dbc-aed3-6c8e9358eb3f.png"
+    },
+    {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images_d81939d7-f7ea-4331-be3c-189185f9d795.png",
       "PackagePath": "staticwebassets\\uploads\\images_d81939d7-f7ea-4331-be3c-189185f9d795.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\img2_15721825-e4c5-4754-b08a-511c42c49da6.png",
+      "PackagePath": "staticwebassets\\uploads\\img2_15721825-e4c5-4754-b08a-511c42c49da6.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\img4_1df87b6a-73b7-44ce-b1fa-3cab21eed973.webp",
+      "PackagePath": "staticwebassets\\uploads\\img4_1df87b6a-73b7-44ce-b1fa-3cab21eed973.webp"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logo_20140304-162649.jpg.300x300_q85_crop-smart_f27f8d2e-86a9-4f37-88c1-803c40619f7c.jpg",
+      "PackagePath": "staticwebassets\\uploads\\logo_20140304-162649.jpg.300x300_q85_crop-smart_f27f8d2e-86a9-4f37-88c1-803c40619f7c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\ok_0f9dbf83-b5c9-4d58-b83e-7dea6801fe20.webp",
+      "PackagePath": "staticwebassets\\uploads\\ok_0f9dbf83-b5c9-4d58-b83e-7dea6801fe20.webp"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\ok_2387acd5-cd46-430a-bbdc-767337abd6fc.webp",
+      "PackagePath": "staticwebassets\\uploads\\ok_2387acd5-cd46-430a-bbdc-767337abd6fc.webp"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\ok_dd9e8e5a-7158-4a41-bbaa-a075a21f5aeb.webp",
+      "PackagePath": "staticwebassets\\uploads\\ok_dd9e8e5a-7158-4a41-bbaa-a075a21f5aeb.webp"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\pg_25aac3b1-c4e7-44b1-b2be-3fcc23820882.webp",
+      "PackagePath": "staticwebassets\\uploads\\pg_25aac3b1-c4e7-44b1-b2be-3fcc23820882.webp"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\pg_99297112-71c8-4afd-9b2a-4a133679dc2d.webp",
+      "PackagePath": "staticwebassets\\uploads\\pg_99297112-71c8-4afd-9b2a-4a133679dc2d.webp"
     },
     {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\po0_483e7b39-45f7-42e0-b9bc-e89305fff901.jpg",
@@ -47,6 +191,10 @@
     {
       "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\po0_8bbcdd86-6424-4272-a0be-8adb5febfa47.jpg",
       "PackagePath": "staticwebassets\\uploads\\po0_8bbcdd86-6424-4272-a0be-8adb5febfa47.jpg"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\tunisie-poulina-agromed-wmc_b7b42c57-881e-495f-8eb5-8d762d5f7f6f.jpg",
+      "PackagePath": "staticwebassets\\uploads\\tunisie-poulina-agromed-wmc_b7b42c57-881e-495f-8eb5-8d762d5f7f6f.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Backend_poulina_future_jobs.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

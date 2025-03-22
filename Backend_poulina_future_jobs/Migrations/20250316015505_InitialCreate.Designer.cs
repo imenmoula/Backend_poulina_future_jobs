@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250306090604_AutoGenerateGuidIdForFiliale")]
-    partial class AutoGenerateGuidIdForFiliale
+    [Migration("20250316015505_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,8 +34,22 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Adresse")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateNaissance")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DepartementIdDepartement")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Diplome")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -45,15 +59,31 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Entreprise")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("FilialeIdFiliale")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<Guid?>("IdDepartement")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("IdFiliale")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NiveauEtude")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
                         .IsRequired()
@@ -68,6 +98,11 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Pays")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -80,6 +115,9 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("Poste")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Prenom")
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
@@ -90,11 +128,47 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Universite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("Ville")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("cv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("github")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("linkedIn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("portfolio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("specialite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartementIdDepartement");
+
+                    b.HasIndex("FilialeIdFiliale");
+
+                    b.HasIndex("IdDepartement");
+
+                    b.HasIndex("IdFiliale");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -105,6 +179,36 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Departement", b =>
+                {
+                    b.Property<Guid>("IdDepartement")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdFiliale")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("IdDepartement");
+
+                    b.HasIndex("IdFiliale");
+
+                    b.ToTable("Departements");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Filiale", b =>
@@ -127,14 +231,34 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Fax")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Photo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SiteWeb")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("IdFiliale");
 
@@ -272,6 +396,42 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUser", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Departement", null)
+                        .WithMany("Users")
+                        .HasForeignKey("DepartementIdDepartement");
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.Filiale", null)
+                        .WithMany("Users")
+                        .HasForeignKey("FilialeIdFiliale");
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.Departement", "Departement")
+                        .WithMany()
+                        .HasForeignKey("IdDepartement")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.Filiale", "Filiale")
+                        .WithMany()
+                        .HasForeignKey("IdFiliale")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Departement");
+
+                    b.Navigation("Filiale");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Departement", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Filiale", "Filiale")
+                        .WithMany("Departements")
+                        .HasForeignKey("IdFiliale")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Filiale");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -321,6 +481,18 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Departement", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Filiale", b =>
+                {
+                    b.Navigation("Departements");
+
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

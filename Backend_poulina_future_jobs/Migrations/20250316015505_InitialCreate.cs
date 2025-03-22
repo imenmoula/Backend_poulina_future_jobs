@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Backend_poulina_future_jobs.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,43 +26,19 @@ namespace Backend_poulina_future_jobs.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(150)", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(150)", nullable: false),
-                    Prenom = table.Column<string>(type: "nvarchar(150)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(255)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Filiales",
                 columns: table => new
                 {
-                    IdFiliale = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adresse = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IdFiliale = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
+                    Nom = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Adresse = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Fax = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    SiteWeb = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,6 +64,95 @@ namespace Backend_poulina_future_jobs.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Departements",
+                columns: table => new
+                {
+                    IdDepartement = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWID()"),
+                    Nom = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
+                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdFiliale = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departements", x => x.IdDepartement);
+                    table.ForeignKey(
+                        name: "FK_Departements_Filiales_IdFiliale",
+                        column: x => x.IdFiliale,
+                        principalTable: "Filiales",
+                        principalColumn: "IdFiliale",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(150)", nullable: false),
+                    Nom = table.Column<string>(type: "nvarchar(150)", nullable: false),
+                    Prenom = table.Column<string>(type: "nvarchar(150)", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(255)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateNaissance = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Adresse = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ville = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Pays = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NiveauEtude = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Diplome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Universite = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    specialite = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cv = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    linkedIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    github = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    portfolio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Entreprise = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Poste = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdDepartement = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdFiliale = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DepartementIdDepartement = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    FilialeIdFiliale = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Departements_DepartementIdDepartement",
+                        column: x => x.DepartementIdDepartement,
+                        principalTable: "Departements",
+                        principalColumn: "IdDepartement");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Departements_IdDepartement",
+                        column: x => x.IdDepartement,
+                        principalTable: "Departements",
+                        principalColumn: "IdDepartement");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Filiales_FilialeIdFiliale",
+                        column: x => x.FilialeIdFiliale,
+                        principalTable: "Filiales",
+                        principalColumn: "IdFiliale");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Filiales_IdFiliale",
+                        column: x => x.IdFiliale,
+                        principalTable: "Filiales",
+                        principalColumn: "IdFiliale");
                 });
 
             migrationBuilder.CreateTable(
@@ -175,27 +240,6 @@ namespace Backend_poulina_future_jobs.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Departements",
-                columns: table => new
-                {
-                    IdDepartement = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdFiliale = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departements", x => x.IdDepartement);
-                    table.ForeignKey(
-                        name: "FK_Departements_Filiales_IdFiliale",
-                        column: x => x.IdFiliale,
-                        principalTable: "Filiales",
-                        principalColumn: "IdFiliale",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -229,6 +273,26 @@ namespace Backend_poulina_future_jobs.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_DepartementIdDepartement",
+                table: "AspNetUsers",
+                column: "DepartementIdDepartement");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_FilialeIdFiliale",
+                table: "AspNetUsers",
+                column: "FilialeIdFiliale");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_IdDepartement",
+                table: "AspNetUsers",
+                column: "IdDepartement");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_IdFiliale",
+                table: "AspNetUsers",
+                column: "IdFiliale");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -260,13 +324,13 @@ namespace Backend_poulina_future_jobs.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Departements");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Departements");
 
             migrationBuilder.DropTable(
                 name: "Filiales");

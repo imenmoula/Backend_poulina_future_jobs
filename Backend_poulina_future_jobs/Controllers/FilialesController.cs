@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
 using Microsoft.AspNetCore.Authorization;
+using Backend_poulina_future_jobs.Models.DTOs;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -82,19 +83,77 @@ namespace Backend_poulina_future_jobs.Controllers
                 }
             }
         }
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Filiale>>> SearchFiliales([FromQuery] string nom)
+        {
+            if (string.IsNullOrWhiteSpace(nom))
+            {
+                return await _context.Filiales.ToListAsync(); // Return all filiales if search term is empty
+            }
+
+            var filiales = await _context.Filiales
+                .Where(f => f.Nom.ToLower().Contains(nom.ToLower()))
+                .ToListAsync();
+
+            return filiales;
+        }
 
         // POST: api/Filiales
-        [HttpPost]
+        [HttpPost("post")]
         [AllowAnonymous]
-        public async Task<ActionResult<Filiale>> PostFiliale(Filiale filiale)
+        public async Task<IActionResult> CreateFiliale([FromBody] CreateFilialeDto createFilialeDto)
         {
-            filiale.IdFiliale = Guid.NewGuid();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Erreur de validation",
+                    errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
+                });
+            }
+
+            // Mapper CreateFilialeDto vers l'entité Filiale
+            var filiale = new Filiale
+            {
+                IdFiliale = Guid.NewGuid(),
+                Nom = createFilialeDto.Nom,
+                Adresse = createFilialeDto.Adresse,
+                Description = createFilialeDto.Description,
+                DateCreation = DateTime.UtcNow,
+                Photo = createFilialeDto.Photo,
+                Phone = createFilialeDto.Phone,
+                Fax = createFilialeDto.Fax,
+                Email = createFilialeDto.Email,
+                SiteWeb = createFilialeDto.SiteWeb
+            };
+
+            // Ajouter à la base de données et sauvegarder
             _context.Filiales.Add(filiale);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetFiliale), new { id = filiale.IdFiliale },
-                new { data = filiale, message = "Nouvelle filiale créée avec succès." });
+            // Retourner un message de succès avec les données de la filiale
+            return CreatedAtAction(nameof(GetFiliale), new { id = filiale.IdFiliale }, new
+            {
+                success = true,
+                message = "Filiale créée avec succès",
+                filiale = new
+                {
+                    filiale.IdFiliale,
+                    filiale.Nom,
+                    filiale.Adresse,
+                    filiale.Description,
+                    filiale.DateCreation,
+                    filiale.Photo,
+                    filiale.Phone,
+                    filiale.Fax,
+                    filiale.Email,
+                    filiale.SiteWeb
+                }
+            });
         }
+
 
         // DELETE: api/Filiales/5
         [HttpDelete("{id}")]

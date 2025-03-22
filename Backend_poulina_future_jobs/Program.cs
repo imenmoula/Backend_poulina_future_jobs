@@ -14,14 +14,28 @@ using System.Security.Claims;
 using Backend_poulina_future_jobs.Extensions;
 using Backend_poulina_future_jobs.Controllers;
 using Microsoft.Extensions.FileProviders;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Backend_poulina_future_jobs.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
- builder.Services.AddControllers();
+//builder.Services.AddControllers().AddJsonOptions(options =>
+//{
+//    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+//});
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
 
-// Configurer CORS au niveau des services (optionnel, mais recommand�)
+builder.Services.AddScoped<UserManager<AppUser>>(); // Nécessaire pour Minimal APIs
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
+
+
 
 
 ///les principale  extention    auth,identity,dbcontext
@@ -31,6 +45,7 @@ builder.Services.AddSwaggerExplorer()
                 .AddIdentityHandlersAndStores()
                 .ConfigureIdentityOptions()
                 .AddIdentityAuth(builder.Configuration);
+
 
 // Configure CORS
 builder.Services.AddCors(options =>
@@ -43,26 +58,37 @@ builder.Services.AddCors(options =>
                .AllowCredentials();
     });
 });
-var app = builder.Build();
 
+
+var app = builder.Build();
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.WebRootPath, "uploads")),
+    RequestPath = "/uploads"
+});
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await RoleInitializer.InitializeAsync(services);
+}
 
 app.ConfigureSwaggerExplorer()
    .ConfigureCors(builder.Configuration)
    .AddIdentityAuthMiddlewares();
+// Initialiser les rôles après le démarrage de l'application
 
-// IMPORTANT: Serve static files from wwwroot/uploads BEFORE authentication middleware is applied.
-// This ensures that static files (images) can be served anonymously.
-app.UseStaticFiles(new StaticFileOptions
+
+var loggerFactory = LoggerFactory.Create(builder =>
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
-    RequestPath = "/uploads"
+    builder.AddConsole(); // Permet d'afficher les logs dans la console
 });
+var logger = loggerFactory.CreateLogger<Program>();
 
-// You can also serve other static files from wwwroot without restrictions.
-app.UseStaticFiles();
 
-// Then configure CORS middleware if needed.
+
+
 app.UseCors("AllowAngular");
 
 

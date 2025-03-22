@@ -22,6 +22,8 @@ namespace Backend_poulina_future_jobs.Extensions
 
 
         }
+        
+
 
         public static IServiceCollection AddAppConfig(
                                                        this IServiceCollection services,
