@@ -45,6 +45,7 @@ builder.Services.AddSwaggerExplorer()
                 .AddIdentityHandlersAndStores()
                 .ConfigureIdentityOptions()
                 .AddIdentityAuth(builder.Configuration);
+               
 
 
 // Configure CORS
@@ -61,6 +62,11 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+// Activer le middleware pour gérer les exceptions et afficher les détails (en développement uniquement)
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -93,6 +99,7 @@ app.UseCors("AllowAngular");
 
 
 app.MapControllers();
+
 app.MapGroup("/api")
     .MapIdentityApi<AppUser>();
 app.MapGroup("/api")

@@ -13,7 +13,7 @@ namespace Backend_poulina_future_jobs.Controllers
             return app;
         }
 
-        [Authorize]
+[Authorize]
         private static async Task<IResult> GetUserProfile(
           ClaimsPrincipal user,
           UserManager<AppUser> userManager)

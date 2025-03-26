@@ -98,6 +98,22 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.AppUsersController",
+    "Method": "CheckEmail",
+    "RelativePath": "api/AppUsers/check-email",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.AppUsersController",
     "Method": "GetUsersByRole",
     "RelativePath": "api/AppUsers/role/{roleName}",
     "HttpMethod": "GET",
@@ -573,6 +589,32 @@
         "StatusCode": 404
       }
     ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ProfileController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Profile/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ProfileController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Profile/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedUser",
+        "Type": "Backend_poulina_future_jobs.Models.AppUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.AuthorizationDemoEndpoints\u002B\u003C\u003Ec",

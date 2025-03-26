@@ -53,6 +53,7 @@ namespace Backend_poulina_future_jobs.Controllers
                .AllowAnonymous();
 
 
+
             return app;
         }
         [AllowAnonymous]
@@ -136,7 +137,7 @@ namespace Backend_poulina_future_jobs.Controllers
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(
                     claims: authClaims,
-                    expires: DateTime.UtcNow.AddDays(30),
+                    expires: DateTime.Now.AddDays(60),
                     signingCredentials: creds
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
@@ -151,7 +152,9 @@ namespace Backend_poulina_future_jobs.Controllers
             }
             return Results.Unauthorized();
         }
-    }        
+    }   
+    
+
 }
 
         

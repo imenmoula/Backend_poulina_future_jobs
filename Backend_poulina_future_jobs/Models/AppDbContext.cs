@@ -13,6 +13,7 @@ namespace Backend_poulina_future_jobs.Models
         public DbSet<IdentityRole<Guid>> AppRole { get; set; } // Pour accéder aux rôles
         public DbSet<Filiale> Filiales { get; set; }
         public DbSet<Departement> Departements { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

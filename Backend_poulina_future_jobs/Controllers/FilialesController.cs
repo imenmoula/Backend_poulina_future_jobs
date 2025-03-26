@@ -18,7 +18,7 @@ namespace Backend_poulina_future_jobs.Controllers
     public class FilialesController : ControllerBase
     {
         private readonly AppDbContext _context;
-
+        private readonly string[] _allowedExtensions = { ".png", ".jfif", ".jpeg", ".jpg", ".gif", ".bmp" }; // Add more as needed
         public FilialesController(AppDbContext context)
         {
             _context = context;
@@ -179,42 +179,101 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
 
+        //[HttpPost("upload-photo")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> UploadPhoto(IFormFile file)
+        //{
+        //    if (file == null || file.Length == 0)
+        //    {
+        //        return BadRequest("Aucun fichier sélectionné.");
+        //    }
+
+        //    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+        //    if (!Directory.Exists(uploadPath))
+        //    {
+        //        Directory.CreateDirectory(uploadPath);
+        //    }
+
+        //    var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+        //    var filePath = Path.Combine(uploadPath, fileName);
+
+        //    using (var stream = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        await file.CopyToAsync(stream);
+        //    }
+
+        //    // Construire l'URL complète de l'image
+        //    var baseUrl = $"{Request.Scheme}://{Request.Host}";
+        //    var fileUrl = $"{baseUrl}/uploads/{fileName}";
+
+        //    return Ok(new
+        //    {
+        //        Message = "Téléchargement réussi!",
+        //        Url = fileUrl
+        //    });
+        //}
+
+    
+
         [HttpPost("upload-photo")]
         [AllowAnonymous]
         public async Task<IActionResult> UploadPhoto(IFormFile file)
         {
-            if (file == null || file.Length == 0)
+            try
             {
-                return BadRequest("Aucun fichier sélectionné.");
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest(new { message = "Aucun fichier sélectionné." });
+                }
+
+                var allowedExtensions = new[] { ".png", ".jfif", ".jpeg", ".jpg", ".gif", ".bmp" };
+                var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return BadRequest(new { message = $"Format de fichier non pris en charge. Formats autorisés : {string.Join(", ", allowedExtensions)}" });
+                }
+
+                const long maxFileSize = 5 * 1024 * 1024; // 5MB
+                if (file.Length > maxFileSize)
+                {
+                    return BadRequest(new { message = "La taille du fichier dépasse la limite de 5 Mo." });
+                }
+
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                var fileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}_{Guid.NewGuid()}{extension}";
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                var fileUrl = $"{baseUrl}/uploads/{fileName}";
+
+                return Ok(new
+                {
+                    message = "Téléchargement réussi!",
+                    url = fileUrl
+                });
             }
-
-            var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-            if (!Directory.Exists(uploadPath))
+            catch (Exception ex)
             {
-                Directory.CreateDirectory(uploadPath);
+                return StatusCode(500, new { message = "Une erreur est survenue lors du téléchargement : " + ex.Message });
             }
-
-            var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var filePath = Path.Combine(uploadPath, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            // Construire l'URL complète de l'image
-            var baseUrl = $"{Request.Scheme}://{Request.Host}";
-            var fileUrl = $"{baseUrl}/uploads/{fileName}";
-
-            return Ok(new
-            {
-                Message = "Téléchargement réussi!",
-                Url = fileUrl
-            });
         }
-
     }
 }
+
+        
+
+        
+    
 
 
 

@@ -71,6 +71,7 @@ namespace Backend_poulina_future_jobs.Extensions
 
         public static WebApplication AddIdentityAuthMiddlewares(this WebApplication app)
         {
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             
