@@ -14,6 +14,10 @@ namespace Backend_poulina_future_jobs.Models
         public DbSet<Filiale> Filiales { get; set; }
         public DbSet<Departement> Departements { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+        public DbSet<OffreEmploi> OffresEmploi { get; set; }
+        public DbSet<Competence> Competences { get; set; }
+        public DbSet<OffreCompetences> OffreCompetences { get; set; }        //public DbSet<Competence> Competences { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -50,16 +54,56 @@ namespace Backend_poulina_future_jobs.Models
                 .WithMany()
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
+            /********************************************************************/
+            // Configuration des relations pour OffreEmploi
+            // Configure many-to-many relationship
+           
+            modelBuilder.Entity<OffreCompetences>()
+                .HasKey(oc => new { oc.IdOffreEmploi, oc.IdCompetence });
+
+            modelBuilder.Entity<OffreCompetences>()
+                .HasOne(oc => oc.OffreEmploi)
+                .WithMany(o => o.OffreCompetences)
+                .HasForeignKey(oc => oc.IdOffreEmploi)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OffreCompetences>()
+                .HasOne(oc => oc.Competence)
+                .WithMany(c => c.OffreCompetences)
+                .HasForeignKey(oc => oc.IdCompetence)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure StatutOffre enum to be stored as string
+            modelBuilder.Entity<OffreEmploi>()
+                      .Property(o => o.Statut)
+                      .HasConversion<int>(); // Convertit StatutOffre en string
+
+            modelBuilder.Entity<OffreEmploi>()
+                .Property(o => o.TypeContrat)
+                .HasConversion<int>();
 
 
+            modelBuilder.Entity<OffreEmploi>()
+                .Property(o => o.Salaire)
+                .HasColumnType("decimal(18,2)");
 
+            modelBuilder.Entity<OffreEmploi>()
+                .Property(o => o.ModeTravail)
+                .HasConversion<int>();
 
+            modelBuilder.Entity<OffreEmploi>()
+                .Property(o => o.NombrePostes)
+                .IsRequired()
+                .HasColumnType("int");
 
+            modelBuilder.Entity<OffreEmploi>()
+                .Property(o => o.Avantages)
+                .HasMaxLength(500);
 
 
         }
 
-public DbSet<Backend_poulina_future_jobs.Models.AppUser> AppUser { get; set; } = default!;
+        public DbSet<Backend_poulina_future_jobs.Models.AppUser> AppUser { get; set; } = default!;
 
 
 

@@ -51,7 +51,8 @@ namespace Backend_poulina_future_jobs.Models
         // Relation avec les rôles (User peut avoir plusieurs rôles)
         public virtual ICollection<IdentityUserRole<Guid>> UserRoles { get; set; } = new List<IdentityUserRole<Guid>>();
 
-
+        // Relation 1:N avec OffreEmploi
+        public ICollection<OffreEmploi> OffresEmploi { get; set; } = new List<OffreEmploi>();
 
 
 

@@ -43,9 +43,12 @@ namespace Backend_poulina_future_jobs.Models
         [MaxLength(255), Url]
         public string SiteWeb { get; set; } = string.Empty;
 
+        public Guid? IdRecruteur { get; set; }
+        [ForeignKey("IdRecruteur")]
+        public virtual AppUser Recruteur { get; set; }
         public virtual ICollection<Departement> Departements { get; set; } = new List<Departement>();
-
-
+        // Relation 1:N avec OffreEmploi
+        public virtual ICollection<OffreEmploi> OffresEmploi { get; set; } = new List<OffreEmploi>();
     }
 }
 

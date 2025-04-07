@@ -576,6 +576,191 @@
         }
       }
     },
+    "/api/Competences": {
+      "get": {
+        "tags": [
+          "Competences"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetenceDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetenceDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CompetenceDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Competences"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetenceDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetenceDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetenceDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetenceDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetenceDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetenceDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Competences/{id}": {
+      "get": {
+        "tags": [
+          "Competences"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetenceDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetenceDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompetenceDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Competences"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetenceDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetenceDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompetenceDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Competences"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Departements": {
       "get": {
         "tags": [
@@ -1028,6 +1213,173 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreEmploiDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreEmploiDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreEmploiDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/{id}": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreEmploiDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreEmploiDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreEmploiDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/search": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "titre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "specialite",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeContrat",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statut",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1498,6 +1850,104 @@
               "$ref": "#/components/schemas/GuidIdentityUserRole"
             },
             "nullable": true
+          },
+          "offresEmploi": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreEmploi"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Competence": {
+        "required": [
+          "description",
+          "nom"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nom": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "dateModification": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hardSkills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HardSkillType"
+            },
+            "nullable": true
+          },
+          "softSkills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SoftSkillType"
+            },
+            "nullable": true
+          },
+          "offreCompetences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreCompetences"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetenceDTO": {
+        "required": [
+          "description",
+          "hardSkills",
+          "nom",
+          "softSkills"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nom": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "dateModification": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hardSkills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HardSkillType"
+            }
+          },
+          "softSkills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SoftSkillType"
+            }
           }
         },
         "additionalProperties": false
@@ -1708,10 +2158,25 @@
             "format": "uri",
             "nullable": true
           },
+          "idRecruteur": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "recruteur": {
+            "$ref": "#/components/schemas/AppUser"
+          },
           "departements": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Departement"
+            },
+            "nullable": true
+          },
+          "offresEmploi": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreEmploi"
             },
             "nullable": true
           }
@@ -1766,6 +2231,48 @@
           }
         },
         "additionalProperties": false
+      },
+      "HardSkillType": {
+        "enum": [
+          "Csharp",
+          "DotNetCore",
+          "Java",
+          "Python",
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Angular",
+          "VueJS",
+          "HTML",
+          "CSS",
+          "SQL",
+          "NoSQL",
+          "Git",
+          "Docker",
+          "Kubernetes",
+          "DevOps",
+          "CloudComputing",
+          "MachineLearning",
+          "DataScience",
+          "CyberSecurity",
+          "UIUXDesign",
+          "MobileDevelopment",
+          "GameDevelopment",
+          "Blockchain",
+          "InternetOfThings",
+          "BigData",
+          "VirtualReality",
+          "AugmentedReality",
+          "Pandas",
+          "PowerBI",
+          "Scrum",
+          "Agile",
+          "ProjectManagement",
+          "SoftwareTesting",
+          "ExpressJS",
+          "NodeJS"
+        ],
+        "type": "string"
       },
       "HttpValidationProblemDetails": {
         "type": "object",
@@ -1879,6 +2386,268 @@
         },
         "additionalProperties": false
       },
+      "NiveauRequisType": {
+        "enum": [
+          "Debutant",
+          "Intermediaire",
+          "Avance",
+          "Expert"
+        ],
+        "type": "string"
+      },
+      "OffreCompetenceDTO": {
+        "type": "object",
+        "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "idCompetence": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "competence": {
+            "$ref": "#/components/schemas/CompetenceDTO"
+          },
+          "niveauRequis": {
+            "$ref": "#/components/schemas/NiveauRequisType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreCompetences": {
+        "required": [
+          "niveauRequis"
+        ],
+        "type": "object",
+        "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreEmploi": {
+            "$ref": "#/components/schemas/OffreEmploi"
+          },
+          "idCompetence": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "competence": {
+            "$ref": "#/components/schemas/Competence"
+          },
+          "niveauRequis": {
+            "$ref": "#/components/schemas/NiveauRequisType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreEmploi": {
+        "required": [
+          "description",
+          "statut",
+          "titre",
+          "typeContrat"
+        ],
+        "type": "object",
+        "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "specialite": {
+            "type": "string",
+            "nullable": true
+          },
+          "titre": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "datePublication": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateExpiration": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "salaire": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "niveauExperienceRequis": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "diplomeRequis": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "typeContrat": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "statut": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "modeTravail": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombrePostes": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "avantages": {
+            "type": "string",
+            "nullable": true
+          },
+          "idRecruteur": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recruteur": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filiale": {
+            "$ref": "#/components/schemas/Filiale"
+          },
+          "offreCompetences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreCompetences"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreEmploiDTO": {
+        "required": [
+          "description",
+          "diplomeRequis",
+          "idFiliale",
+          "idRecruteur",
+          "niveauExperienceRequis",
+          "nombrePostes",
+          "specialite",
+          "statut",
+          "titre",
+          "typeContrat"
+        ],
+        "type": "object",
+        "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titre": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "specialite": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "diplomeRequis": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "niveauExperienceRequis": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "salaire": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "datePublication": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateExpiration": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "typeContrat": {
+            "maximum": 4,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "statut": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "modeTravail": {
+            "maximum": 2,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombrePostes": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "avantages": {
+            "type": "string",
+            "nullable": true
+          },
+          "idRecruteur": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreCompetences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreCompetenceDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RefreshRequest": {
         "required": [
           "refreshToken"
@@ -1945,6 +2714,43 @@
           }
         },
         "additionalProperties": false
+      },
+      "SoftSkillType": {
+        "enum": [
+          "Discipline",
+          "EcouteActive",
+          "Communication",
+          "TravailEquipe",
+          "GestionTemps",
+          "Adaptabilite",
+          "EspritCritique",
+          "Empathie",
+          "Creativite",
+          "Leadership",
+          "GestionConflits",
+          "Negociation",
+          "PriseDecisions",
+          "GestionStress",
+          "SensibiliteCulturelle",
+          "IntelligenceEmotionnelle",
+          "GestionChangement",
+          "VisionStrategique",
+          "OrientationResultats",
+          "GestionProjets",
+          "Innovation",
+          "Responsabilite",
+          "Autonomie",
+          "Curiosite",
+          "EspritAnalytique",
+          "SensibiliteClient",
+          "GestionRisques",
+          "GestionQualite",
+          "GestionConnaissances",
+          "AttentionAuxDetails",
+          "GestionDesPerformances",
+          "Collaboration"
+        ],
+        "type": "string"
       },
       "TwoFactorRequest": {
         "type": "object",
