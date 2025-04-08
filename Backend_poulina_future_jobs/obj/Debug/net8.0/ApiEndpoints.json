@@ -453,8 +453,8 @@
         "IsRequired": true
       },
       {
-        "Name": "filiale",
-        "Type": "Backend_poulina_future_jobs.Models.Filiale",
+        "Name": "updateFilialeDto",
+        "Type": "Backend_poulina_future_jobs.Models.DTOs.UpdateFilialeDto",
         "IsRequired": true
       }
     ],
@@ -803,6 +803,11 @@
       },
       {
         "Name": "statut",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "modeTravail",
         "Type": "System.String",
         "IsRequired": false
       }

@@ -50,6 +50,10 @@ namespace Backend_poulina_future_jobs.Controllers
                     DateExpiration = o.DateExpiration,
                     Salaire = o.Salaire,
                     TypeContrat = o.TypeContrat,
+                    NombrePostes = o.NombrePostes,
+                    ModeTravail = o.ModeTravail,
+                    Avantages = o.Avantages,
+
                     Statut = o.Statut,
                     NiveauExperienceRequis = o.NiveauExperienceRequis,
                     DiplomeRequis = o.DiplomeRequis,
@@ -120,7 +124,7 @@ namespace Backend_poulina_future_jobs.Controllers
                         Id = newCompetenceId,
                         Nom = ocDTO.Competence.Nom,
                         Description = ocDTO.Competence.Description,
-                     DateModification= ocDTO.Competence.DateModification,
+                     //DateModification= ocDTO.Competence.DateModification,
                         HardSkills = ocDTO.Competence.HardSkills,
                         SoftSkills = ocDTO.Competence.SoftSkills
                     };
@@ -164,6 +168,7 @@ namespace Backend_poulina_future_jobs.Controllers
         {
             var offreEmploi = await _context.OffresEmploi
                 .Include(o => o.OffreCompetences)
+                .ThenInclude(oc => oc.Competence) // Ajouter cette ligne pour charger les détails de Competence
                 .FirstOrDefaultAsync(o => o.IdOffreEmploi == id);
 
             if (offreEmploi == null)
@@ -182,6 +187,9 @@ namespace Backend_poulina_future_jobs.Controllers
                 Salaire = offreEmploi.Salaire,
                 TypeContrat = offreEmploi.TypeContrat,
                 Statut = offreEmploi.Statut,
+                ModeTravail = offreEmploi.ModeTravail,
+                NombrePostes = offreEmploi.NombrePostes,
+                Avantages = offreEmploi.Avantages,
                 NiveauExperienceRequis = offreEmploi.NiveauExperienceRequis,
                 DiplomeRequis = offreEmploi.DiplomeRequis,
                 IdRecruteur = offreEmploi.IdRecruteur,
@@ -190,7 +198,16 @@ namespace Backend_poulina_future_jobs.Controllers
                 {
                     IdOffreEmploi = oc.IdOffreEmploi,
                     IdCompetence = oc.IdCompetence,
-                    NiveauRequis = oc.NiveauRequis
+                    NiveauRequis = oc.NiveauRequis,
+                    Competence = new CompetenceDTO // Remplir les détails de la compétence
+                    {
+                        Id = oc.Competence.Id,
+                        Nom = oc.Competence.Nom,
+                        Description = oc.Competence.Description,
+                        DateModification = oc.Competence.DateModification,
+                        HardSkills = oc.Competence.HardSkills,
+                        SoftSkills = oc.Competence.SoftSkills
+                    }
                 }).ToList()
             };
 
@@ -283,22 +300,24 @@ namespace Backend_poulina_future_jobs.Controllers
 
 
         //GET: api/OffreEmplois/search
-               [HttpGet("search")]
-               [AllowAnonymous]
-                public async Task<ActionResult<object>> Search(
-                    [FromQuery] string titre = null,
-                    [FromQuery] string specialite = null,
-                    [FromQuery] string typeContrat = null,
-                    [FromQuery] string statut = null)
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> Search(
+    [FromQuery] string titre = null,
+    [FromQuery] string specialite = null,
+    [FromQuery] string typeContrat = null,
+    [FromQuery] string statut = null,
+    [FromQuery] string modeTravail = null) // Ajout de modeTravail
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(titre) &&
                     string.IsNullOrWhiteSpace(specialite) &&
                     string.IsNullOrWhiteSpace(typeContrat) &&
-                    string.IsNullOrWhiteSpace(statut))
+                    string.IsNullOrWhiteSpace(statut) &&
+                    string.IsNullOrWhiteSpace(modeTravail))
                 {
-                    return BadRequest(new { message = "Au moins un critère de recherche (titre, spécialité, type de contrat ou statut) doit être fourni." });
+                    return BadRequest(new { message = "Au moins un critère de recherche (titre, spécialité, type de contrat, statut ou mode de travail) doit être fourni." });
                 }
 
                 var query = _context.OffresEmploi
@@ -327,11 +346,20 @@ namespace Backend_poulina_future_jobs.Controllers
 
                 if (!string.IsNullOrWhiteSpace(statut))
                 {
-                    if (!Enum.TryParse<StatutOffre>(statut, true, out var StatutEnum))
+                    if (!Enum.TryParse<StatutOffre>(statut, true, out var statutEnum))
                     {
                         return BadRequest(new { message = "Statut invalide." });
                     }
-                    query = query.Where(o => o.Statut == (int)StatutEnum);
+                    query = query.Where(o => o.Statut == (int)statutEnum);
+                }
+
+                if (!string.IsNullOrWhiteSpace(modeTravail))
+                {
+                    if (!Enum.TryParse<ModeTravail>(modeTravail, true, out var modeTravailEnum))
+                    {
+                        return BadRequest(new { message = $"ModeTravail invalide. Valeurs acceptées : {string.Join(", ", Enum.GetNames(typeof(ModeTravail)))}" });
+                    }
+                    query = query.Where(o => o.ModeTravail == (int)modeTravailEnum);
                 }
 
                 var offresEmploi = await query.ToListAsync();
@@ -352,6 +380,8 @@ namespace Backend_poulina_future_jobs.Controllers
                     Salaire = (decimal)offreEmploi.Salaire,
                     TypeContrat = offreEmploi.TypeContrat,
                     Statut = offreEmploi.Statut,
+                    ModeTravail = offreEmploi.ModeTravail,
+                    NombrePostes=offreEmploi.NombrePostes,
                     NiveauExperienceRequis = offreEmploi.NiveauExperienceRequis,
                     DiplomeRequis = offreEmploi.DiplomeRequis,
                     IdRecruteur = offreEmploi.IdRecruteur,
@@ -380,8 +410,6 @@ namespace Backend_poulina_future_jobs.Controllers
                 return StatusCode(500, new { message = "Une erreur est survenue lors de la recherche.", detail = ex.Message });
             }
         }
-
-
 
 
         private bool OffreEmploiExists(Guid id)

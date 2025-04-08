@@ -1023,17 +1023,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Filiale"
+                "$ref": "#/components/schemas/UpdateFilialeDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Filiale"
+                "$ref": "#/components/schemas/UpdateFilialeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Filiale"
+                "$ref": "#/components/schemas/UpdateFilialeDto"
               }
             }
           }
@@ -1374,6 +1374,13 @@
           },
           {
             "name": "statut",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "modeTravail",
             "in": "query",
             "schema": {
               "type": "string"
@@ -2826,6 +2833,48 @@
           "idFiliale": {
             "type": "string",
             "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateFilialeDto": {
+        "type": "object",
+        "properties": {
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "photo": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "fax": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "siteWeb": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

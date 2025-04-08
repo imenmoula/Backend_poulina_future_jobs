@@ -53,34 +53,124 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(new { data = filiale, message = "Détails de la filiale récupérés avec succès." });
         }
 
+       
+
         // PUT: api/Filiales/5
         [HttpPut("{id}")]
         [AllowAnonymous]
-
-        public async Task<IActionResult> PutFiliale(Guid id, Filiale filiale)
+        public async Task<IActionResult> PutFiliale(Guid id, [FromBody] UpdateFilialeDto updateFilialeDto)
         {
-            if (id != filiale.IdFiliale)
+            // Vérifier si l'ID dans l'URL correspond à l'ID dans le DTO
+            if (id != updateFilialeDto.IdFiliale)
             {
-                return BadRequest(new { message = "L'ID dans l'URL ne correspond pas à l'ID dans le corps de la requête." });
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "L'ID dans l'URL ne correspond pas à l'ID dans le corps de la requête."
+                });
             }
 
-            _context.Entry(filiale).State = EntityState.Modified;
+            // Vérifier si la filiale existe
+            var existingFiliale = await _context.Filiales.FindAsync(id);
+            if (existingFiliale == null)
+            {
+                return NotFound(new
+                {
+                    success = false,
+                    message = "La filiale spécifiée n'existe pas."
+                });
+            }
+
+            // Validation des données
+            var validationErrors = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(updateFilialeDto.Nom))
+                validationErrors.Add("Le nom est requis.");
+            if (string.IsNullOrWhiteSpace(updateFilialeDto.Adresse))
+                validationErrors.Add("L'adresse est requise.");
+            if (string.IsNullOrWhiteSpace(updateFilialeDto.Email))
+                validationErrors.Add("L'email est requis.");
+            if (!string.IsNullOrWhiteSpace(updateFilialeDto.Email) && !new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(updateFilialeDto.Email))
+                validationErrors.Add("L'email doit être dans un format valide.");
+
+            if (validationErrors.Any())
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Données invalides",
+                    errors = validationErrors
+                });
+            }
+
+            // Vérifier l'unicité de l'email (si l'email a changé)
+            if (!string.IsNullOrEmpty(updateFilialeDto.Email) && updateFilialeDto.Email != existingFiliale.Email)
+            {
+                var emailExists = await _context.Filiales.AnyAsync(f => f.Email == updateFilialeDto.Email && f.IdFiliale != id);
+                if (emailExists)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Cet email est déjà utilisé par une autre filiale."
+                    });
+                }
+            }
+
+            // Mettre à jour les champs de la filiale
+            existingFiliale.Nom = updateFilialeDto.Nom;
+            existingFiliale.Adresse = updateFilialeDto.Adresse;
+            existingFiliale.Description = updateFilialeDto.Description ?? existingFiliale.Description;
+            existingFiliale.Photo = updateFilialeDto.Photo ?? existingFiliale.Photo;
+            existingFiliale.Phone = updateFilialeDto.Phone ?? existingFiliale.Phone;
+            existingFiliale.Fax = updateFilialeDto.Fax ?? existingFiliale.Fax;
+            existingFiliale.Email = updateFilialeDto.Email;
+            existingFiliale.SiteWeb = updateFilialeDto.SiteWeb ?? existingFiliale.SiteWeb;
 
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok(new { message = "La filiale a été mise à jour avec succès." });
+                return Ok(new
+                {
+                    success = true,
+                    message = "La filiale a été mise à jour avec succès.",
+                    filiale = new
+                    {
+                        existingFiliale.IdFiliale,
+                        existingFiliale.Nom,
+                        existingFiliale.Adresse,
+                        existingFiliale.Description,
+                        existingFiliale.DateCreation,
+                        existingFiliale.Photo,
+                        existingFiliale.Phone,
+                        existingFiliale.Fax,
+                        existingFiliale.Email,
+                        existingFiliale.SiteWeb
+                    }
+                });
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!FilialeExists(id))
                 {
-                    return NotFound(new { message = "La filiale spécifiée n'existe pas." });
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "La filiale spécifiée n'existe pas."
+                    });
                 }
                 else
                 {
                     throw;
                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la mise à jour de la filiale: " + ex.Message
+                });
             }
         }
         [HttpGet("search")]
@@ -179,40 +269,7 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
 
-        //[HttpPost("upload-photo")]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> UploadPhoto(IFormFile file)
-        //{
-        //    if (file == null || file.Length == 0)
-        //    {
-        //        return BadRequest("Aucun fichier sélectionné.");
-        //    }
-
-        //    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-        //    if (!Directory.Exists(uploadPath))
-        //    {
-        //        Directory.CreateDirectory(uploadPath);
-        //    }
-
-        //    var fileName = Path.GetFileNameWithoutExtension(file.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-        //    var filePath = Path.Combine(uploadPath, fileName);
-
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
-
-        //    // Construire l'URL complète de l'image
-        //    var baseUrl = $"{Request.Scheme}://{Request.Host}";
-        //    var fileUrl = $"{baseUrl}/uploads/{fileName}";
-
-        //    return Ok(new
-        //    {
-        //        Message = "Téléchargement réussi!",
-        //        Url = fileUrl
-        //    });
-        //}
-
+       
     
 
         [HttpPost("upload-photo")]

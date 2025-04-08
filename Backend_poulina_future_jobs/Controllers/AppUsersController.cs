@@ -173,9 +173,9 @@ namespace Backend_poulina_future_jobs.Controllers
                 validationErrors.Add("Le rôle est requis.");
             else
             {
-                var validRoles = new[] { "Admin", "Candidat", "Recruteur" };
+                var validRoles = new[] { "Admin", "Candidate", "Recruteur" };
                 if (!validRoles.Contains(createUserModel.Role))
-                    validationErrors.Add("Le rôle doit être 'Admin', 'Candidat' ou 'Recruteur'.");
+                    validationErrors.Add("Le rôle doit être 'Admin', 'Candidate' ou 'Recruteur'.");
             }
 
             if (validationErrors.Any())
@@ -250,6 +250,7 @@ namespace Backend_poulina_future_jobs.Controllers
         // PUT: api/AppUsers/{id} - Mettre à jour un utilisateur
         [HttpPut("{id}")]
         [AllowAnonymous]
+
         public async Task<IActionResult> PutAppUser(Guid id, [FromBody] UpdateUserModel updatedUser)
         {
             if (id != updatedUser.Id)
@@ -269,15 +270,11 @@ namespace Backend_poulina_future_jobs.Controllers
                 validationErrors.Add("Le nom est requis.");
             if (string.IsNullOrWhiteSpace(updatedUser.Prenom))
                 validationErrors.Add("Le prénom est requis.");
-            if (string.IsNullOrWhiteSpace(updatedUser.Email))
-                validationErrors.Add("L'email est requis.");
-            if (!string.IsNullOrWhiteSpace(updatedUser.Email) && !new EmailAddressAttribute().IsValid(updatedUser.Email))
-                validationErrors.Add("L'email doit être dans un format valide.");
             if (!string.IsNullOrWhiteSpace(updatedUser.Role))
             {
-                var validRoles = new[] { "Admin", "Candidat", "Recruteur" };
+                var validRoles = new[] { "Admin", "Candidate", "Recruteur" };
                 if (!validRoles.Contains(updatedUser.Role))
-                    validationErrors.Add("Le rôle doit être 'Admin', 'Candidat' ou 'Recruteur'.");
+                    validationErrors.Add("Le rôle doit être 'Admin', 'Candidate' ou 'Recruteur'.");
             }
 
             if (validationErrors.Any())
@@ -290,31 +287,17 @@ namespace Backend_poulina_future_jobs.Controllers
                 });
             }
 
+            // Ne pas permettre la mise à jour de l'email
             if (!string.IsNullOrEmpty(updatedUser.Email) && updatedUser.Email != existingUser.Email)
             {
-                var emailExists = await _userManager.FindByEmailAsync(updatedUser.Email);
-                if (emailExists != null && emailExists.Id != existingUser.Id)
+                return BadRequest(new ApiResponse<object>
                 {
-                    return BadRequest(new ApiResponse<object>
-                    {
-                        Success = false,
-                        Message = "Cet email est déjà utilisé par un autre utilisateur."
-                    });
-                }
-
-                var setEmailResult = await _userManager.SetEmailAsync(existingUser, updatedUser.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    return BadRequest(new ApiResponse<object>
-                    {
-                        Success = false,
-                        Message = "Erreur lors de la mise à jour de l'email",
-                        Errors = setEmailResult.Errors.Select(e => e.Description)
-                    });
-                }
-                await _userManager.SetUserNameAsync(existingUser, updatedUser.Email);
+                    Success = false,
+                    Message = "La modification de l'email n'est pas autorisée."
+                });
             }
 
+            // Mise à jour des autres champs
             existingUser.FullName = updatedUser.FullName ?? existingUser.FullName;
             existingUser.Nom = updatedUser.Nom ?? existingUser.Nom;
             existingUser.Prenom = updatedUser.Prenom ?? existingUser.Prenom;
@@ -362,6 +345,118 @@ namespace Backend_poulina_future_jobs.Controllers
 
             return Ok(new ApiResponse<object> { Success = true, Message = "Utilisateur mis à jour avec succès" });
         }
+        //public async Task<IActionResult> PutAppUser(Guid id, [FromBody] UpdateUserModel updatedUser)
+        //{
+        //    if (id != updatedUser.Id)
+        //    {
+        //        return BadRequest(new ApiResponse<object> { Success = false, Message = "ID mismatch" });
+        //    }
+
+        //    var existingUser = await _userManager.FindByIdAsync(id.ToString());
+        //    if (existingUser == null)
+        //    {
+        //        return NotFound(new ApiResponse<object> { Success = false, Message = "Utilisateur non trouvé" });
+        //    }
+
+        //    var validationErrors = new List<string>();
+
+        //    if (string.IsNullOrWhiteSpace(updatedUser.Nom))
+        //        validationErrors.Add("Le nom est requis.");
+        //    if (string.IsNullOrWhiteSpace(updatedUser.Prenom))
+        //        validationErrors.Add("Le prénom est requis.");
+        //    if (string.IsNullOrWhiteSpace(updatedUser.Email))
+        //        validationErrors.Add("L'email est requis.");
+        //    if (!string.IsNullOrWhiteSpace(updatedUser.Email) && !new EmailAddressAttribute().IsValid(updatedUser.Email))
+        //        validationErrors.Add("L'email doit être dans un format valide.");
+        //    if (!string.IsNullOrWhiteSpace(updatedUser.Role))
+        //    {
+        //        var validRoles = new[] { "Admin", "Candidate", "Recruteur" };
+        //        if (!validRoles.Contains(updatedUser.Role))
+        //            validationErrors.Add("Le rôle doit être 'Admin', 'Candidate' ou 'Recruteur'.");
+        //    }
+
+        //    if (validationErrors.Any())
+        //    {
+        //        return BadRequest(new ApiResponse<object>
+        //        {
+        //            Success = false,
+        //            Message = "Données invalides",
+        //            Errors = validationErrors
+        //        });
+        //    }
+
+        //    if (!string.IsNullOrEmpty(updatedUser.Email) && updatedUser.Email != existingUser.Email)
+        //    {
+        //        var emailExists = await _userManager.FindByEmailAsync(updatedUser.Email);
+        //        if (emailExists != null && emailExists.Id != existingUser.Id)
+        //        {
+        //            return BadRequest(new ApiResponse<object>
+        //            {
+        //                Success = false,
+        //                Message = "Cet email est déjà utilisé par un autre utilisateur."
+        //            });
+        //        }
+
+        //        var setEmailResult = await _userManager.SetEmailAsync(existingUser, updatedUser.Email);
+        //        if (!setEmailResult.Succeeded)
+        //        {
+        //            return BadRequest(new ApiResponse<object>
+        //            {
+        //                Success = false,
+        //                Message = "Erreur lors de la mise à jour de l'email",
+        //                Errors = setEmailResult.Errors.Select(e => e.Description)
+        //            });
+        //        }
+        //        await _userManager.SetUserNameAsync(existingUser, updatedUser.Email);
+        //    }
+
+        //    existingUser.FullName = updatedUser.FullName ?? existingUser.FullName;
+        //    existingUser.Nom = updatedUser.Nom ?? existingUser.Nom;
+        //    existingUser.Prenom = updatedUser.Prenom ?? existingUser.Prenom;
+        //    existingUser.PhoneNumber = updatedUser.PhoneNumber ?? existingUser.PhoneNumber;
+        //    existingUser.Photo = updatedUser.Photo ?? existingUser.Photo;
+        //    existingUser.Entreprise = updatedUser.Entreprise ?? existingUser.Entreprise;
+        //    existingUser.Poste = updatedUser.Poste ?? existingUser.Poste;
+
+        //    if (!string.IsNullOrEmpty(updatedUser.Role))
+        //    {
+        //        var currentRoles = await _userManager.GetRolesAsync(existingUser);
+        //        var removeRolesResult = await _userManager.RemoveFromRolesAsync(existingUser, currentRoles);
+        //        if (!removeRolesResult.Succeeded)
+        //        {
+        //            return BadRequest(new ApiResponse<object>
+        //            {
+        //                Success = false,
+        //                Message = "Erreur lors de la suppression des anciens rôles",
+        //                Errors = removeRolesResult.Errors.Select(e => e.Description)
+        //            });
+        //        }
+
+        //        var addRoleResult = await _userManager.AddToRoleAsync(existingUser, updatedUser.Role);
+        //        if (!addRoleResult.Succeeded)
+        //        {
+        //            return BadRequest(new ApiResponse<object>
+        //            {
+        //                Success = false,
+        //                Message = "Erreur lors de l'ajout du nouveau rôle",
+        //                Errors = addRoleResult.Errors.Select(e => e.Description)
+        //            });
+        //        }
+        //    }
+
+        //    var updateResult = await _userManager.UpdateAsync(existingUser);
+        //    if (!updateResult.Succeeded)
+        //    {
+        //        return BadRequest(new ApiResponse<object>
+        //        {
+        //            Success = false,
+        //            Message = "Erreur lors de la mise à jour de l'utilisateur",
+        //            Errors = updateResult.Errors.Select(e => e.Description)
+        //        });
+        //    }
+
+        //    return Ok(new ApiResponse<object> { Success = true, Message = "Utilisateur mis à jour avec succès" });
+        //}
 
         // DELETE: api/AppUsers/{id} - Supprimer un utilisateur
         [HttpDelete("{id}")]
