@@ -497,6 +497,38 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(new { exists = user != null });
         }
 
+        [HttpGet("recruteurs")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetRecruteurs()
+        {
+            // Use UserManager to fetch users in the "Recruteur" role
+            var recruteurs = await _userManager.GetUsersInRoleAsync("Recruteur");
+
+            if (recruteurs == null || !recruteurs.Any())
+            {
+                return NotFound(new ApiResponse<object>
+                {
+                    Success = false,
+                    Message = "Aucun recruteur trouvé"
+                });
+            }
+
+            // Select only the necessary fields (Id and UserName)
+            var recruteurDtos = recruteurs.Select(u => new
+            {
+                Id = u.Id,
+                Username = u.UserName,// Guid from AppUser
+                fullaName = u.FullName  // Consistent with Identity's UserName property
+            }).ToList();
+
+            return Ok(new ApiResponse<object>
+            {
+                Success = true,
+                Message = "Recruteurs récupérés avec succès",
+                Data = recruteurDtos
+            });
+        }
+
         // Modèle de réponse standardisée
         public class ApiResponse<T>
         {

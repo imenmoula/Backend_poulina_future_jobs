@@ -1,14 +1,13 @@
-﻿
+﻿using Backend_poulina_future_jobs.Models;
+using Backend_poulina_future_jobs.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Backend_poulina_future_jobs.Models;
-using Backend_poulina_future_jobs.Models.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using OffreCompetenceDTO = Backend_poulina_future_jobs.Models.DTOs.OffreCompetenceDTO;
 
 namespace Backend_poulina_future_jobs.Controllers
@@ -18,10 +17,12 @@ namespace Backend_poulina_future_jobs.Controllers
     public class OffreEmploisController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public OffreEmploisController(AppDbContext context)
+        public OffreEmploisController(AppDbContext context, UserManager<AppUser> userManager)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         // GET: api/OffreEmplois
@@ -33,18 +34,20 @@ namespace Backend_poulina_future_jobs.Controllers
             {
                 var offresEmploi = await _context.OffresEmploi
                     .Include(o => o.OffreCompetences)
+                    .ThenInclude(oc => oc.Competence)
+                    .Include(o => o.Recruteur) // Include Recruteur for FullName
                     .ToListAsync();
 
                 if (!offresEmploi.Any())
                 {
-                    return NotFound(new { message = "Aucune offre d'emploi trouvée." });
+                    return NotFound(new { success = false, message = "Aucune offre d'emploi trouvée." });
                 }
 
                 var offresEmploiDTO = offresEmploi.Select(o => new OffreEmploiDTO
                 {
                     IdOffreEmploi = o.IdOffreEmploi,
                     Titre = o.Titre,
-                    Specialite = o.specialite,
+                    Specialite = o.Specialite,
                     Description = o.Description,
                     DatePublication = o.DatePublication,
                     DateExpiration = o.DateExpiration,
@@ -53,372 +56,397 @@ namespace Backend_poulina_future_jobs.Controllers
                     NombrePostes = o.NombrePostes,
                     ModeTravail = o.ModeTravail,
                     Avantages = o.Avantages,
-
                     Statut = o.Statut,
                     NiveauExperienceRequis = o.NiveauExperienceRequis,
                     DiplomeRequis = o.DiplomeRequis,
                     IdRecruteur = o.IdRecruteur,
+                    //RecruteurNom = o.Recruteur?.FullName, // Add recruiter name
                     IdFiliale = o.IdFiliale,
                     OffreCompetences = o.OffreCompetences.Select(oc => new OffreCompetenceDTO
                     {
                         IdOffreEmploi = oc.IdOffreEmploi,
                         IdCompetence = oc.IdCompetence,
-                        NiveauRequis = oc.NiveauRequis
+                        NiveauRequis = oc.NiveauRequis,
+                        Competence = oc.Competence != null ? new CompetenceCreateDto
+                        {
+                            Nom = oc.Competence.Nom,
+                            Description = oc.Competence.Description,
+                            EstTechnique = oc.Competence.estTechnique,
+                            EstSoftSkill = oc.Competence.estSoftSkill
+                        } : null
                     }).ToList()
-                });
+                }).ToList();
 
-                return Ok(new { message = "Liste des offres d'emploi récupérée avec succès.", offresEmploi = offresEmploiDTO });
+                return Ok(new
+                {
+                    success = true,
+                    message = "Liste des offres d'emploi récupérée avec succès.",
+                    offresEmploi = offresEmploiDTO
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Une erreur est survenue.", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Une erreur est survenue.", detail = ex.Message });
+            }
+        }
+
+        // GET: api/OffreEmplois/{id}
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetOffreEmploi(Guid id)
+        {
+            try
+            {
+                var offreEmploi = await _context.OffresEmploi
+                    .Include(o => o.OffreCompetences)
+                    .ThenInclude(oc => oc.Competence)
+                    .Include(o => o.Recruteur) // Include Recruteur for FullName
+                    .FirstOrDefaultAsync(o => o.IdOffreEmploi == id);
+
+                if (offreEmploi == null)
+                {
+                    return NotFound(new { success = false, message = "L'offre d'emploi demandée n'existe pas." });
+                }
+
+                var offreEmploiDTO = new OffreEmploiDTO
+                {
+                    IdOffreEmploi = offreEmploi.IdOffreEmploi,
+                    Titre = offreEmploi.Titre,
+                    Specialite = offreEmploi.Specialite,
+                    Description = offreEmploi.Description,
+                    DatePublication = offreEmploi.DatePublication,
+                    DateExpiration = offreEmploi.DateExpiration,
+                    Salaire = offreEmploi.Salaire,
+                    TypeContrat = offreEmploi.TypeContrat,
+                    Statut = offreEmploi.Statut,
+                    ModeTravail = offreEmploi.ModeTravail,
+                    NombrePostes = offreEmploi.NombrePostes,
+                    Avantages = offreEmploi.Avantages,
+                    NiveauExperienceRequis = offreEmploi.NiveauExperienceRequis,
+                    DiplomeRequis = offreEmploi.DiplomeRequis,
+                    IdRecruteur = offreEmploi.IdRecruteur,
+                    //RecruteurNom = offreEmploi.Recruteur?.FullName, // Add recruiter name
+                    IdFiliale = offreEmploi.IdFiliale,
+                    OffreCompetences = offreEmploi.OffreCompetences.Select(oc => new OffreCompetenceDTO
+                    {
+                        IdOffreEmploi = oc.IdOffreEmploi,
+                        IdCompetence = oc.IdCompetence,
+                        NiveauRequis = oc.NiveauRequis,
+                        Competence = oc.Competence != null ? new CompetenceCreateDto
+                        {
+                            Nom = oc.Competence.Nom,
+                            Description = oc.Competence.Description,
+                            EstTechnique = oc.Competence.estTechnique,
+                            EstSoftSkill = oc.Competence.estSoftSkill
+                        } : null
+                    }).ToList()
+                };
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Offre d'emploi récupérée avec succès.",
+                    offreEmploi = offreEmploiDTO
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Une erreur est survenue.", detail = ex.Message });
             }
         }
 
         // POST: api/OffreEmplois
         [HttpPost]
         [AllowAnonymous]
-     
-        public async Task<ActionResult<object>> CreateOffreEmploi([FromBody] OffreEmploiDTO offreEmploiDTO)
+        public async Task<ActionResult<object>> CreateOffreEmploi([FromBody] OffreEmploiDTO dto)
         {
             try
             {
-                // Validation des entités liées
-                if (!await _context.Users.AnyAsync(u => u.Id == offreEmploiDTO.IdRecruteur))
+                if (dto == null)
                 {
-                    return BadRequest(new { message = "Le recruteur spécifié n'existe pas." });
-                }
-                if (!await _context.Filiales.AnyAsync(f => f.IdFiliale == offreEmploiDTO.IdFiliale))
-                {
-                    return BadRequest(new { message = "La filiale spécifiée n'existe pas." });
+                    return BadRequest(new { success = false, message = "Données d'offre invalides." });
                 }
 
-                var newOffreId = Guid.NewGuid();
-                var offreEmploi = new OffreEmploi
+                // Vérification Recruteur & Role
+                var recruteur = await _userManager.FindByIdAsync(dto.IdRecruteur.ToString());
+                if (recruteur == null)
                 {
-                    IdOffreEmploi = newOffreId,
-                    specialite = offreEmploiDTO.Specialite,
-                    Titre = offreEmploiDTO.Titre,
-                    Description = offreEmploiDTO.Description,
-                    DatePublication = DateTime.UtcNow, // Override with server time
-                    DateExpiration = offreEmploiDTO.DateExpiration,
-                    Salaire = offreEmploiDTO.Salaire,
-                    TypeContrat = offreEmploiDTO.TypeContrat,
-                    Statut = offreEmploiDTO.Statut,
-                    ModeTravail = offreEmploiDTO.ModeTravail,
-                    NombrePostes = offreEmploiDTO.NombrePostes,
-                    Avantages = offreEmploiDTO.Avantages,
-                    NiveauExperienceRequis = offreEmploiDTO.NiveauExperienceRequis,
-                    DiplomeRequis = offreEmploiDTO.DiplomeRequis,
-                    IdRecruteur = offreEmploiDTO.IdRecruteur,
-                    IdFiliale = offreEmploiDTO.IdFiliale,
+                    return BadRequest(new { success = false, message = "Le recruteur n'existe pas." });
+                }
+
+                var isRecruteur = await _userManager.IsInRoleAsync(recruteur, "Recruteur");
+                if (!isRecruteur)
+                {
+                    return StatusCode(403, new { success = false, message = "Seuls les utilisateurs avec le rôle 'Recruteur' peuvent créer des offres d'emploi." });
+                }
+
+                // Vérification Filiale
+                if (!await _context.Filiales.AnyAsync(f => f.IdFiliale == dto.IdFiliale))
+                {
+                    return BadRequest(new { success = false, message = "La filiale n'existe pas." });
+                }
+
+                var offre = new OffreEmploi
+                {
+                    IdOffreEmploi = Guid.NewGuid(),
+                    Titre = dto.Titre,
+                    Specialite = dto.Specialite,
+                    Description = dto.Description,
+                    DiplomeRequis = dto.DiplomeRequis,
+                    NiveauExperienceRequis = dto.NiveauExperienceRequis,
+                    Salaire = dto.Salaire,
+                    DatePublication = DateTime.UtcNow,
+                    DateExpiration = dto.DateExpiration,
+                    TypeContrat = dto.TypeContrat,
+                    Statut = dto.Statut,
+                    ModeTravail = dto.ModeTravail,
+                    NombrePostes = dto.NombrePostes,
+                    Avantages = dto.Avantages,
+                    IdRecruteur = dto.IdRecruteur,
+                    IdFiliale = dto.IdFiliale,
                     OffreCompetences = new List<OffreCompetences>()
                 };
 
-                // Create new competencies and link them
-                foreach (var ocDTO in offreEmploiDTO.OffreCompetences)
+                // Associer les compétences si présentes
+                if (dto.OffreCompetences != null && dto.OffreCompetences.Any())
                 {
-                    var newCompetenceId = Guid.NewGuid();
-                    var competence = new Competence
+                    foreach (var oc in dto.OffreCompetences)
                     {
-                        Id = newCompetenceId,
-                        Nom = ocDTO.Competence.Nom,
-                        Description = ocDTO.Competence.Description,
-                     //DateModification= ocDTO.Competence.DateModification,
-                        HardSkills = ocDTO.Competence.HardSkills,
-                        SoftSkills = ocDTO.Competence.SoftSkills
-                    };
+                        if (oc?.Competence == null || string.IsNullOrWhiteSpace(oc.Competence.Nom))
+                        {
+                            continue;
+                        }
 
-                    _context.Competences.Add(competence);
+                        var existing = await _context.Competences
+                            .FirstOrDefaultAsync(c => c.Nom.ToLower() == oc.Competence.Nom.ToLower());
 
-                    offreEmploi.OffreCompetences.Add(new OffreCompetences
-                    {
-                        IdOffreEmploi = newOffreId,
-                        IdCompetence = newCompetenceId,
-                        NiveauRequis = ocDTO.NiveauRequis
-                    });
+                        Guid competenceId;
+                        if (existing != null)
+                        {
+                            competenceId = existing.Id;
+                        }
+                        else
+                        {
+                            var newCompetence = new Competence
+                            {
+                                Id = Guid.NewGuid(),
+                                Nom = oc.Competence.Nom,
+                                Description = oc.Competence.Description,
+                                estTechnique = oc.Competence.EstTechnique,
+                                estSoftSkill = oc.Competence.EstSoftSkill,
+                                dateAjout = DateTime.UtcNow,
+                                DateModification = DateTime.UtcNow
+                            };
+                            _context.Competences.Add(newCompetence);
+                            competenceId = newCompetence.Id;
+                        }
+
+                        offre.OffreCompetences.Add(new OffreCompetences
+                        {
+                            IdOffreEmploi = offre.IdOffreEmploi,
+                            IdCompetence = competenceId,
+                            NiveauRequis = oc.NiveauRequis
+                        });
+                    }
                 }
 
-                _context.OffresEmploi.Add(offreEmploi);
+                _context.OffresEmploi.Add(offre);
                 await _context.SaveChangesAsync();
 
-                // Prepare response DTO
-                offreEmploiDTO.IdOffreEmploi = newOffreId;
-                foreach (var oc in offreEmploiDTO.OffreCompetences)
+                return CreatedAtAction(nameof(GetOffreEmploi), new { id = offre.IdOffreEmploi }, new
                 {
-                    oc.IdOffreEmploi = newOffreId;
-                    oc.Competence.Id = offreEmploi.OffreCompetences.First(c => c.NiveauRequis == oc.NiveauRequis).IdCompetence;
-                }
-
-                return CreatedAtAction(nameof(GetOffreEmploi), new { id = newOffreId }, new
-                {
-                    message = "L'offre d'emploi a été créée avec succès.",
-                    offreEmploi = offreEmploiDTO
+                    success = true,
+                    message = "Offre créée avec succès.",
+                    data = new { id = offre.IdOffreEmploi }
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Une erreur est survenue.", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Erreur lors de la création.", detail = ex.Message });
             }
-        }
-        // GET: api/OffreEmplois/{id}
-        [HttpGet("{id}")]
-        [AllowAnonymous]
-        public async Task<ActionResult<object>> GetOffreEmploi(Guid id)
-        {
-            var offreEmploi = await _context.OffresEmploi
-                .Include(o => o.OffreCompetences)
-                .ThenInclude(oc => oc.Competence) // Ajouter cette ligne pour charger les détails de Competence
-                .FirstOrDefaultAsync(o => o.IdOffreEmploi == id);
-
-            if (offreEmploi == null)
-            {
-                return NotFound(new { message = "L'offre d'emploi demandée n'existe pas." });
-            }
-
-            var offreEmploiDTO = new OffreEmploiDTO
-            {
-                IdOffreEmploi = offreEmploi.IdOffreEmploi,
-                Titre = offreEmploi.Titre,
-                Specialite = offreEmploi.specialite,
-                Description = offreEmploi.Description,
-                DatePublication = offreEmploi.DatePublication,
-                DateExpiration = offreEmploi.DateExpiration,
-                Salaire = offreEmploi.Salaire,
-                TypeContrat = offreEmploi.TypeContrat,
-                Statut = offreEmploi.Statut,
-                ModeTravail = offreEmploi.ModeTravail,
-                NombrePostes = offreEmploi.NombrePostes,
-                Avantages = offreEmploi.Avantages,
-                NiveauExperienceRequis = offreEmploi.NiveauExperienceRequis,
-                DiplomeRequis = offreEmploi.DiplomeRequis,
-                IdRecruteur = offreEmploi.IdRecruteur,
-                IdFiliale = offreEmploi.IdFiliale,
-                OffreCompetences = offreEmploi.OffreCompetences.Select(oc => new OffreCompetenceDTO
-                {
-                    IdOffreEmploi = oc.IdOffreEmploi,
-                    IdCompetence = oc.IdCompetence,
-                    NiveauRequis = oc.NiveauRequis,
-                    Competence = new CompetenceDTO // Remplir les détails de la compétence
-                    {
-                        Id = oc.Competence.Id,
-                        Nom = oc.Competence.Nom,
-                        Description = oc.Competence.Description,
-                        DateModification = oc.Competence.DateModification,
-                        HardSkills = oc.Competence.HardSkills,
-                        SoftSkills = oc.Competence.SoftSkills
-                    }
-                }).ToList()
-            };
-
-            return Ok(new { message = "Offre d'emploi récupérée avec succès.", offreEmploi = offreEmploiDTO });
         }
 
         // PUT: api/OffreEmplois/{id}
         [HttpPut("{id}")]
         [AllowAnonymous]
 
-
-        public async Task<ActionResult<object>> UpdateOffreEmploi(Guid id, OffreEmploiDTO offreEmploiDTO)
+        public async Task<ActionResult<object>> UpdateOffreEmploi(Guid id, [FromBody] OffreEmploiDTO dto)
         {
             try
             {
-                var offreEmploi = await _context.OffresEmploi
+                if (dto == null)
+                {
+                    return BadRequest(new { success = false, message = "Données d'offre invalides." });
+                }
+
+                if (id != dto.IdOffreEmploi)
+                {
+                    return BadRequest(new { success = false, message = "L'identifiant de l'offre ne correspond pas." });
+                }
+
+                var offre = await _context.OffresEmploi
                     .Include(o => o.OffreCompetences)
                     .FirstOrDefaultAsync(o => o.IdOffreEmploi == id);
 
-                if (offreEmploi == null)
+                if (offre == null)
                 {
-                    return NotFound(new { message = "L'offre d'emploi à modifier n'existe pas." });
+                    return NotFound(new { success = false, message = "Offre non trouvée." });
                 }
 
-                // Mettre à jour les champs principaux
-                offreEmploi.specialite = offreEmploiDTO.Specialite;
-                offreEmploi.Titre = offreEmploiDTO.Titre;
-                offreEmploi.Description = offreEmploiDTO.Description;
-                offreEmploi.DateExpiration = offreEmploiDTO.DateExpiration;
-                offreEmploi.Salaire = offreEmploiDTO.Salaire;
-                offreEmploi.TypeContrat = offreEmploiDTO.TypeContrat;
-                offreEmploi.Statut = offreEmploiDTO.Statut;
-                offreEmploi.NiveauExperienceRequis = offreEmploiDTO.NiveauExperienceRequis;
-                offreEmploi.DiplomeRequis = offreEmploiDTO.DiplomeRequis;
-                offreEmploi.IdRecruteur = offreEmploiDTO.IdRecruteur;
-                offreEmploi.IdFiliale = offreEmploiDTO.IdFiliale;
-                // Ajouter les champs manquants
-                offreEmploi.ModeTravail = offreEmploiDTO.ModeTravail;
-                offreEmploi.Avantages = offreEmploiDTO.Avantages;
-                offreEmploi.NombrePostes = offreEmploiDTO.NombrePostes;
-
-                // Supprimer les anciennes compétences
-                _context.OffreCompetences.RemoveRange(offreEmploi.OffreCompetences);
-
-                // Ajouter les nouvelles compétences
-                foreach (var oc in offreEmploiDTO.OffreCompetences)
+                // Vérification Recruteur & Role
+                var recruteur = await _userManager.FindByIdAsync(dto.IdRecruteur.ToString());
+                if (recruteur == null)
                 {
-                    offreEmploi.OffreCompetences.Add(new OffreCompetences
+                    return BadRequest(new { success = false, message = "Le recruteur n'existe pas." });
+                }
+
+                var isRecruteur = await _userManager.IsInRoleAsync(recruteur, "Recruteur");
+                if (!isRecruteur)
+                {
+                    return StatusCode(403, new { success = false, message = "Seuls les utilisateurs avec le rôle 'Recruteur' peuvent modifier des offres d'emploi." });
+                }
+
+                // Vérification Filiale
+                if (!await _context.Filiales.AnyAsync(f => f.IdFiliale == dto.IdFiliale))
+                {
+                    return BadRequest(new { success = false, message = "La filiale n'existe pas." });
+                }
+
+                // Mise à jour des champs de l'offre
+                offre.Titre = dto.Titre;
+                offre.Specialite = dto.Specialite;
+                offre.Description = dto.Description;
+                offre.DiplomeRequis = dto.DiplomeRequis;
+                offre.NiveauExperienceRequis = dto.NiveauExperienceRequis;
+                offre.Salaire = dto.Salaire;
+                offre.DateExpiration = dto.DateExpiration;
+                offre.TypeContrat = dto.TypeContrat;
+                offre.Statut = dto.Statut;
+                offre.ModeTravail = dto.ModeTravail;
+                offre.NombrePostes = dto.NombrePostes;
+                offre.Avantages = dto.Avantages;
+                offre.IdRecruteur = dto.IdRecruteur;
+                offre.IdFiliale = dto.IdFiliale;
+
+                // Suppression des anciennes compétences
+                _context.OffreCompetences.RemoveRange(offre.OffreCompetences);
+                offre.OffreCompetences.Clear(); // Ensure collection is cleared
+
+                // Ajout des nouvelles compétences
+                if (dto.OffreCompetences != null && dto.OffreCompetences.Any())
+                {
+                    foreach (var oc in dto.OffreCompetences)
                     {
-                        IdOffreEmploi = id,
-                        IdCompetence = oc.IdCompetence,
-                        NiveauRequis = oc.NiveauRequis
-                    });
+                        if (oc?.Competence == null || string.IsNullOrWhiteSpace(oc.Competence.Nom))
+                        {
+                            continue;
+                        }
+
+                        var existing = await _context.Competences
+                            .FirstOrDefaultAsync(c => c.Nom.ToLower() == oc.Competence.Nom.ToLower());
+
+                        Guid competenceId;
+                        if (existing != null)
+                        {
+                            competenceId = existing.Id;
+                        }
+                        else
+                        {
+                            var newCompetence = new Competence
+                            {
+                                Id = Guid.NewGuid(),
+                                Nom = oc.Competence.Nom,
+                                Description = oc.Competence.Description,
+                                estTechnique = oc.Competence.EstTechnique,
+                                estSoftSkill = oc.Competence.EstSoftSkill,
+                                dateAjout = DateTime.UtcNow,
+                                DateModification = DateTime.UtcNow
+                            };
+                            _context.Competences.Add(newCompetence);
+                            competenceId = newCompetence.Id;
+                        }
+
+                        offre.OffreCompetences.Add(new OffreCompetences
+                        {
+                            IdOffreEmploi = offre.IdOffreEmploi,
+                            IdCompetence = competenceId,
+                            NiveauRequis = oc.NiveauRequis
+                        });
+                    }
                 }
 
                 await _context.SaveChangesAsync();
-                return Ok(new { message = "L'offre d'emploi a été modifiée avec succès.", offreEmploi = offreEmploiDTO });
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Offre d'emploi mise à jour avec succès.",
+                    data = new { id = offre.IdOffreEmploi }
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Une erreur est survenue.", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Erreur lors de la mise à jour.", detail = ex.Message });
             }
-        }        // DELETE: api/OffreEmplois/{id}
+        }
+
+        // DELETE: api/OffreEmplois/{id}
         [HttpDelete("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult<object>> DeleteOffreEmploi(Guid id)
         {
             try
             {
-                var offreEmploi = await _context.OffresEmploi
-                    .Include(o => o.OffreCompetences)
-                    .FirstOrDefaultAsync(o => o.IdOffreEmploi == id);
-
+                var offreEmploi = await _context.OffresEmploi.FindAsync(id);
                 if (offreEmploi == null)
                 {
-                    return NotFound(new { message = "L'offre d'emploi spécifiée n'existe pas." });
+                    return NotFound(new { success = false, message = "Offre non trouvée." });
                 }
 
-                _context.OffreCompetences.RemoveRange(offreEmploi.OffreCompetences);
                 _context.OffresEmploi.Remove(offreEmploi);
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Offre d'emploi supprimée avec succès." });
+                return Ok(new
+                {
+                    success = true,
+                    message = "Offre supprimée avec succès."
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Une erreur est survenue.", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Erreur lors de la suppression.", detail = ex.Message });
             }
         }
 
-
-        //GET: api/OffreEmplois/search
-        [HttpGet("search")]
+        // GET: api/OffreEmplois/Recruteurs
+        [HttpGet("Recruteurs")]
         [AllowAnonymous]
-        public async Task<ActionResult<object>> Search(
-    [FromQuery] string titre = null,
-    [FromQuery] string specialite = null,
-    [FromQuery] string typeContrat = null,
-    [FromQuery] string statut = null,
-    [FromQuery] string modeTravail = null) // Ajout de modeTravail
+        public async Task<ActionResult<object>> GetRecruteurIds()
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(titre) &&
-                    string.IsNullOrWhiteSpace(specialite) &&
-                    string.IsNullOrWhiteSpace(typeContrat) &&
-                    string.IsNullOrWhiteSpace(statut) &&
-                    string.IsNullOrWhiteSpace(modeTravail))
+                // Récupérer tous les utilisateurs avec le rôle "Recruteur"
+                var recruteurs = await _userManager.GetUsersInRoleAsync("Recruteur");
+                // Extraire uniquement les IDs et les noms complets
+                var recruteurData = recruteurs.Select(r => new
                 {
-                    return BadRequest(new { message = "Au moins un critère de recherche (titre, spécialité, type de contrat, statut ou mode de travail) doit être fourni." });
-                }
-
-                var query = _context.OffresEmploi
-                    .Include(o => o.OffreCompetences)
-                    .ThenInclude(oc => oc.Competence)
-                    .AsQueryable();
-
-                if (!string.IsNullOrWhiteSpace(titre))
-                {
-                    query = query.Where(o => o.Titre.ToLower().Contains(titre.ToLower()));
-                }
-
-                if (!string.IsNullOrWhiteSpace(specialite))
-                {
-                    query = query.Where(o => o.specialite.ToLower().Contains(specialite.ToLower()));
-                }
-
-                if (!string.IsNullOrWhiteSpace(typeContrat))
-                {
-                    if (!Enum.TryParse<TypeContratEnum>(typeContrat, true, out var typeContratEnum))
-                    {
-                        return BadRequest(new { message = "TypeContrat invalide." });
-                    }
-                    query = query.Where(o => o.TypeContrat == (int)typeContratEnum);
-                }
-
-                if (!string.IsNullOrWhiteSpace(statut))
-                {
-                    if (!Enum.TryParse<StatutOffre>(statut, true, out var statutEnum))
-                    {
-                        return BadRequest(new { message = "Statut invalide." });
-                    }
-                    query = query.Where(o => o.Statut == (int)statutEnum);
-                }
-
-                if (!string.IsNullOrWhiteSpace(modeTravail))
-                {
-                    if (!Enum.TryParse<ModeTravail>(modeTravail, true, out var modeTravailEnum))
-                    {
-                        return BadRequest(new { message = $"ModeTravail invalide. Valeurs acceptées : {string.Join(", ", Enum.GetNames(typeof(ModeTravail)))}" });
-                    }
-                    query = query.Where(o => o.ModeTravail == (int)modeTravailEnum);
-                }
-
-                var offresEmploi = await query.ToListAsync();
-
-                if (!offresEmploi.Any())
-                {
-                    return NotFound(new { message = "Aucune offre trouvée avec ces critères." });
-                }
-
-                var offresEmploiDTO = offresEmploi.Select(offreEmploi => new OffreEmploiDTO
-                {
-                    IdOffreEmploi = offreEmploi.IdOffreEmploi,
-                    Specialite = offreEmploi.specialite,
-                    Titre = offreEmploi.Titre,
-                    Description = offreEmploi.Description,
-                    DatePublication = offreEmploi.DatePublication,
-                    DateExpiration = offreEmploi.DateExpiration,
-                    Salaire = (decimal)offreEmploi.Salaire,
-                    TypeContrat = offreEmploi.TypeContrat,
-                    Statut = offreEmploi.Statut,
-                    ModeTravail = offreEmploi.ModeTravail,
-                    NombrePostes=offreEmploi.NombrePostes,
-                    NiveauExperienceRequis = offreEmploi.NiveauExperienceRequis,
-                    DiplomeRequis = offreEmploi.DiplomeRequis,
-                    IdRecruteur = offreEmploi.IdRecruteur,
-                    IdFiliale = offreEmploi.IdFiliale,
-                    OffreCompetences = offreEmploi.OffreCompetences?.Select(oc => new OffreCompetenceDTO
-                    {
-                        IdOffreEmploi = oc.IdOffreEmploi,
-                        IdCompetence = oc.IdCompetence,
-                        NiveauRequis = oc.NiveauRequis,
-                        Competence = new CompetenceDTO
-                        {
-                            Id = oc.Competence.Id,
-                            Nom = oc.Competence.Nom,
-                            Description = oc.Competence.Description,
-                            DateModification = oc.Competence.DateModification,
-                            HardSkills = oc.Competence.HardSkills,
-                            SoftSkills = oc.Competence.SoftSkills
-                        }
-                    }).ToList() ?? new List<OffreCompetenceDTO>()
+                    id = r.Id,
+                    fullName = r.FullName // Assurez-vous que FullName est défini dans votre modèle AppUser
                 }).ToList();
-
-                return Ok(new { message = "Offres d'emploi trouvées.", offresEmploi = offresEmploiDTO });
+                return Ok(new
+                {
+                    success = true,
+                    message = "Liste des recruteurs récupérée avec succès.",
+                    data = recruteurData
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Une erreur est survenue lors de la recherche.", detail = ex.Message });
+                return StatusCode(500, new { success = false, message = "Une erreur est survenue.", detail = ex.Message });
             }
-        }
-
-
-        private bool OffreEmploiExists(Guid id)
-        {
-            return _context.OffresEmploi.Any(e => e.IdOffreEmploi == id);
         }
     }
 }
-
 
 
 

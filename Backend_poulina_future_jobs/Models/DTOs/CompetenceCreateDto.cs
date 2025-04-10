@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Backend_poulina_future_jobs.Models;
 
 namespace Backend_poulina_future_jobs.Models.DTOs
 {
-    public class CompetenceUpdateDTO
+    public class CompetenceCreateDto
     {
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "Le nom de la compétence est obligatoire")]
         [MaxLength(50, ErrorMessage = "Le nom ne doit pas dépasser 50 caractères")]
         public string Nom { get; set; }
@@ -22,5 +23,4 @@ namespace Backend_poulina_future_jobs.Models.DTOs
         public bool EstSoftSkill { get; set; }
 
     }
-
 }

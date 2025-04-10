@@ -30,7 +30,7 @@ namespace Backend_poulina_future_jobs.Models.DTOs
 
         [Range(0, double.MaxValue, ErrorMessage = "Le salaire doit être positif.")]
         public decimal Salaire { get; set; }
-
+        //public string RecruteurNom { get; set; }
         public DateTime DatePublication { get; set; } = DateTime.UtcNow;
 
         public DateTime? DateExpiration { get; set; }

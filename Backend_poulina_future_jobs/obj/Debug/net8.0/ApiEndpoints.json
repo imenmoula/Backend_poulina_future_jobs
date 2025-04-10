@@ -114,6 +114,16 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.AppUsersController",
+    "Method": "GetRecruteurs",
+    "RelativePath": "api/AppUsers/recruteurs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.AppUsersController",
     "Method": "GetUsersByRole",
     "RelativePath": "api/AppUsers/role/{roleName}",
     "HttpMethod": "GET",
@@ -154,43 +164,23 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Models.DTOs.CompetenceDTO, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
-    "Method": "CreateCompetence",
+    "Method": "PostCompetence",
     "RelativePath": "api/Competences",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "competenceDTO",
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceDTO",
+        "Name": "competenceDto",
+        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceCreateDto",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
@@ -206,21 +196,11 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
-    "Method": "UpdateCompetence",
+    "Method": "PutCompetence",
     "RelativePath": "api/Competences/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -232,8 +212,8 @@
         "IsRequired": true
       },
       {
-        "Name": "competenceDTO",
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceDTO",
+        "Name": "competenceDto",
+        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceUpdateDTO",
         "IsRequired": true
       }
     ],
@@ -251,6 +231,22 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
+    "Method": "SearchCompetences",
+    "RelativePath": "api/Competences/search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "term",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -718,7 +714,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "offreEmploiDTO",
+        "Name": "dto",
         "Type": "Backend_poulina_future_jobs.Models.DTOs.OffreEmploiDTO",
         "IsRequired": true
       }
@@ -755,7 +751,7 @@
         "IsRequired": true
       },
       {
-        "Name": "offreEmploiDTO",
+        "Name": "dto",
         "Type": "Backend_poulina_future_jobs.Models.DTOs.OffreEmploiDTO",
         "IsRequired": true
       }
@@ -780,38 +776,12 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "Search",
-    "RelativePath": "api/OffreEmplois/search",
+    "Method": "GetRecruteurIds",
+    "RelativePath": "api/OffreEmplois/Recruteurs",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "titre",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "specialite",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "typeContrat",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "statut",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "modeTravail",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

@@ -185,6 +185,18 @@
         }
       }
     },
+    "/api/AppUsers/recruteurs": {
+      "get": {
+        "tags": [
+          "AppUsers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/AdminOnly": {
       "get": {
         "tags": [
@@ -583,33 +595,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CompetenceDTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CompetenceDTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CompetenceDTO"
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -621,41 +607,24 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceDTO"
+                "$ref": "#/components/schemas/CompetenceCreateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceDTO"
+                "$ref": "#/components/schemas/CompetenceCreateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceDTO"
+                "$ref": "#/components/schemas/CompetenceCreateDto"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompetenceDTO"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompetenceDTO"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompetenceDTO"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -678,24 +647,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompetenceDTO"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompetenceDTO"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompetenceDTO"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -718,17 +670,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceDTO"
+                "$ref": "#/components/schemas/CompetenceUpdateDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceDTO"
+                "$ref": "#/components/schemas/CompetenceUpdateDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceDTO"
+                "$ref": "#/components/schemas/CompetenceUpdateDTO"
               }
             }
           }
@@ -751,6 +703,27 @@
             "schema": {
               "type": "string",
               "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Competences/search": {
+      "get": {
+        "tags": [
+          "Competences"
+        ],
+        "parameters": [
+          {
+            "name": "term",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -1345,47 +1318,10 @@
         }
       }
     },
-    "/api/OffreEmplois/search": {
+    "/api/OffreEmplois/Recruteurs": {
       "get": {
         "tags": [
           "OffreEmplois"
-        ],
-        "parameters": [
-          {
-            "name": "titre",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "specialite",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "typeContrat",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "statut",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "modeTravail",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -1889,23 +1825,19 @@
             "minLength": 1,
             "type": "string"
           },
+          "dateAjout": {
+            "type": "string",
+            "format": "date-time"
+          },
           "dateModification": {
             "type": "string",
             "format": "date-time"
           },
-          "hardSkills": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HardSkillType"
-            },
-            "nullable": true
+          "estTechnique": {
+            "type": "boolean"
           },
-          "softSkills": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SoftSkillType"
-            },
-            "nullable": true
+          "estSoftSkill": {
+            "type": "boolean"
           },
           "offreCompetences": {
             "type": "array",
@@ -1917,12 +1849,40 @@
         },
         "additionalProperties": false
       },
-      "CompetenceDTO": {
+      "CompetenceCreateDto": {
         "required": [
           "description",
-          "hardSkills",
-          "nom",
-          "softSkills"
+          "estSoftSkill",
+          "estTechnique",
+          "nom"
+        ],
+        "type": "object",
+        "properties": {
+          "nom": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "estTechnique": {
+            "type": "boolean"
+          },
+          "estSoftSkill": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetenceUpdateDTO": {
+        "required": [
+          "description",
+          "estSoftSkill",
+          "estTechnique",
+          "nom"
         ],
         "type": "object",
         "properties": {
@@ -1940,21 +1900,11 @@
             "minLength": 1,
             "type": "string"
           },
-          "dateModification": {
-            "type": "string",
-            "format": "date-time"
+          "estTechnique": {
+            "type": "boolean"
           },
-          "hardSkills": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HardSkillType"
-            }
-          },
-          "softSkills": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SoftSkillType"
-            }
+          "estSoftSkill": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -2239,48 +2189,6 @@
         },
         "additionalProperties": false
       },
-      "HardSkillType": {
-        "enum": [
-          "Csharp",
-          "DotNetCore",
-          "Java",
-          "Python",
-          "JavaScript",
-          "TypeScript",
-          "React",
-          "Angular",
-          "VueJS",
-          "HTML",
-          "CSS",
-          "SQL",
-          "NoSQL",
-          "Git",
-          "Docker",
-          "Kubernetes",
-          "DevOps",
-          "CloudComputing",
-          "MachineLearning",
-          "DataScience",
-          "CyberSecurity",
-          "UIUXDesign",
-          "MobileDevelopment",
-          "GameDevelopment",
-          "Blockchain",
-          "InternetOfThings",
-          "BigData",
-          "VirtualReality",
-          "AugmentedReality",
-          "Pandas",
-          "PowerBI",
-          "Scrum",
-          "Agile",
-          "ProjectManagement",
-          "SoftwareTesting",
-          "ExpressJS",
-          "NodeJS"
-        ],
-        "type": "string"
-      },
       "HttpValidationProblemDetails": {
         "type": "object",
         "properties": {
@@ -2407,14 +2315,16 @@
         "properties": {
           "idOffreEmploi": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           },
           "idCompetence": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           },
           "competence": {
-            "$ref": "#/components/schemas/CompetenceDTO"
+            "$ref": "#/components/schemas/CompetenceCreateDto"
           },
           "niveauRequis": {
             "$ref": "#/components/schemas/NiveauRequisType"
@@ -2721,43 +2631,6 @@
           }
         },
         "additionalProperties": false
-      },
-      "SoftSkillType": {
-        "enum": [
-          "Discipline",
-          "EcouteActive",
-          "Communication",
-          "TravailEquipe",
-          "GestionTemps",
-          "Adaptabilite",
-          "EspritCritique",
-          "Empathie",
-          "Creativite",
-          "Leadership",
-          "GestionConflits",
-          "Negociation",
-          "PriseDecisions",
-          "GestionStress",
-          "SensibiliteCulturelle",
-          "IntelligenceEmotionnelle",
-          "GestionChangement",
-          "VisionStrategique",
-          "OrientationResultats",
-          "GestionProjets",
-          "Innovation",
-          "Responsabilite",
-          "Autonomie",
-          "Curiosite",
-          "EspritAnalytique",
-          "SensibiliteClient",
-          "GestionRisques",
-          "GestionQualite",
-          "GestionConnaissances",
-          "AttentionAuxDetails",
-          "GestionDesPerformances",
-          "Collaboration"
-        ],
-        "type": "string"
       },
       "TwoFactorRequest": {
         "type": "object",

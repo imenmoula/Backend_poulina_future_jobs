@@ -35,7 +35,7 @@ namespace Backend_poulina_future_jobs.Models
         [Key]
         public Guid IdOffreEmploi { get; set; } = Guid.NewGuid();
 
-        public string specialite { get; set; } = string.Empty;
+        public string Specialite { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Le champ 'Titre' est obligatoire.")]
         [MaxLength(200, ErrorMessage = "Le titre ne peut pas dépasser 200 caractères.")]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
@@ -24,136 +25,154 @@ namespace Backend_poulina_future_jobs.Controllers
         // GET: api/Competences
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<CompetenceDTO>>> GetCompetences()
+        public async Task<ActionResult<object>> GetCompetences()
         {
             var competences = await _context.Competences.ToListAsync();
-            var competencesDTO = competences.Select(c => new CompetenceDTO
+            return new
             {
-                Id = c.Id,
-                Nom = c.Nom,
-                Description = c.Description,
-                DateModification = c.DateModification,
-                HardSkills = c.HardSkills,
-                SoftSkills = c.SoftSkills
-            }).ToList();
-
-            return Ok(competencesDTO);
+                success = true,
+                message = "Compétences récupérées avec succès",
+                data = competences,
+                count = competences.Count
+            };
         }
 
-        // GET: api/Competences/{id}
+        // GET: api/Competenc
+        // es/5
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<CompetenceDTO>> GetCompetence(Guid id)
+        public async Task<ActionResult<object>> GetCompetence(Guid id)
         {
+            var competence = await _context.Competences.FindAsync(id);
+
+            if (competence == null)
+            {
+                return NotFound(new { success = false, message = $"Compétence avec l'ID {id} non trouvée" });
+            }
+
+            return new
+            {
+                success = true,
+                message = "Compétence récupérée avec succès",
+                data = competence
+            };
+        }
+        // PUT: api/Competences/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PutCompetence(Guid id, CompetenceUpdateDTO competenceDto)
+        {
+            if (id != competenceDto.Id)
+            {
+                return BadRequest(new { success = false, message = "L'ID fourni ne correspond pas à l'ID de la compétence" });
+            }
+
             var competence = await _context.Competences.FindAsync(id);
             if (competence == null)
             {
-                return NotFound(new { message = "Compétence non trouvée." });
+                return NotFound(new { success = false, message = $"Compétence avec l'ID {id} non trouvée" });
             }
 
-            var competenceDTO = new CompetenceDTO
-            {
-                Id = competence.Id,
-                Nom = competence.Nom,
-                Description = competence.Description,
-                DateModification = competence.DateModification,
-                HardSkills = competence.HardSkills,
-                SoftSkills = competence.SoftSkills
-            };
+            // Mettre à jour les propriétés de la compétence existante
+            competence.Nom = competenceDto.Nom;
+            competence.Description = competenceDto.Description;
+            competence.estTechnique = competenceDto.EstTechnique;
+            competence.estSoftSkill = competenceDto.EstSoftSkill;
+            competence.DateModification = DateTime.UtcNow;
 
-            return Ok(competenceDTO);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok(new { success = true, message = "Compétence mise à jour avec succès", data = competence });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CompetenceExists(id))
+                {
+                    return NotFound(new { success = false, message = $"Compétence avec l'ID {id} non trouvée" });
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
+
         // POST: api/Competences
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<CompetenceDTO>> CreateCompetence(CompetenceDTO competenceDTO)
+        public async Task<ActionResult<object>> PostCompetence(CompetenceCreateDto competenceDto)
         {
-            // Valider HardSkills
-            if (competenceDTO.HardSkills == null || !competenceDTO.HardSkills.All(hs => Enum.IsDefined(typeof(HardSkillType), hs)))
-            {
-                return BadRequest(new { message = "Une ou plusieurs valeurs de HardSkills sont invalides." });
-            }
-
-            // Valider SoftSkills
-            if (competenceDTO.SoftSkills == null || !competenceDTO.SoftSkills.All(ss => Enum.IsDefined(typeof(SoftSkillType), ss)))
-            {
-                return BadRequest(new { message = "Une ou plusieurs valeurs de SoftSkills sont invalides." });
-            }
-
+            // Créer une nouvelle instance de Competence à partir du DTO
             var competence = new Competence
             {
                 Id = Guid.NewGuid(),
-                Nom = competenceDTO.Nom,
-                Description = competenceDTO.Description,
-                DateModification = DateTime.UtcNow,
-                HardSkills = competenceDTO.HardSkills,
-                SoftSkills = competenceDTO.SoftSkills
+                Nom = competenceDto.Nom,
+                Description = competenceDto.Description,
+                estTechnique = competenceDto.EstTechnique,
+                estSoftSkill = competenceDto.EstSoftSkill,
+                dateAjout = DateTime.UtcNow,
+                DateModification = DateTime.UtcNow
             };
 
             _context.Competences.Add(competence);
             await _context.SaveChangesAsync();
 
-            competenceDTO.Id = competence.Id;
-            competenceDTO.DateModification = competence.DateModification;
-
-            return CreatedAtAction(nameof(GetCompetence), new { id = competence.Id }, competenceDTO);
+            return CreatedAtAction("GetCompetence",
+                new { id = competence.Id },
+                new { success = true, message = "Compétence créée avec succès", data = competence });
         }
 
-        // PUT: api/Competences/{id}
-        [HttpPut("{id}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> UpdateCompetence(Guid id, CompetenceDTO competenceDTO)
-        {
-            var competence = await _context.Competences.FindAsync(id);
-            if (competence == null)
-            {
-                return NotFound(new { message = "Compétence non trouvée." });
-            }
-
-            // Valider HardSkills
-            if (competenceDTO.HardSkills == null || !competenceDTO.HardSkills.All(hs => Enum.IsDefined(typeof(HardSkillType), hs)))
-            {
-                return BadRequest(new { message = "Une ou plusieurs valeurs de HardSkills sont invalides." });
-            }
-
-            // Valider SoftSkills
-            if (competenceDTO.SoftSkills == null || !competenceDTO.SoftSkills.All(ss => Enum.IsDefined(typeof(SoftSkillType), ss)))
-            {
-                return BadRequest(new { message = "Une ou plusieurs valeurs de SoftSkills sont invalides." });
-            }
-
-            competence.Nom = competenceDTO.Nom;
-            competence.Description = competenceDTO.Description;
-            competence.DateModification = DateTime.UtcNow;
-            competence.HardSkills = competenceDTO.HardSkills;
-            competence.SoftSkills = competenceDTO.SoftSkills;
-
-            _context.Entry(competence).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Compétence mise à jour avec succès." });
-        }
-
-        // DELETE: api/Competences/{id}
+        // DELETE: api/Competences/5
         [HttpDelete("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteCompetence(Guid id)
         {
-            var competence = await _context.Competences
-                .Include(c => c.OffreCompetences)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
+            var competence = await _context.Competences.FindAsync(id);
             if (competence == null)
             {
-                return NotFound(new { message = "Compétence non trouvée." });
+                return NotFound(new { success = false, message = $"Compétence avec l'ID {id} non trouvée" });
             }
 
-            _context.OffreCompetences.RemoveRange(competence.OffreCompetences);
             _context.Competences.Remove(competence);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Compétence supprimée avec succès." });
+            return Ok(new { success = true, message = "Compétence supprimée avec succès" });
+        }
+       
+            [HttpGet("search")]
+        [AllowAnonymous]
+            public async Task<IActionResult> SearchCompetences([FromQuery] string term)
+            {
+                if (string.IsNullOrWhiteSpace(term))
+                {
+                    return BadRequest(new { message = "Le terme de recherche est requis." });
+                }
+
+                var results = await _context.Competences
+                    .Where(c => c.Nom.ToLower().Contains(term.ToLower()))
+                    .Select(c => new
+                    {
+                        c.Id,
+                        c.Nom,
+                        c.Description,
+                        c.estTechnique,
+                        c.estSoftSkill
+                    })
+                    .ToListAsync();
+
+                return Ok(results);
+            }
+        
+
+
+
+        private bool CompetenceExists(Guid id)
+        {
+            return _context.Competences.Any(e => e.Id == id);
         }
     }
 }
