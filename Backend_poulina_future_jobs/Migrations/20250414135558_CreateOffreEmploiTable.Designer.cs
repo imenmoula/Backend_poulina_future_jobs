@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250414135558_CreateOffreEmploiTable")]
+    partial class CreateOffreEmploiTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,11 +36,13 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Nom")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("dateAjout")
                         .HasColumnType("datetime2");
@@ -50,7 +55,7 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Competences", (string)null);
+                    b.ToTable("Competences");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Departement", b =>
@@ -150,14 +155,16 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<Guid>("IdCompetence")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("NiveauRequis")
-                        .HasColumnType("int");
+                    b.Property<string>("NiveauRequis")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("IdOffreEmploi", "IdCompetence");
 
                     b.HasIndex("IdCompetence");
 
-                    b.ToTable("OffreCompetences", (string)null);
+                    b.ToTable("OffreCompetences");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreEmploi", b =>
@@ -179,11 +186,13 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("DiplomeRequis")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid>("IdFiliale")
                         .HasColumnType("uniqueidentifier");
@@ -192,21 +201,18 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ModeTravail")
+                        .HasMaxLength(20)
                         .HasColumnType("int");
 
                     b.Property<string>("NiveauExperienceRequis")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("NombrePostes")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("SalaireMax")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("SalaireMin")
-                        .HasPrecision(18, 2)
+                    b.Property<decimal>("Salaire")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Specialite")
@@ -214,13 +220,16 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Statut")
+                        .HasMaxLength(20)
                         .HasColumnType("int");
 
                     b.Property<string>("Titre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("TypeContrat")
+                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.HasKey("IdOffreEmploi");
@@ -229,7 +238,7 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.HasIndex("IdRecruteur");
 
-                    b.ToTable("OffresEmploi", (string)null);
+                    b.ToTable("OffresEmploi");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.RefreshToken", b =>

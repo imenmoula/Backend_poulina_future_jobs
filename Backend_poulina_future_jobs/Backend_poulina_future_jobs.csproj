@@ -25,6 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Resssources\Images\" />
-  </ItemGroup>
+  </ItemGroup>  
 
 </Project>

@@ -1980,6 +1980,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\Poulina-Group-Holding_9fd6543d-ab27-4720-aa23-4a266368bd12.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>pr2p46t1f1</Fingerprint>
+      <Integrity>u7kxlCmKJhuZ1dvdrWH1z8gmXCO95CaCVQrxZdLUW/s=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\tunisie-poulina-agromed-wmc_b7b42c57-881e-495f-8eb5-8d762d5f7f6f.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>Backend_poulina_future_jobs</SourceId>

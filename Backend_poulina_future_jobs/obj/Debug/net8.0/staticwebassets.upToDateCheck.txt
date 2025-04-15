@@ -108,4 +108,5 @@ wwwroot\uploads\pg_99297112-71c8-4afd-9b2a-4a133679dc2d.webp
 wwwroot\uploads\po0_483e7b39-45f7-42e0-b9bc-e89305fff901.jpg
 wwwroot\uploads\po0_8bbcdd86-6424-4272-a0be-8adb5febfa47.jpg
 wwwroot\uploads\Poulina-Group-Holding_9fd6543d-ab27-4720-aa23-4a266368bd12.jpg
+wwwroot\uploads\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg
 wwwroot\uploads\tunisie-poulina-agromed-wmc_b7b42c57-881e-495f-8eb5-8d762d5f7f6f.jpg

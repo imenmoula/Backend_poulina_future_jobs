@@ -1318,10 +1318,93 @@
         }
       }
     },
-    "/api/OffreEmplois/Recruteurs": {
+    "/api/OffreEmplois/statut/{statut}": {
       "get": {
         "tags": [
           "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "statut",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/StatutOffre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/filiale/{idFiliale}": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "idFiliale",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/search": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "titre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statut",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/StatutOffre"
+            }
+          },
+          {
+            "name": "idFiliale",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "modeTravail",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ModeTravail"
+            }
+          },
+          {
+            "name": "typeContrat",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TypeContratEnum"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -1816,12 +1899,10 @@
             "format": "uuid"
           },
           "nom": {
-            "maxLength": 50,
             "minLength": 1,
             "type": "string"
           },
           "description": {
-            "maxLength": 200,
             "minLength": 1,
             "type": "string"
           },
@@ -1852,19 +1933,19 @@
       "CompetenceCreateDto": {
         "required": [
           "description",
-          "estSoftSkill",
-          "estTechnique",
           "nom"
         ],
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
           "nom": {
-            "maxLength": 50,
             "minLength": 1,
             "type": "string"
           },
           "description": {
-            "maxLength": 200,
             "minLength": 1,
             "type": "string"
           },
@@ -1899,6 +1980,10 @@
             "maxLength": 200,
             "minLength": 1,
             "type": "string"
+          },
+          "dateModification": {
+            "type": "string",
+            "format": "date-time"
           },
           "estTechnique": {
             "type": "boolean"
@@ -2301,6 +2386,14 @@
         },
         "additionalProperties": false
       },
+      "ModeTravail": {
+        "enum": [
+          "Presentiel",
+          "Hybride",
+          "Teletravail"
+        ],
+        "type": "string"
+      },
       "NiveauRequisType": {
         "enum": [
           "Debutant",
@@ -2311,23 +2404,24 @@
         "type": "string"
       },
       "OffreCompetenceDTO": {
+        "required": [
+          "niveauRequis"
+        ],
         "type": "object",
         "properties": {
           "idOffreEmploi": {
             "type": "string",
-            "format": "uuid",
-            "nullable": true
+            "format": "uuid"
           },
           "idCompetence": {
             "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "competence": {
-            "$ref": "#/components/schemas/CompetenceCreateDto"
+            "format": "uuid"
           },
           "niveauRequis": {
             "$ref": "#/components/schemas/NiveauRequisType"
+          },
+          "competence": {
+            "$ref": "#/components/schemas/CompetenceCreateDto"
           }
         },
         "additionalProperties": false
@@ -2376,12 +2470,10 @@
             "nullable": true
           },
           "titre": {
-            "maxLength": 200,
             "minLength": 1,
             "type": "string"
           },
           "description": {
-            "maxLength": 2000,
             "minLength": 1,
             "type": "string"
           },
@@ -2394,38 +2486,32 @@
             "format": "date-time",
             "nullable": true
           },
-          "salaire": {
+          "salaireMin": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "salaireMax": {
             "minimum": 0,
             "type": "number",
             "format": "double"
           },
           "niveauExperienceRequis": {
-            "maxLength": 50,
             "type": "string",
             "nullable": true
           },
           "diplomeRequis": {
-            "maxLength": 100,
             "type": "string",
             "nullable": true
           },
           "typeContrat": {
-            "maximum": 4,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/TypeContratEnum"
           },
           "statut": {
-            "maximum": 1,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/StatutOffre"
           },
           "modeTravail": {
-            "maximum": 2,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ModeTravail"
           },
           "nombrePostes": {
             "maximum": 2147483647,
@@ -2464,12 +2550,6 @@
       "OffreEmploiDTO": {
         "required": [
           "description",
-          "diplomeRequis",
-          "idFiliale",
-          "idRecruteur",
-          "niveauExperienceRequis",
-          "nombrePostes",
-          "specialite",
           "statut",
           "titre",
           "typeContrat"
@@ -2481,34 +2561,16 @@
             "format": "uuid"
           },
           "titre": {
-            "maxLength": 200,
             "minLength": 1,
             "type": "string"
           },
           "specialite": {
-            "maxLength": 100,
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "description": {
-            "maxLength": 2000,
             "minLength": 1,
             "type": "string"
-          },
-          "diplomeRequis": {
-            "maxLength": 100,
-            "minLength": 1,
-            "type": "string"
-          },
-          "niveauExperienceRequis": {
-            "maxLength": 50,
-            "minLength": 1,
-            "type": "string"
-          },
-          "salaire": {
-            "minimum": 0,
-            "type": "number",
-            "format": "double"
           },
           "datePublication": {
             "type": "string",
@@ -2519,23 +2581,32 @@
             "format": "date-time",
             "nullable": true
           },
+          "salaireMin": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "salaireMax": {
+            "minimum": 0,
+            "type": "number",
+            "format": "double"
+          },
+          "niveauExperienceRequis": {
+            "type": "string",
+            "nullable": true
+          },
+          "diplomeRequis": {
+            "type": "string",
+            "nullable": true
+          },
           "typeContrat": {
-            "maximum": 4,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/TypeContratEnum"
           },
           "statut": {
-            "maximum": 1,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/StatutOffre"
           },
           "modeTravail": {
-            "maximum": 2,
-            "minimum": 0,
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ModeTravail"
           },
           "nombrePostes": {
             "maximum": 2147483647,
@@ -2632,6 +2703,13 @@
         },
         "additionalProperties": false
       },
+      "StatutOffre": {
+        "enum": [
+          "Ouvert",
+          "Ferme"
+        ],
+        "type": "string"
+      },
       "TwoFactorRequest": {
         "type": "object",
         "properties": {
@@ -2687,6 +2765,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "TypeContratEnum": {
+        "enum": [
+          "CDI",
+          "CDD",
+          "Freelance",
+          "Stage"
+        ],
+        "type": "string"
       },
       "UpdateDepartementDTO": {
         "required": [

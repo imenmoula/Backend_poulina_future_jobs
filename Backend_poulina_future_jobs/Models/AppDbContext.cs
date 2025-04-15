@@ -75,30 +75,44 @@ namespace Backend_poulina_future_jobs.Models
 
             // Configure StatutOffre enum to be stored as string
             modelBuilder.Entity<OffreEmploi>()
-                      .Property(o => o.Statut)
-                      .HasConversion<int>(); // Convertit StatutOffre en string
+         .Property(r => r.TypeContrat)
+         .HasColumnType("int");
 
             modelBuilder.Entity<OffreEmploi>()
-                .Property(o => o.TypeContrat)
+                .Property(o => o.Statut)
                 .HasConversion<int>();
-
-
-            modelBuilder.Entity<OffreEmploi>()
-                .Property(o => o.Salaire)
-                .HasColumnType("decimal(18,2)");
 
             modelBuilder.Entity<OffreEmploi>()
                 .Property(o => o.ModeTravail)
                 .HasConversion<int>();
 
+            modelBuilder.Entity<OffreCompetences>()
+                    .Property(o => o.NiveauRequis)
+                    .HasConversion<int>();
+
+          
             modelBuilder.Entity<OffreEmploi>()
                 .Property(o => o.NombrePostes)
                 .IsRequired()
                 .HasColumnType("int");
 
+          
+
             modelBuilder.Entity<OffreEmploi>()
-                .Property(o => o.Avantages)
-                .HasMaxLength(500);
+           .Property(o => o.Avantages)
+           .HasMaxLength(500);
+
+
+            modelBuilder.Entity<OffreEmploi>()
+     .Property(o => o.SalaireMin)
+     .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OffreEmploi>()
+                .Property(o => o.SalaireMax)
+                .HasPrecision(18, 2);
+            modelBuilder.Entity<OffreEmploi>().ToTable("OffresEmploi");
+            modelBuilder.Entity<Competence>().ToTable("Competences");
+            modelBuilder.Entity<OffreCompetences>().ToTable("OffreCompetences");
 
 
         }

@@ -13,6 +13,8 @@ namespace Backend_poulina_future_jobs.Models.DTOs
         [Required(ErrorMessage = "La description de la compétence est obligatoire")]
         [MaxLength(200, ErrorMessage = "La description ne doit pas dépasser 200 caractères")]
         public string Description { get; set; }
+        public DateTime DateModification { get; set; }
+
 
         // Type de compétence
         [Required(ErrorMessage = "Veuillez préciser s'il s'agit d'une compétence technique")]

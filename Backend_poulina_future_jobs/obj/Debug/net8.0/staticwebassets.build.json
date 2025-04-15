@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Z/slJZR37W/kjSWUL04AO/xGG+xcEqPJsghmwFIIL68=",
+  "Hash": "OA9b5rZE4La6th28UgBJXw+pmWAiJ2EHmeE+ymrvjps=",
   "Source": "Backend_poulina_future_jobs",
   "BasePath": "_content/Backend_poulina_future_jobs",
   "Mode": "Default",
@@ -2325,6 +2325,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\Poulina-Group-Holding_9fd6543d-ab27-4720-aa23-4a266368bd12.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "pr2p46t1f1",
+      "Integrity": "u7kxlCmKJhuZ1dvdrWH1z8gmXCO95CaCVQrxZdLUW/s=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg"
     },
     {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\tunisie-poulina-agromed-wmc_b7b42c57-881e-495f-8eb5-8d762d5f7f6f.jpg",
@@ -11366,6 +11387,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-pQtvJTGib5m9chcu6ssLt7Fnkw78Y/Bp03N9ZMdrqOo="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "134270"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"u7kxlCmKJhuZ1dvdrWH1z8gmXCO95CaCVQrxZdLUW/s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 14 Apr 2025 10:01:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-u7kxlCmKJhuZ1dvdrWH1z8gmXCO95CaCVQrxZdLUW/s="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.pr2p46t1f1.jpg",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "134270"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"u7kxlCmKJhuZ1dvdrWH1z8gmXCO95CaCVQrxZdLUW/s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 14 Apr 2025 10:01:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "pr2p46t1f1"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/residence-la-paix_864d780f-0a43-466a-bc45-7a874b79cdfd.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-u7kxlCmKJhuZ1dvdrWH1z8gmXCO95CaCVQrxZdLUW/s="
         }
       ]
     },

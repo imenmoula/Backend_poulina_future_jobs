@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,7 +7,6 @@ namespace Backend_poulina_future_jobs.Models
 {
     public class OffreCompetences
     {
-
         public Guid IdOffreEmploi { get; set; }
         [ForeignKey("IdOffreEmploi")]
         public virtual OffreEmploi OffreEmploi { get; set; }
@@ -15,9 +15,8 @@ namespace Backend_poulina_future_jobs.Models
         [ForeignKey("IdCompetence")]
         public virtual Competence Competence { get; set; }
 
-        // Propriété pour le niveau requis
         [Required(ErrorMessage = "Le niveau requis est obligatoire.")]
-        [EnumDataType(typeof(NiveauRequisType), ErrorMessage = "Le niveau requis doit être Débutant, Intermédiaire ou Avancé.")]
+        [EnumDataType(typeof(NiveauRequisType), ErrorMessage = "Le niveau requis doit être Débutant, Intermédiaire, Avancé ou Expert.")]
         public NiveauRequisType NiveauRequis { get; set; }
     }
 
@@ -29,4 +28,3 @@ namespace Backend_poulina_future_jobs.Models
         Expert
     }
 }
-
