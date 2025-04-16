@@ -19,7 +19,11 @@ namespace Backend_poulina_future_jobs.Models
         CDI = 1,
         CDD = 2,
         Freelance = 3,
-        Stage = 4
+        Stage = 4,
+            
+       Alternance= 5,
+            
+
     }
 
     public enum ModeTravail

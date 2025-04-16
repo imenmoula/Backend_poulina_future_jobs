@@ -714,7 +714,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "offreEmploiDTO",
+        "Name": "dto",
         "Type": "Backend_poulina_future_jobs.Models.DTOs.OffreEmploiDTO",
         "IsRequired": true
       }
@@ -751,7 +751,7 @@
         "IsRequired": true
       },
       {
-        "Name": "offreEmploiDTO",
+        "Name": "dto",
         "Type": "Backend_poulina_future_jobs.Models.DTOs.OffreEmploiDTO",
         "IsRequired": true
       }
@@ -776,6 +776,86 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetModeTravailEnums",
+    "RelativePath": "api/OffreEmplois/enums/modeTravail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetNiveauxRequisEnums",
+    "RelativePath": "api/OffreEmplois/enums/niveauxRequis",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetStatutEnums",
+    "RelativePath": "api/OffreEmplois/enums/statut",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetTypeContratEnums",
+    "RelativePath": "api/OffreEmplois/enums/typeContrat",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
     "Method": "GetOffreEmploisByFiliale",
     "RelativePath": "api/OffreEmplois/filiale/{idFiliale}",
     "HttpMethod": "GET",
@@ -792,6 +872,16 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetRecruteurIds",
+    "RelativePath": "api/OffreEmplois/Recruteurs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
     "Method": "SearchOffreEmplois",
     "RelativePath": "api/OffreEmplois/search",
     "HttpMethod": "GET",
@@ -800,6 +890,11 @@
     "Parameters": [
       {
         "Name": "titre",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "specialite",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -822,22 +917,6 @@
         "Name": "typeContrat",
         "Type": "System.String",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetOffreEmploisByStatut",
-    "RelativePath": "api/OffreEmplois/statut/{statut}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "statut",
-        "Type": "System.String",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []

@@ -1318,24 +1318,128 @@
         }
       }
     },
-    "/api/OffreEmplois/statut/{statut}": {
+    "/api/OffreEmplois/Recruteurs": {
       "get": {
         "tags": [
           "OffreEmplois"
         ],
-        "parameters": [
-          {
-            "name": "statut",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/StatutOffre"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/enums/typeContrat": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/enums/statut": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/enums/modeTravail": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1363,6 +1467,44 @@
         }
       }
     },
+    "/api/OffreEmplois/enums/niveauxRequis": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/OffreEmplois/search": {
       "get": {
         "tags": [
@@ -1371,6 +1513,13 @@
         "parameters": [
           {
             "name": "titre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "specialite",
             "in": "query",
             "schema": {
               "type": "string"
@@ -2771,7 +2920,8 @@
           "CDI",
           "CDD",
           "Freelance",
-          "Stage"
+          "Stage",
+          "Alternance"
         ],
         "type": "string"
       },
