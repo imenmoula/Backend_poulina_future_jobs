@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OA9b5rZE4La6th28UgBJXw+pmWAiJ2EHmeE+ymrvjps=",
+  "Hash": "Ss7oxUk10L+qqIk3FthrNrbs6ER3V1SRWBBuGoTMYWY=",
   "Source": "Backend_poulina_future_jobs",
   "BasePath": "_content/Backend_poulina_future_jobs",
   "Mode": "Default",
@@ -626,6 +626,27 @@
       "OriginalItemSpec": "wwwroot\\uploads\\avatar_69338c26-1c7f-49d6-82ca-3364b375a5b5.png"
     },
     {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.png",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/avatar_8ea3708a-525b-457c-a553-8c3492b2cad6#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "a4khy0nsr5",
+      "Integrity": "5q1T0I00mseP5pFjiqYcsEA3qJPzaWGMz0ZMqXbagSM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.png"
+    },
+    {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_a34fd0f1-844a-4383-9a51-772e1c936ff3.png",
       "SourceId": "Backend_poulina_future_jobs",
       "SourceType": "Discovered",
@@ -1151,6 +1172,27 @@
       "OriginalItemSpec": "wwwroot\\uploads\\images (5)_37bdba78-bab7-4257-819b-78e0c6b0cadc.jfif"
     },
     {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.jfif",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d#[.{fingerprint}]?.jfif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0zdfwv7i1o",
+      "Integrity": "fOBj2FLBgDdPYph/SSJbc5OFs0uDW1+KtC3S2Dr49RE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.jfif"
+    },
+    {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images_32c07b61-0cdd-4370-9c9b-ec5b3081dfc6.png",
       "SourceId": "Backend_poulina_future_jobs",
       "SourceType": "Discovered",
@@ -1401,6 +1443,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_a53002d3-cab2-4bba-888a-30fb0cf5f837.png"
+    },
+    {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.png",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dg9by3df6g",
+      "Integrity": "Yx2hZLsKEpGdLqk9kVIef1qQTMWq1llC16dHBqnevvk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.png"
     },
     {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_d1dda2e1-a002-4cca-bef4-99ae0e57eb62.png",
@@ -1842,6 +1905,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\logo-30204-20240529-110322_91b27924-a28f-41fa-907e-99e17bd6c0bd.png"
+    },
+    {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.png",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "4lfxnkt6f1",
+      "Integrity": "2JsYAhzhgQLyAeSJ4AJRR8uTCdFg/ddPVzsWkM9woxg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.png"
     },
     {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logo-30204-20240529-110322_a017c9b2-bc4c-486b-b730-26f911f22756.png",
@@ -4749,6 +4833,88 @@
       ]
     },
     {
+      "Route": "uploads/avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.a4khy0nsr5.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "83160"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5q1T0I00mseP5pFjiqYcsEA3qJPzaWGMz0ZMqXbagSM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:54:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "a4khy0nsr5"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5q1T0I00mseP5pFjiqYcsEA3qJPzaWGMz0ZMqXbagSM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_8ea3708a-525b-457c-a553-8c3492b2cad6.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "83160"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5q1T0I00mseP5pFjiqYcsEA3qJPzaWGMz0ZMqXbagSM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:54:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5q1T0I00mseP5pFjiqYcsEA3qJPzaWGMz0ZMqXbagSM="
+        }
+      ]
+    },
+    {
       "Route": "uploads/avatar_a34fd0f1-844a-4383-9a51-772e1c936ff3.a4khy0nsr5.png",
       "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\avatar_a34fd0f1-844a-4383-9a51-772e1c936ff3.png",
       "Selectors": [],
@@ -6799,6 +6965,88 @@
       ]
     },
     {
+      "Route": "uploads/images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.0zdfwv7i1o.jfif",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.jfif",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6939"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/pjpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fOBj2FLBgDdPYph/SSJbc5OFs0uDW1+KtC3S2Dr49RE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:42:25 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0zdfwv7i1o"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.jfif"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fOBj2FLBgDdPYph/SSJbc5OFs0uDW1+KtC3S2Dr49RE="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.jfif",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images (5)_af78738c-ecad-48ea-b211-8f7493e0f15d.jfif",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6939"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/pjpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fOBj2FLBgDdPYph/SSJbc5OFs0uDW1+KtC3S2Dr49RE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:42:25 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fOBj2FLBgDdPYph/SSJbc5OFs0uDW1+KtC3S2Dr49RE="
+        }
+      ]
+    },
+    {
       "Route": "uploads/images_32c07b61-0cdd-4370-9c9b-ec5b3081dfc6.png",
       "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\images_32c07b61-0cdd-4370-9c9b-ec5b3081dfc6.png",
       "Selectors": [],
@@ -7769,6 +8017,88 @@
         {
           "Name": "Last-Modified",
           "Value": "Wed, 26 Mar 2025 00:12:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yx2hZLsKEpGdLqk9kVIef1qQTMWq1llC16dHBqnevvk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.dg9by3df6g.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "17952"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yx2hZLsKEpGdLqk9kVIef1qQTMWq1llC16dHBqnevvk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:51:08 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dg9by3df6g"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yx2hZLsKEpGdLqk9kVIef1qQTMWq1llC16dHBqnevvk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\Ks4sWl7mfrhYdCHhBaHibCmLk9vcMCTx9TyriDyg_ce04dbbc-6d30-48fd-9575-75ed6f71f32d.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "17952"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yx2hZLsKEpGdLqk9kVIef1qQTMWq1llC16dHBqnevvk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:51:08 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -9491,6 +9821,88 @@
         {
           "Name": "Last-Modified",
           "Value": "Wed, 26 Mar 2025 00:27:45 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-2JsYAhzhgQLyAeSJ4AJRR8uTCdFg/ddPVzsWkM9woxg="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.4lfxnkt6f1.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9173"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2JsYAhzhgQLyAeSJ4AJRR8uTCdFg/ddPVzsWkM9woxg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:46:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4lfxnkt6f1"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-2JsYAhzhgQLyAeSJ4AJRR8uTCdFg/ddPVzsWkM9woxg="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logo-30204-20240529-110322_9afc0651-74db-411f-bb40-f0f499a65187.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9173"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2JsYAhzhgQLyAeSJ4AJRR8uTCdFg/ddPVzsWkM9woxg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 17 Apr 2025 20:46:57 GMT"
         },
         {
           "Name": "Cache-Control",

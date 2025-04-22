@@ -48,12 +48,19 @@ namespace Backend_poulina_future_jobs.Models
         public string Entreprise { get; set; } = string.Empty;
         public string  Poste { get; set; } = string.Empty;
 
+        [Required]
+        [MaxLength(20)]
+        public string Statut { get; set; } = "Debutant";
+
         // Relation avec les rôles (User peut avoir plusieurs rôles)
         public virtual ICollection<IdentityUserRole<Guid>> UserRoles { get; set; } = new List<IdentityUserRole<Guid>>();
 
         // Relation 1:N avec OffreEmploi
         public ICollection<OffreEmploi> OffresEmploi { get; set; } = new List<OffreEmploi>();
 
+        public ICollection<Experience> Experiences { get; set; } = new List<Experience>(); // Pour un candidat
+        public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>(); // Pour un candidat
+        public ICollection<candiadate_competence> AppUserCompetences { get; set; } = new List<candiadate_competence>(); // Nouvelle relation
 
 
 

@@ -588,6 +588,152 @@
         }
       }
     },
+    "/api/Candidature": {
+      "get": {
+        "tags": [
+          "Candidature"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Candidature"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Candidature/{id}": {
+      "get": {
+        "tags": [
+          "Candidature"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Candidature"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Candidature/{id}/status": {
+      "patch": {
+        "tags": [
+          "Candidature"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Competences": {
       "get": {
         "tags": [
@@ -1883,6 +2029,9 @@
         "additionalProperties": false
       },
       "AppUser": {
+        "required": [
+          "statut"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2019,6 +2168,11 @@
             "type": "string",
             "nullable": true
           },
+          "statut": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
           "userRoles": {
             "type": "array",
             "items": {
@@ -2031,6 +2185,281 @@
             "items": {
               "$ref": "#/components/schemas/OffreEmploi"
             },
+            "nullable": true
+          },
+          "experiences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Experience"
+            },
+            "nullable": true
+          },
+          "candidatures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Candidature"
+            },
+            "nullable": true
+          },
+          "appUserCompetences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/candiadate_competence"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CandidateCompetenceDto": {
+        "required": [
+          "competenceNom",
+          "niveauPossede"
+        ],
+        "type": "object",
+        "properties": {
+          "competenceNom": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "niveauPossede": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Candidature": {
+        "required": [
+          "dateSoumission",
+          "statut"
+        ],
+        "type": "object",
+        "properties": {
+          "idCandidature": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "statut": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "messageMotivation": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "dateSoumission": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "offre": {
+            "$ref": "#/components/schemas/OffreEmploi"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CandidatureDto": {
+        "type": "object",
+        "properties": {
+          "idCandidature": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "prenom": {
+            "type": "string",
+            "nullable": true
+          },
+          "photo": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateNaissance": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "adresse": {
+            "type": "string",
+            "nullable": true
+          },
+          "ville": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "niveauEtude": {
+            "type": "string",
+            "nullable": true
+          },
+          "diplome": {
+            "type": "string",
+            "nullable": true
+          },
+          "universite": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialite": {
+            "type": "string",
+            "nullable": true
+          },
+          "cv": {
+            "type": "string",
+            "nullable": true
+          },
+          "linkedIn": {
+            "type": "string",
+            "nullable": true
+          },
+          "github": {
+            "type": "string",
+            "nullable": true
+          },
+          "portfolio": {
+            "type": "string",
+            "nullable": true
+          },
+          "entreprise": {
+            "type": "string",
+            "nullable": true
+          },
+          "poste": {
+            "type": "string",
+            "nullable": true
+          },
+          "userStatut": {
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
+          },
+          "messageMotivation": {
+            "type": "string",
+            "nullable": true
+          },
+          "experiences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExperienceDto"
+            },
+            "nullable": true
+          },
+          "competences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CandidateCompetenceDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Certificat": {
+        "required": [
+          "dateObtention",
+          "nom",
+          "organisme"
+        ],
+        "type": "object",
+        "properties": {
+          "idCertificat": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "experienceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nom": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "dateObtention": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "organisme": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "urlDocument": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "experience": {
+            "$ref": "#/components/schemas/Experience"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CertificatDto": {
+        "type": "object",
+        "properties": {
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateObtention": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "organisme": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "urlDocument": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -2068,6 +2497,13 @@
           },
           "estSoftSkill": {
             "type": "boolean"
+          },
+          "appUserCompetences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/candiadate_competence"
+            },
+            "nullable": true
           },
           "offreCompetences": {
             "type": "array",
@@ -2290,6 +2726,103 @@
           "idFiliale": {
             "type": "string",
             "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Experience": {
+        "required": [
+          "nomEntreprise",
+          "poste"
+        ],
+        "type": "object",
+        "properties": {
+          "idExperience": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "poste": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "nomEntreprise": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "competenceAcquise": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "certificats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Certificat"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExperienceDto": {
+        "type": "object",
+        "properties": {
+          "poste": {
+            "type": "string",
+            "nullable": true
+          },
+          "nomEntreprise": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "competenceAcquise": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "certificats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CertificatDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2686,6 +3219,13 @@
           "filiale": {
             "$ref": "#/components/schemas/Filiale"
           },
+          "candidatures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Candidature"
+            },
+            "nullable": true
+          },
           "offreCompetences": {
             "type": "array",
             "items": {
@@ -2855,7 +3395,7 @@
       "StatutOffre": {
         "enum": [
           "Ouvert",
-          "Ferme"
+          "cloturer"
         ],
         "type": "string"
       },
@@ -3093,6 +3633,38 @@
           "summary": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "candiadate_competence": {
+        "required": [
+          "niveauPossede"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "competenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "niveauPossede": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "competence": {
+            "$ref": "#/components/schemas/Competence"
           }
         },
         "additionalProperties": false

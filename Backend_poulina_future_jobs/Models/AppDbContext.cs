@@ -18,6 +18,12 @@ namespace Backend_poulina_future_jobs.Models
         public DbSet<OffreEmploi> OffresEmploi { get; set; }
         public DbSet<Competence> Competences { get; set; }
         public DbSet<OffreCompetences> OffreCompetences { get; set; }        //public DbSet<Competence> Competences { get; set; }
+
+        public DbSet<Experience> Experiences { get; set; }
+        public DbSet<Certificat> Certificats { get; set; }
+        public DbSet<Candidature> Candidatures { get; set; }
+
+        public DbSet<candiadate_competence> AppUserCompetences { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -113,19 +119,85 @@ namespace Backend_poulina_future_jobs.Models
             modelBuilder.Entity<OffreEmploi>().ToTable("OffresEmploi");
             modelBuilder.Entity<Competence>().ToTable("Competences");
             modelBuilder.Entity<OffreCompetences>().ToTable("OffreCompetences");
+            /************************postuler**********************************************/
+            // Configuration des clés primaires et génération automatique des Guid
+            modelBuilder.Entity<Experience>()
+                .Property(e => e.IdExperience)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Certificat>()
+                .Property(c => c.IdCertificat)
+                .ValueGeneratedOnAdd();
+
+
+            modelBuilder.Entity<Candidature>()
+                .Property(c => c.IdCandidature)
+                .ValueGeneratedOnAdd();
+
+        
+
+            modelBuilder.Entity<candiadate_competence>()
+                .Property(uc => uc.Id)
+                .ValueGeneratedOnAdd();
+
+        
+
+            // Configuration des relations
+            modelBuilder.Entity<Experience>()
+                .HasOne(e => e.AppUser)
+                .WithMany(u => u.Experiences)
+                .HasForeignKey(e => e.AppUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Certificat>()
+                .HasOne(c => c.Experience)
+                .WithMany(e => e.Certificats)
+                .HasForeignKey(c => c.ExperienceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+         
+
+            modelBuilder.Entity<Candidature>()
+                .HasOne(c => c.AppUser)
+                .WithMany(u => u.Candidatures)
+                .HasForeignKey(c => c.AppUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Candidature>()
+                .HasOne(c => c.Offre)
+                .WithMany(o => o.Candidatures)
+                .HasForeignKey(c => c.OffreId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<candiadate_competence>()
+                    .HasOne(cc => cc.AppUser)
+                    .WithMany(u => u.AppUserCompetences)
+                    .HasForeignKey(cc => cc.AppUserId)
+                    .OnDelete(DeleteBehavior.Restrict); // Éviter la suppression en cascade
+
+            modelBuilder.Entity<candiadate_competence>()
+                .HasOne(cc => cc.Competence)
+                .WithMany(c => c.AppUserCompetences)
+                .HasForeignKey(cc => cc.CompetenceId)
+                .OnDelete(DeleteBehavior.Restrict); 
+
+            // Ajout d'index pour optimiser les recherches
+            modelBuilder.Entity<Candidature>()
+                .HasIndex(c => new { c.AppUserId, c.OffreId })
+                .IsUnique(); // Une candidature unique par utilisateur et par offre
+
+            modelBuilder.Entity<candiadate_competence>()
+                .HasIndex(uc => new { uc.AppUserId, uc.CompetenceId })
+                .IsUnique(); // Une compétence unique par utilisateur
+
+
+
 
 
         }
 
         public DbSet<Backend_poulina_future_jobs.Models.AppUser> AppUser { get; set; } = default!;
-
-
-
-
-
-
-
-
-
+        public IEnumerable<object> CandidateCompetences { get; internal set; }
     }
 }

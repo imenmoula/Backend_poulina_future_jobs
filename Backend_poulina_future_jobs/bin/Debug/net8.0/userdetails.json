@@ -17,7 +17,7 @@
         "fullName": "Moula Mohamed",
         "nom": "Moula",
         "prenom": "Mohamed",
-        "role": "Recruteur,
+        "role": "Recruteur,,
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibW9oYW1lZDYwQGdtYWlsLmNvbSIsInVzZXJJZCI6ImQ1ZGZjZjE2LWUxMDQtNDQ1ZC01ZjA5LTA4ZGQ2NjBhOTk4YSIsImp0aSI6IjQwMmM2M2ZhLTMyOTUtNDM0My05ZWIxLTZjOGQ0Yzg1Y2Q4MCIsIkZ1bGxOYW1lIjoiTW91bGEgTW9oYW1lZCIsIk5vbSI6Ik1vdWxhIiwiUHJlbm9tIjoiTW9oYW1lZCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJlY3J1dGV1ciIsImV4cCI6MTc0MzE1OTMwMH0.bscrQoaeNCnJufB7bEnaeMdluX2vSq3SxpgzghFKkME"
 
     },
@@ -60,8 +60,38 @@
         "nom": "Moula",
         "prenom": "alyouta",
         "role": "Admin",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWx5b3V0YUBnbWFpbC5jb20iLCJ1c2VySWQiOiIxODAzNDhjNS1iNDdkLTQ3NmMtNjk5Mi0wOGRkNjZlODJlMzAiLCJqdGkiOiI5MzBlMzU0YS03YTE5LTQwNmItODExMi1mNWNmYWYyZWYwN2MiLCJGdWxsTmFtZSI6Ik1vdWxhIGFseW91dGEiLCJOb20iOiJNb3VsYSIsIlByZW5vbSI6ImFseW91dGEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NDk4MjYyMn0.Uo_p00VqQmorl_CvvMTxDIeuuv_UmNINjWe0t4N4O4Y"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaGJpYmFAZ21haWwuY29tIiwidXNlcklkIjoiNzMwMTcwYjAtMDYwNi00M2JjLTE4ZjMtMDhkZDgwZGY4ZjU1IiwianRpIjoiNjAwNjc2MzQtNWY2MS00MTMxLTg3OTQtMjE4OGUyYjY5M2FiIiwiRnVsbE5hbWUiOiJiZW5uYSBoYmliYSIsIk5vbSI6ImJlbm5hIiwiUHJlbm9tIjoiaGJpYmEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NTA0MjkyODd9.tKnefGl84avjzE2awFftJWJ0QyUWpglT3vapZkrhEJM",   
+
     },
+    {
+        "email": "hbiba@gmail.com",
+        "password": "hbiba2001$",
+        "fullName": "benna hbiba",
+        "nom": "benna",
+        "prenom": "hbiba",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaGJpYmFAZ21haWwuY29tIiwidXNlcklkIjoiNzMwMTcwYjAtMDYwNi00M2JjLTE4ZjMtMDhkZDgwZGY4ZjU1IiwianRpIjoiNjAwNjc2MzQtNWY2MS00MTMxLTg3OTQtMjE4OGUyYjY5M2FiIiwiRnVsbE5hbWUiOiJiZW5uYSBoYmliYSIsIk5vbSI6ImJlbm5hIiwiUHJlbm9tIjoiaGJpYmEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NTA0MjkyODd9.tKnefGl84avjzE2awFftJWJ0QyUWpglT3vapZkrhEJM",
+    },
+    {
+        "email": "olfa@gmail.com",
+        "password": "olfa123$",
+        "fullName": "benna olfa",
+        "nom": "benna",
+        "prenom": "olfa",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoib2xmYUBnbWFpbC5jb20iLCJ1c2VySWQiOiJlODJlMjIyYy0wNWJlLTQ0ZjYtNzRkZi0wOGRkODEwMzI4NzciLCJqdGkiOiJiMjI4NjNjNS1kODYwLTQ1MjgtOTJjOC1jMDk0NGI4MGUxMjEiLCJGdWxsTmFtZSI6ImJlbm5hIG9sZmEiLCJOb20iOiJiZW5uYSIsIlByZW5vbSI6Im9sZmEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NTA0NDQ1MjJ9.hHrWg1NiKu_fXE4wEqWT7hSkt7h2t7O19TQK4t6ACNM",
+    },
+    {
+        "email": "alisaleh@gmail.com",
+        "password": "alisaleh123$",
+        "fullName": "ali saleh",
+        "nom": "saleh",
+        "prenom": "ali",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWxpc2FsZWhAZ21haWwuY29tIiwidXNlcklkIjoiNWY4MWY3ZGQtNWNmNC00NDBhLTE4ZjQtMDhkZDgwZGY4ZjU1IiwianRpIjoiMTA1MTlkYTQtNDBhOS00NWY2LWIxZDItODY3MTczYTFkYzZhIiwiRnVsbE5hbWUiOiJhbGkgc2FsZWgiLCJOb20iOiJzYWxlaCIsIlByZW5vbSI6ImFsaSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkNhbmRpZGF0ZSIsImV4cCI6MTc1MDQzMDc4N30.heS3tuensu_WJK9VO9QMy2BheR_vXBb_sC3oT4dmIKk",
+
+    }
+    
 
 
     {
@@ -71,8 +101,8 @@
         "nom": "belhaj",
         "prenom": "hbiba",
         "role": "Admin",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWx5b3V0YUBnbWFpbC5jb20iLCJ1c2VySWQiOiIxODAzNDhjNS1iNDdkLTQ3NmMtNjk5Mi0wOGRkNjZlODJlMzAiLCJqdGkiOiIyNjU0Nzk5ZC05NDcyLTQ2ZDYtOWExMS02NTNhZTllYzcyMmMiLCJGdWxsTmFtZSI6Ik1vdWxhIGFseW91dGEiLCJOb20iOiJNb3VsYSIsIlByZW5vbSI6ImFseW91dGEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NDk4MjgxMn0.BkLFiTZ2EK4pDNE3UWKkb-wVp4uD87pecRclVB8nrH0",
-        
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWx5b3V0YUBnbWFpbC5jb20iLCJ1c2VySWQiOiIxODAzNDhjNS1iNDdkLTQ3NmMtNjk5Mi0wOGRkNjZlODJlMzAiLCJqdGkiOiIyNjU0Nzk5ZC05NDcyLTQ2ZDYtOWExMS02NTNhZTllYzcyMmMiLCJGdWxsTmFtZSI6Ik1vdWxhIGFseW91dGEiLCJOb20iOiJNb3VsYSIsIlByZW5vbSI6ImFseW91dGEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NDk4MjgxMn0.BkLFiTZ2EK4pDNE3UWKkb-wVp4uD87pecRclVB8nrH0"
+
     },
     {
         {
@@ -84,7 +114,7 @@
             "role": "Admin",
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaGF5a2VsQGV4YW1wbGUuY29tIiwidXNlcklkIjoiZmE0NTdhYWYtMDY2My00ZGEwLTY5OTUtMDhkZDY2ZTgyZTMwIiwianRpIjoiNWM1ZGMxNGQtYjJjNi00ZTY3LWI2N2ItZmUyNWQ3MmZmZDFkIiwiRnVsbE5hbWUiOiJ6cmVsaSBoeWthbCIsIk5vbSI6InpyZWxpIiwiUHJlbm9tIjoiaHlrZWwiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NTQ0NDMxMH0.kzNs6FulKVGnVJNJ9I-ydnlxckpFu9rHHqUV5wquFaE"
         }
-    }
+    },
 
 
     {
@@ -97,7 +127,7 @@
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlcjJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiJlYjc2MjgwYi1jMGJjLTRjZjItOTk1ZS0wOGRkNzJkZTM1NzQiLCJqdGkiOiJhYTFmNjdkMC1mZDY4LTRkMjUtOTU5MS05NTg3ODBlNmQ0NTUiLCJGdWxsTmFtZSI6InVzZXIyIiwiTm9tIjoidXNlcjIiLCJQcmVub20iOiJ1c2VyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDg4ODk0Njd9.YQ3VI60lqAQguAhF0MkP1R4PI6BAcPl639wVzEMJflc",
         "
     }
-    
+
 
 
 ]

@@ -157,6 +157,90 @@
     ]
   },
   {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidatureController",
+    "Method": "GetAllCandidatures",
+    "RelativePath": "api/Candidature",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidatureController",
+    "Method": "CreateCandidature",
+    "RelativePath": "api/Candidature",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "candidatureDto",
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidatureController",
+    "Method": "GetCandidature",
+    "RelativePath": "api/Candidature/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidatureController",
+    "Method": "UpdateCandidature",
+    "RelativePath": "api/Candidature/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "candidatureDto",
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidatureController",
+    "Method": "SetCandidatureStatus",
+    "RelativePath": "api/Candidature/{id}/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "statut",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
     "Method": "GetCompetences",
     "RelativePath": "api/Competences",

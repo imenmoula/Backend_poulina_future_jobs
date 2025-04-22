@@ -18,6 +18,11 @@ namespace Backend_poulina_future_jobs.Models
         [Required(ErrorMessage = "Le niveau requis est obligatoire.")]
         [EnumDataType(typeof(NiveauRequisType), ErrorMessage = "Le niveau requis doit être Débutant, Intermédiaire, Avancé ou Expert.")]
         public NiveauRequisType NiveauRequis { get; set; }
+
+        internal static bool All(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum NiveauRequisType

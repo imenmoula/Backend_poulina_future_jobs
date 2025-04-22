@@ -22,7 +22,7 @@ namespace Backend_poulina_future_jobs.Models
 
         public bool estTechnique { get; set; }
         public bool estSoftSkill { get; set; }
-
+        public ICollection<candiadate_competence> AppUserCompetences { get; set; } = new List<candiadate_competence>();
         public virtual ICollection<OffreCompetences> OffreCompetences { get; set; } = new List<OffreCompetences>();
     }
 }

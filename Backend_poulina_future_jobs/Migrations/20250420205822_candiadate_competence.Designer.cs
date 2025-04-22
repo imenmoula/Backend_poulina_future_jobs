@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250420205822_candiadate_competence")]
+    partial class candiadate_competence
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -806,9 +809,9 @@ namespace Backend_poulina_future_jobs.Migrations
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.candiadate_competence", b =>
                 {
                     b.HasOne("Backend_poulina_future_jobs.Models.AppUser", "AppUser")
-                        .WithMany("AppUserCompetences")
+                        .WithMany("candiadate_competence")
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Backend_poulina_future_jobs.Models.Competence", "Competence")
@@ -907,8 +910,6 @@ namespace Backend_poulina_future_jobs.Migrations
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUser", b =>
                 {
-                    b.Navigation("AppUserCompetences");
-
                     b.Navigation("Candidatures");
 
                     b.Navigation("Experiences");
@@ -916,6 +917,8 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("OffresEmploi");
 
                     b.Navigation("UserRoles");
+
+                    b.Navigation("candiadate_competence");
                 });
 #pragma warning restore 612, 618
         }

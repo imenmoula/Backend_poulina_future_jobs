@@ -10,8 +10,8 @@ namespace Backend_poulina_future_jobs.Models
     {
         [EnumMember(Value = "Ouvert")]
         Ouvert = 0,
-        [EnumMember(Value = "Ferme")]
-        Ferme = 1
+        [EnumMember(Value = " cloturer")]
+        cloturer = 1
     }
 
     public enum TypeContratEnum
@@ -81,6 +81,8 @@ namespace Backend_poulina_future_jobs.Models
         [ForeignKey("IdFiliale")]
         public virtual Filiale Filiale { get; set; }
 
+        public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>();
         public virtual ICollection<OffreCompetences> OffreCompetences { get; set; } = new List<OffreCompetences>();
+
     }
 }
