@@ -27,7 +27,8 @@ namespace Backend_poulina_future_jobs.Models
         [ForeignKey("IdFiliale")]
         [JsonIgnore]
         public Filiale Filiale { get; set; }
-        
+
+
     }
 
 }

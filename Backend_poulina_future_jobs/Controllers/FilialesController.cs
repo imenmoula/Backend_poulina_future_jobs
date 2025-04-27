@@ -53,7 +53,7 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(new { data = filiale, message = "Détails de la filiale récupérés avec succès." });
         }
 
-       
+
 
         // PUT: api/Filiales/5
         [HttpPut("{id}")]
@@ -269,8 +269,8 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
 
-       
-    
+
+
 
         [HttpPost("upload-photo")]
         [AllowAnonymous]
@@ -327,10 +327,10 @@ namespace Backend_poulina_future_jobs.Controllers
     }
 }
 
-        
 
-        
-    
+
+
+
 
 
 

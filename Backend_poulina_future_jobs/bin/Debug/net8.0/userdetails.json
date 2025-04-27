@@ -126,6 +126,29 @@
         "role": "Admin",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlcjJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiJlYjc2MjgwYi1jMGJjLTRjZjItOTk1ZS0wOGRkNzJkZTM1NzQiLCJqdGkiOiJhYTFmNjdkMC1mZDY4LTRkMjUtOTU5MS05NTg3ODBlNmQ0NTUiLCJGdWxsTmFtZSI6InVzZXIyIiwiTm9tIjoidXNlcjIiLCJQcmVub20iOiJ1c2VyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDg4ODk0Njd9.YQ3VI60lqAQguAhF0MkP1R4PI6BAcPl639wVzEMJflc",
         "
+    },
+    {
+        "email": "aya@gmail.com.com",
+        "password": "aya123$",
+        "confirmPassword": "aya123$",
+        "fullName": "aounallah aya",
+        "nom": "aounallah ",
+        "prenom": "aya",
+        "role": "Admin",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYXlhQGdtYWlsLmNvbS5jb20iLCJ1c2VySWQiOiI1Yjk1YThiOS1iM2Y2LTQ0OTgtZjE2Yi0wOGRkODU3OTk3NzMiLCJqdGkiOiI0ODZkNjc2Zi00OWYyLTRlNTQtOTQ0Ny1lNDUwODU2ZGY1MDAiLCJGdWxsTmFtZSI6ImFvdW5hbGxhaCBheWEiLCJOb20iOiJhb3VuYWxsYWggIiwiUHJlbm9tIjoiYXlhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDU3NTQ3NzEsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwNiJ9.A4NiSrEQmC7RA0IXZ9n6urZMM6rkHa9utW5GcxFOlvs"
+
+
+
+    },
+    {
+        "email": "souleima@gmail.com",
+        "password": "souleima123$",
+        "confirmPassword": "souleima123$",
+        "fullName": "souleima touati",
+        "nom": "Touati",
+        "prenom": "souleima",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic291bGVpbWFAZ21haWwuY29tIiwidXNlcklkIjoiNTEzNTRlYWYtYmFkOS00OWE3LWQyYzAtMDhkZDg1YmEwYjVjIiwianRpIjoiOTZiOGY1YWItZGU2NS00NTcwLThlZmQtZjI0NTEwNDExZGU4IiwiRnVsbE5hbWUiOiJzb3VsZWltYSB0b3VhdGkiLCJOb20iOiJUb3VhdGkiLCJQcmVub20iOiJzb3VsZWltYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkNhbmRpZGF0ZSIsImV4cCI6MTc0NjM4MzY5NywiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDA2In0.E38xza0lUomQMUEnX4dPU5--_sFGBiYAzsqyI7LZ8Qk"
     }
 
 

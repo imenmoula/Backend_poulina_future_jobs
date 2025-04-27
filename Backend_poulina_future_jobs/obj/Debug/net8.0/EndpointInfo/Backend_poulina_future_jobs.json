@@ -5,18 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/UserProfile": {
-      "get": {
-        "tags": [
-          "AccountEndpoints"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/AppUsers": {
       "get": {
         "tags": [
@@ -588,10 +576,10 @@
         }
       }
     },
-    "/api/Candidature": {
+    "/api/Candidatures": {
       "get": {
         "tags": [
-          "Candidature"
+          "Candidatures"
         ],
         "responses": {
           "200": {
@@ -601,23 +589,23 @@
       },
       "post": {
         "tags": [
-          "Candidature"
+          "Candidatures"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CandidatureDto"
+                "$ref": "#/components/schemas/CandidatureFormDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CandidatureDto"
+                "$ref": "#/components/schemas/CandidatureFormDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CandidatureDto"
+                "$ref": "#/components/schemas/CandidatureFormDto"
               }
             }
           }
@@ -629,10 +617,10 @@
         }
       }
     },
-    "/api/Candidature/{id}": {
+    "/api/Candidatures/{id}": {
       "get": {
         "tags": [
-          "Candidature"
+          "Candidatures"
         ],
         "parameters": [
           {
@@ -653,7 +641,7 @@
       },
       "put": {
         "tags": [
-          "Candidature"
+          "Candidatures"
         ],
         "parameters": [
           {
@@ -670,17 +658,80 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CandidatureDto"
+                "$ref": "#/components/schemas/CandidatureFormDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CandidatureDto"
+                "$ref": "#/components/schemas/CandidatureFormDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CandidatureDto"
+                "$ref": "#/components/schemas/CandidatureFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Candidatures"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Candidatures/{id}/status": {
+      "patch": {
+        "tags": [
+          "Candidatures"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
               }
             }
           }
@@ -692,14 +743,14 @@
         }
       }
     },
-    "/api/Candidature/{id}/status": {
-      "patch": {
+    "/api/Candidatures/download-cv/{userId}": {
+      "get": {
         "tags": [
-          "Candidature"
+          "Candidatures"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -708,25 +759,6 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -1332,6 +1364,163 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/refresh-token": {
+      "post": {
+        "tags": [
+          "IdentityUserEndpoints"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreCompetences/offre/{idOffreEmploi}": {
+      "get": {
+        "tags": [
+          "OffreCompetences"
+        ],
+        "parameters": [
+          {
+            "name": "idOffreEmploi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreCompetences": {
+      "post": {
+        "tags": [
+          "OffreCompetences"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreCompetenceDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreCompetenceDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreCompetenceDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreCompetences/{idOffreEmploi}/{idCompetence}": {
+      "put": {
+        "tags": [
+          "OffreCompetences"
+        ],
+        "parameters": [
+          {
+            "name": "idOffreEmploi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "idCompetence",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreCompetenceDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreCompetenceDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreCompetenceDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OffreCompetences"
+        ],
+        "parameters": [
+          {
+            "name": "idOffreEmploi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "idCompetence",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -2173,6 +2362,23 @@
             "minLength": 1,
             "type": "string"
           },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "refreshTokenExpiryTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "filiale": {
+            "$ref": "#/components/schemas/Filiale"
+          },
           "userRoles": {
             "type": "array",
             "items": {
@@ -2204,23 +2410,50 @@
           "appUserCompetences": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/candiadate_competence"
+              "$ref": "#/components/schemas/AppUserCompetence"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
+      "AppUserCompetence": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "competenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "niveauPossede": {
+            "$ref": "#/components/schemas/NiveauPossedeType"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "competence": {
+            "$ref": "#/components/schemas/Competence"
+          }
+        },
+        "additionalProperties": false
+      },
       "CandidateCompetenceDto": {
         "required": [
-          "competenceNom",
+          "competenceId",
           "niveauPossede"
         ],
         "type": "object",
         "properties": {
-          "competenceNom": {
-            "minLength": 1,
-            "type": "string"
+          "competenceId": {
+            "type": "string",
+            "format": "uuid"
           },
           "niveauPossede": {
             "maxLength": 20,
@@ -2272,7 +2505,7 @@
         },
         "additionalProperties": false
       },
-      "CandidatureDto": {
+      "CandidatureFormDto": {
         "type": "object",
         "properties": {
           "idCandidature": {
@@ -2296,10 +2529,6 @@
             "nullable": true
           },
           "prenom": {
-            "type": "string",
-            "nullable": true
-          },
-          "photo": {
             "type": "string",
             "nullable": true
           },
@@ -2353,14 +2582,6 @@
             "nullable": true
           },
           "portfolio": {
-            "type": "string",
-            "nullable": true
-          },
-          "entreprise": {
-            "type": "string",
-            "nullable": true
-          },
-          "poste": {
             "type": "string",
             "nullable": true
           },
@@ -2448,7 +2669,8 @@
           },
           "dateObtention": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "organisme": {
             "type": "string",
@@ -2501,7 +2723,7 @@
           "appUserCompetences": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/candiadate_competence"
+              "$ref": "#/components/schemas/AppUserCompetence"
             },
             "nullable": true
           },
@@ -2516,10 +2738,6 @@
         "additionalProperties": false
       },
       "CompetenceCreateDto": {
-        "required": [
-          "description",
-          "nom"
-        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2527,12 +2745,12 @@
             "format": "uuid"
           },
           "nom": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "description": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "estTechnique": {
             "type": "boolean"
@@ -2903,6 +3121,13 @@
               "$ref": "#/components/schemas/OffreEmploi"
             },
             "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppUser"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3076,6 +3301,15 @@
         ],
         "type": "string"
       },
+      "NiveauPossedeType": {
+        "enum": [
+          "Debutant",
+          "Intermediaire",
+          "Avance",
+          "Expert"
+        ],
+        "type": "string"
+      },
       "NiveauRequisType": {
         "enum": [
           "Debutant",
@@ -3086,9 +3320,6 @@
         "type": "string"
       },
       "OffreCompetenceDTO": {
-        "required": [
-          "niveauRequis"
-        ],
         "type": "object",
         "properties": {
           "idOffreEmploi": {
@@ -3338,6 +3569,16 @@
         },
         "additionalProperties": false
       },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterRequest": {
         "required": [
           "email",
@@ -3577,6 +3818,7 @@
       },
       "UserRegistrationModel": {
         "required": [
+          "confirmPassword",
           "email",
           "fullName",
           "nom",
@@ -3593,6 +3835,10 @@
           "password": {
             "maxLength": 100,
             "minLength": 6,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "minLength": 1,
             "type": "string"
           },
           "fullName": {
@@ -3633,38 +3879,6 @@
           "summary": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "candiadate_competence": {
-        "required": [
-          "niveauPossede"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "appUserId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "competenceId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "niveauPossede": {
-            "maxLength": 20,
-            "minLength": 1,
-            "type": "string"
-          },
-          "appUser": {
-            "$ref": "#/components/schemas/AppUser"
-          },
-          "competence": {
-            "$ref": "#/components/schemas/Competence"
           }
         },
         "additionalProperties": false

@@ -252,6 +252,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\1_f3c1d85d-7a18-4542-9d63-d848edb3e6f9.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\27237314-9743-41dc-aa63-239f121824c7.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/27237314-9743-41dc-aa63-239f121824c7.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>qyuy7evytx</Fingerprint>
+      <Integrity>QqA5+z2mn3IzgGJRUK5X13cuBddBeRThzhCZUET4zpY=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\27237314-9743-41dc-aa63-239f121824c7.png'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\2_0ce1f3ad-b322-4cd8-afc2-40b94bacc384.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>Backend_poulina_future_jobs</SourceId>
@@ -323,6 +341,42 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\2_6f63e5f9-d190-41b0-a582-ca811c97c48d.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\30bff0ec-c09f-4ec5-b4da-a2968242c9b1.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/30bff0ec-c09f-4ec5-b4da-a2968242c9b1.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>a23hy4cbzd</Fingerprint>
+      <Integrity>PmRZgEpAxojujLKe2DM0knHLrmBhalgF6YgY2F48n64=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\30bff0ec-c09f-4ec5-b4da-a2968242c9b1.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\75cb0a7b-6706-4ada-9cc3-8d01ff076d46.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/75cb0a7b-6706-4ada-9cc3-8d01ff076d46.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>a23hy4cbzd</Fingerprint>
+      <Integrity>PmRZgEpAxojujLKe2DM0knHLrmBhalgF6YgY2F48n64=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\75cb0a7b-6706-4ada-9cc3-8d01ff076d46.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\7_762c8f77-1efe-43c2-b4ee-f12aa262d273.png'))">
       <SourceType>Package</SourceType>
@@ -774,6 +828,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\dog_402fc84a-dd0a-40b9-9fb6-40a694a747e4.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\dog_46f372f5-a92d-40ab-8140-507e3d059d53.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/dog_46f372f5-a92d-40ab-8140-507e3d059d53.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>cwgmxsh4lz</Fingerprint>
+      <Integrity>DMChCPzP3eU1OJIRLaLFLzRDSFROBfABtot9RWg4Sxk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\dog_46f372f5-a92d-40ab-8140-507e3d059d53.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\dog_93ac8c55-92d0-4595-862d-c405861d739d.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>Backend_poulina_future_jobs</SourceId>
@@ -845,6 +917,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\dog_c0a9fa81-5e21-4f6b-90d9-2c0528545d6e.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\eb96bda5-51ef-4cd5-8e23-7ec73d17f922.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/eb96bda5-51ef-4cd5-8e23-7ec73d17f922.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>a23hy4cbzd</Fingerprint>
+      <Integrity>PmRZgEpAxojujLKe2DM0knHLrmBhalgF6YgY2F48n64=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\eb96bda5-51ef-4cd5-8e23-7ec73d17f922.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\event_3cd72f78-b381-4b29-a8f5-a48b75cdba1e.avif'))">
       <SourceType>Package</SourceType>

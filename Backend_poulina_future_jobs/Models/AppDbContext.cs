@@ -2,11 +2,15 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
+using Backend_poulina_future_jobs.Migrations;
+using System.Text;
+using System.Globalization;
+using Backend_poulina_future_jobs.Controllers;
 
 namespace Backend_poulina_future_jobs.Models
 {
 
-    public class AppDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>,Guid>
+    public class AppDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         // public DbSet<Backend_poulina_future_jobs.Models.AppRole> Role { get; set; } = default!;
@@ -23,7 +27,7 @@ namespace Backend_poulina_future_jobs.Models
         public DbSet<Certificat> Certificats { get; set; }
         public DbSet<Candidature> Candidatures { get; set; }
 
-        public DbSet<candiadate_competence> AppUserCompetences { get; set; }
+        public DbSet<AppUserCompetence> AppUserCompetences { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,7 +39,7 @@ namespace Backend_poulina_future_jobs.Models
             modelBuilder.Entity<Departement>()
                 .Property(d => d.IdDepartement)
                 .HasDefaultValueSql("NEWID()");
-;
+            ;
 
             // Configuration optionnelle si besoin
             modelBuilder.Entity<Departement>()
@@ -63,7 +67,7 @@ namespace Backend_poulina_future_jobs.Models
             /********************************************************************/
             // Configuration des relations pour OffreEmploi
             // Configure many-to-many relationship
-           
+
             modelBuilder.Entity<OffreCompetences>()
                 .HasKey(oc => new { oc.IdOffreEmploi, oc.IdCompetence });
 
@@ -96,13 +100,13 @@ namespace Backend_poulina_future_jobs.Models
                     .Property(o => o.NiveauRequis)
                     .HasConversion<int>();
 
-          
+
             modelBuilder.Entity<OffreEmploi>()
                 .Property(o => o.NombrePostes)
                 .IsRequired()
                 .HasColumnType("int");
 
-          
+
 
             modelBuilder.Entity<OffreEmploi>()
            .Property(o => o.Avantages)
@@ -134,13 +138,13 @@ namespace Backend_poulina_future_jobs.Models
                 .Property(c => c.IdCandidature)
                 .ValueGeneratedOnAdd();
 
-        
 
-            modelBuilder.Entity<candiadate_competence>()
-                .Property(uc => uc.Id)
-                .ValueGeneratedOnAdd();
 
-        
+            modelBuilder.Entity<AppUserCompetence>() // Updated
+                 .Property(uc => uc.Id)
+                 .ValueGeneratedOnAdd();
+
+
 
             // Configuration des relations
             modelBuilder.Entity<Experience>()
@@ -155,7 +159,7 @@ namespace Backend_poulina_future_jobs.Models
                 .HasForeignKey(c => c.ExperienceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-         
+
 
             modelBuilder.Entity<Candidature>()
                 .HasOne(c => c.AppUser)
@@ -167,37 +171,90 @@ namespace Backend_poulina_future_jobs.Models
                 .HasOne(c => c.Offre)
                 .WithMany(o => o.Candidatures)
                 .HasForeignKey(c => c.OffreId)
-                .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade);
 
 
-            modelBuilder.Entity<candiadate_competence>()
-                    .HasOne(cc => cc.AppUser)
-                    .WithMany(u => u.AppUserCompetences)
-                    .HasForeignKey(cc => cc.AppUserId)
-                    .OnDelete(DeleteBehavior.Restrict); // Éviter la suppression en cascade
+            modelBuilder.Entity<AppUserCompetence>()
+           .HasOne(cc => cc.AppUser) // Updated to specify the navigation property
+           .WithMany(u => u.AppUserCompetences)
+           .HasForeignKey(cc => cc.AppUserId);
 
-            modelBuilder.Entity<candiadate_competence>()
-                .HasOne(cc => cc.Competence)
-                .WithMany(c => c.AppUserCompetences)
-                .HasForeignKey(cc => cc.CompetenceId)
-                .OnDelete(DeleteBehavior.Restrict); 
 
-            // Ajout d'index pour optimiser les recherches
+            modelBuilder.Entity<AppUserCompetence>()
+       .HasOne(cc => cc.Competence) // Updated
+       .WithMany(c => c.AppUserCompetences)
+       .HasForeignKey(cc => cc.CompetenceId);
+
+            // Explicitly set the table name to AppUserCompetences
+            modelBuilder.Entity<AppUserCompetence>() // Updated
+                .ToTable("AppUserCompetences");
+
+            // Configure NiveauPossede with a custom value converter to handle accents
+            // In OnModelCreating method
+            modelBuilder.Entity<AppUserCompetence>()
+                .Property(cc => cc.NiveauPossede)
+                .HasConversion<int>();
+
+
+            modelBuilder.Entity<AppUserCompetence>()
+                .Property(cc => cc.NiveauPossede)
+                .HasConversion<int>();
+            modelBuilder.Entity<AppUserCompetence>()
+                 .HasIndex(cc => new { cc.AppUserId, cc.CompetenceId })
+                 .IsUnique();
+
+            // Add index for Candidature
             modelBuilder.Entity<Candidature>()
                 .HasIndex(c => new { c.AppUserId, c.OffreId })
-                .IsUnique(); // Une candidature unique par utilisateur et par offre
-
-            modelBuilder.Entity<candiadate_competence>()
-                .HasIndex(uc => new { uc.AppUserId, uc.CompetenceId })
-                .IsUnique(); // Une compétence unique par utilisateur
+                   .IsUnique();
 
 
-
-
-
+            // Exemple : Configuration de la relation entre Filiale et AppUser (optionnel, car déjà géré par les annotations)
+            modelBuilder.Entity<AppUser>()
+                .HasOne(u => u.Filiale)
+                .WithMany(f => f.Users)
+                .HasForeignKey(u => u.IdFiliale)
+                .OnDelete(DeleteBehavior.SetNull); // Si la Filiale est supprimée, IdFiliale sera défini à null
         }
 
+
+
+        /*****relation user ---departement ***************************/
+
+        
+
+
+
+
+
+
+
+
+        // Add the following helper method to handle string normalization:
+        private static string RemoveDiacritics(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new System.Text.StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+
+
         public DbSet<Backend_poulina_future_jobs.Models.AppUser> AppUser { get; set; } = default!;
-        public IEnumerable<object> CandidateCompetences { get; internal set; }
     }
+
+
 }

@@ -639,5 +639,7 @@ namespace Backend_poulina_future_jobs.Controllers
                 return StatusCode(500, new { message = "Une erreur est survenue lors de la recherche.", detail = ex.Message });
             }
         }
+
+
     } }
 

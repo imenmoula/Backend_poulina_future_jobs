@@ -1,16 +1,22 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿//// Models/DTOs/OffreCompetenceDTO.cs
+//using System;
 
-namespace Backend_poulina_future_jobs.Models.DTOs
-{
-    public class OffreCompetenceDTO
-    {
-        public Guid IdOffreEmploi { get; set; }
-        public Guid IdCompetence { get; set; }
-        [Required(ErrorMessage = "Le niveau requis est obligatoire.")]
-        [EnumDataType(typeof(NiveauRequisType), ErrorMessage = "Le niveau requis doit être Débutant, Intermédiaire, Avancé ou Expert.")]
-        public NiveauRequisType NiveauRequis { get; set; }
+//namespace Backend_poulina_future_jobs.Models.DTOs
+//{
+//    public class OffreCompetenceDTO
+//    {
+//        public Guid IdOffreEmploi { get; set; }
+//        public Guid IdCompetence { get; set; }
+//        public NiveauRequisType NiveauRequis { get; set; }
+//        public CompetenceCreateDto Competence { get; set; }
+//    }
 
-        public CompetenceCreateDto? Competence { get; set; }
-    }
-}
+//    public class CompetenceCreateDto
+//    {
+//        public Guid Id { get; set; }
+//        public string Nom { get; set; }
+//        public string Description { get; set; }
+//        public bool EstTechnique { get; set; }
+//        public bool EstSoftSkill { get; set; }
+//    }
+//}

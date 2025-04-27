@@ -46,9 +46,9 @@ namespace Backend_poulina_future_jobs.Extensions
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(config["AppSettings:JWTSecret"]!)),
                         ValidateIssuer = false,
-                        ValidateAudience = false,
+                        ValidateAudience = true,
                         ValidateLifetime = true,
-                       ValidIssuer = config["AppSettings:Issuer"], // Ajouter l'issuer
+                        ValidIssuer = config["AppSettings:Issuer"], // Ajouter l'issuer
                         ValidAudience = config["AppSettings:Audience"],
                         ClockSkew = TimeSpan.Zero
                     };
@@ -68,6 +68,8 @@ namespace Backend_poulina_future_jobs.Extensions
 
             return services;
         }
+
+
 
         public static WebApplication AddIdentityAuthMiddlewares(this WebApplication app)
         {

@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250424203316_FixNiveauPossedeConversion")]
+    partial class FixNiveauPossedeConversion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +37,9 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<Guid>("CompetenceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("NiveauPossede")
-                        .HasColumnType("int");
+                    b.Property<string>("NiveauPossede")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -627,9 +631,6 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid?>("IdFiliale")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NiveauEtude")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -653,12 +654,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<string>("Prenom")
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Statut")
                         .IsRequired()
@@ -696,8 +691,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<string>("specialite")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("IdFiliale");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -888,16 +881,6 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUser", b =>
-                {
-                    b.HasOne("Backend_poulina_future_jobs.Models.Filiale", "Filiale")
-                        .WithMany("Users")
-                        .HasForeignKey("IdFiliale")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Filiale");
-                });
-
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Competence", b =>
                 {
                     b.Navigation("AppUserCompetences");
@@ -915,8 +898,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("Departements");
 
                     b.Navigation("OffresEmploi");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreEmploi", b =>

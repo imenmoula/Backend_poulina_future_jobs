@@ -48,9 +48,20 @@ namespace Backend_poulina_future_jobs.Models
         public string Entreprise { get; set; } = string.Empty;
         public string  Poste { get; set; } = string.Empty;
 
+
+
         [Required]
         [MaxLength(20)]
         public string Statut { get; set; } = "Debutant";
+
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
+
+        /************relatione with departement -**********************************/
+        // Nouvelle relation avec Filiale
+        public Guid? IdFiliale { get; set; }
+        [ForeignKey("IdFiliale")]
+        public Filiale? Filiale { get; set; }
 
         // Relation avec les rôles (User peut avoir plusieurs rôles)
         public virtual ICollection<IdentityUserRole<Guid>> UserRoles { get; set; } = new List<IdentityUserRole<Guid>>();
@@ -60,7 +71,7 @@ namespace Backend_poulina_future_jobs.Models
 
         public ICollection<Experience> Experiences { get; set; } = new List<Experience>(); // Pour un candidat
         public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>(); // Pour un candidat
-        public ICollection<candiadate_competence> AppUserCompetences { get; set; } = new List<candiadate_competence>(); // Nouvelle relation
+        public ICollection<AppUserCompetence> AppUserCompetences { get; set; } = new List<AppUserCompetence>(); // Nouvelle relation
 
 
 

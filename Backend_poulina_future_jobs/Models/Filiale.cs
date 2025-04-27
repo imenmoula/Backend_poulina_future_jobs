@@ -49,6 +49,9 @@ namespace Backend_poulina_future_jobs.Models
         public virtual ICollection<Departement> Departements { get; set; } = new List<Departement>();
         // Relation 1:N avec OffreEmploi
         public virtual ICollection<OffreEmploi> OffresEmploi { get; set; } = new List<OffreEmploi>();
+
+        // Nouvelle relation 1:N avec AppUser
+        public virtual ICollection<AppUser> Users { get; set; } = new List<AppUser>();
     }
 }
 

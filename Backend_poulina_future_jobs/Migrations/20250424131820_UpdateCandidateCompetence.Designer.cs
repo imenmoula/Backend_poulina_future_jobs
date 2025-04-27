@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250424131820_UpdateCandidateCompetence")]
+    partial class UpdateCandidateCompetence
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,31 +24,6 @@ namespace Backend_poulina_future_jobs.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUserCompetence", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CompetenceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("NiveauPossede")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompetenceId");
-
-                    b.HasIndex("AppUserId", "CompetenceId")
-                        .IsUnique();
-
-                    b.ToTable("AppUserCompetences", (string)null);
-                });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Candidature", b =>
                 {
@@ -398,6 +376,32 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.candiadate_competence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompetenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NiveauPossede")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompetenceId");
+
+                    b.HasIndex("AppUserId", "CompetenceId")
+                        .IsUnique();
+
+                    b.ToTable("AppUserCompetences");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -627,9 +631,6 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid?>("IdFiliale")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("NiveauEtude")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -653,12 +654,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<string>("Prenom")
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Statut")
                         .IsRequired()
@@ -697,28 +692,7 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("IdFiliale");
-
                     b.HasDiscriminator().HasValue("AppUser");
-                });
-
-            modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUserCompetence", b =>
-                {
-                    b.HasOne("Backend_poulina_future_jobs.Models.AppUser", "AppUser")
-                        .WithMany("AppUserCompetences")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Backend_poulina_future_jobs.Models.Competence", "Competence")
-                        .WithMany("AppUserCompetences")
-                        .HasForeignKey("CompetenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Competence");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Candidature", b =>
@@ -831,6 +805,25 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.candiadate_competence", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.AppUser", "AppUser")
+                        .WithMany("AppUserCompetences")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.Competence", "Competence")
+                        .WithMany("AppUserCompetences")
+                        .HasForeignKey("CompetenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Competence");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -888,16 +881,6 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUser", b =>
-                {
-                    b.HasOne("Backend_poulina_future_jobs.Models.Filiale", "Filiale")
-                        .WithMany("Users")
-                        .HasForeignKey("IdFiliale")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Filiale");
-                });
-
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Competence", b =>
                 {
                     b.Navigation("AppUserCompetences");
@@ -915,8 +898,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("Departements");
 
                     b.Navigation("OffresEmploi");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreEmploi", b =>

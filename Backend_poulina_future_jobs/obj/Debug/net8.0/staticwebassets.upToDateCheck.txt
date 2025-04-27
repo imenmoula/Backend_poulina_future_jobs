@@ -16,8 +16,11 @@ wwwroot\uploads\2_0ce1f3ad-b322-4cd8-afc2-40b94bacc384.jpg
 wwwroot\uploads\2_3e0b0c55-1e3e-4d7d-ac6c-6cc7287dcbd7.avif
 wwwroot\uploads\2_49e723fa-c7f8-4bf5-8272-ea51cdaf21da.jpg
 wwwroot\uploads\2_6f63e5f9-d190-41b0-a582-ca811c97c48d.jpg
+wwwroot\uploads\27237314-9743-41dc-aa63-239f121824c7.png
+wwwroot\uploads\30bff0ec-c09f-4ec5-b4da-a2968242c9b1.jpg
 wwwroot\uploads\7_762c8f77-1efe-43c2-b4ee-f12aa262d273.png
 wwwroot\uploads\7_80420eac-ff68-4703-b3d8-a3213bcd7185.png
+wwwroot\uploads\75cb0a7b-6706-4ada-9cc3-8d01ff076d46.jpg
 wwwroot\uploads\9187604_c344d687-aa33-49ae-9107-433cb1620f1b.png
 wwwroot\uploads\avantages-inconvenients-metier-de-comptable_96ce4848-a905-41b5-ba8f-6f3cd97a0320.jpg
 wwwroot\uploads\avantages-inconvenients-metier-de-comptable_e6acf7f7-5d86-4d46-b19c-62f4706daf9b.jpg
@@ -41,10 +44,12 @@ wwwroot\uploads\cover-expertise-comptable-1-640x690_7955b42c-f457-47e9-a646-5858
 wwwroot\uploads\creation-site-web-gratuit_b46746e0-4404-4090-a949-2c79b891be6e.webp
 wwwroot\uploads\dog_1825b0db-cb66-4e98-8466-f03ff7b3eb1c.jpg
 wwwroot\uploads\dog_402fc84a-dd0a-40b9-9fb6-40a694a747e4.jpg
+wwwroot\uploads\dog_46f372f5-a92d-40ab-8140-507e3d059d53.jpg
 wwwroot\uploads\dog_93ac8c55-92d0-4595-862d-c405861d739d.jpg
 wwwroot\uploads\dog_a7f7c2e5-1b43-4154-9a16-7d7c66eb068b.jpg
 wwwroot\uploads\dog_acfcc237-0ff6-452f-bb15-f4559fdd0c13.jpg
 wwwroot\uploads\dog_c0a9fa81-5e21-4f6b-90d9-2c0528545d6e.jpg
+wwwroot\uploads\eb96bda5-51ef-4cd5-8e23-7ec73d17f922.jpg
 wwwroot\uploads\event_3cd72f78-b381-4b29-a8f5-a48b75cdba1e.avif
 wwwroot\uploads\event_43ea6fa3-2493-486a-829d-caaa377d5977.avif
 wwwroot\uploads\event_9fbf73c8-1bcd-4cec-9bb0-966426cfa437.avif

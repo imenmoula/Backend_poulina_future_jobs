@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250427201804_RenameDepartmentIdToIdDepartment")]
+    partial class RenameDepartmentIdToIdDepartment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -627,7 +630,7 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<Guid?>("IdFiliale")
+                    b.Property<Guid?>("IdDepartement")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NiveauEtude")
@@ -697,7 +700,7 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("IdFiliale");
+                    b.HasIndex("IdDepartement");
 
                     b.HasDiscriminator().HasValue("AppUser");
                 });
@@ -890,12 +893,11 @@ namespace Backend_poulina_future_jobs.Migrations
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUser", b =>
                 {
-                    b.HasOne("Backend_poulina_future_jobs.Models.Filiale", "Filiale")
+                    b.HasOne("Backend_poulina_future_jobs.Models.Departement", "Department")
                         .WithMany("Users")
-                        .HasForeignKey("IdFiliale")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("IdDepartement");
 
-                    b.Navigation("Filiale");
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Competence", b =>
@@ -903,6 +905,11 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("AppUserCompetences");
 
                     b.Navigation("OffreCompetences");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Departement", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Experience", b =>
@@ -915,8 +922,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("Departements");
 
                     b.Navigation("OffresEmploi");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreEmploi", b =>
