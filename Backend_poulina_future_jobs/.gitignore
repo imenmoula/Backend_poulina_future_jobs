@@ -1,2 +1,24 @@
 # Add this to your .gitignore
 .vs/
+
+# Ne pas versionner les fichiers de configuration sensibles
+appsettings*.json
+
+# Si tu utilises un dossier spécifique pour tes migrations EF Core
+# (par défaut c’est souvent Migrations/)
+Migrations/
+**/Migrations/
+
+# Facultatif : ignorer les binaires et dossiers générés
+bin/
+obj/
+
+# Si tu as un dossier pour user secrets (dotnet user-secrets)
+secrets.json
+
+# Fichiers et dossiers de build .NET
+bin/
+obj/
+
+# (Optionnel) Si tu veux ignorer uniquement la configuration Debug/net8.0
+bin/Debug/net8.0/
