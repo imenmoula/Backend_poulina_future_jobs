@@ -576,196 +576,6 @@
         }
       }
     },
-    "/api/Candidatures": {
-      "get": {
-        "tags": [
-          "Candidatures"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Candidatures"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidatureFormDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidatureFormDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidatureFormDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Candidatures/{id}": {
-      "get": {
-        "tags": [
-          "Candidatures"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Candidatures"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidatureFormDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidatureFormDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CandidatureFormDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Candidatures"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Candidatures/{id}/status": {
-      "patch": {
-        "tags": [
-          "Candidatures"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Candidatures/download-cv/{userId}": {
-      "get": {
-        "tags": [
-          "Candidatures"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Competences": {
       "get": {
         "tags": [
@@ -773,7 +583,33 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Competence"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Competence"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Competence"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -785,24 +621,41 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceCreateDto"
+                "$ref": "#/components/schemas/Competence"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceCreateDto"
+                "$ref": "#/components/schemas/Competence"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceCreateDto"
+                "$ref": "#/components/schemas/Competence"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competence"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competence"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competence"
+                }
+              }
+            }
           }
         }
       }
@@ -825,7 +678,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competence"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competence"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Competence"
+                }
+              }
+            }
           }
         }
       },
@@ -848,17 +718,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceUpdateDTO"
+                "$ref": "#/components/schemas/Competence"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceUpdateDTO"
+                "$ref": "#/components/schemas/Competence"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CompetenceUpdateDTO"
+                "$ref": "#/components/schemas/Competence"
               }
             }
           }
@@ -881,27 +751,6 @@
             "schema": {
               "type": "string",
               "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Competences/search": {
-      "get": {
-        "tags": [
-          "Competences"
-        ],
-        "parameters": [
-          {
-            "name": "term",
-            "in": "query",
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -1117,6 +966,191 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Diplomes": {
+      "get": {
+        "tags": [
+          "Diplomes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Diplome"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Diplome"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Diplome"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Diplomes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Diplome"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Diplome"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Diplome"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Diplome"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Diplome"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Diplome"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Diplomes/{id}": {
+      "get": {
+        "tags": [
+          "Diplomes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Diplome"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Diplome"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Diplome"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Diplomes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Diplome"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Diplome"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Diplome"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Diplomes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1393,30 +1427,43 @@
         }
       }
     },
-    "/api/OffreCompetences/offre/{idOffreEmploi}": {
+    "/api/OffreCompetences": {
       "get": {
         "tags": [
           "OffreCompetences"
         ],
-        "parameters": [
-          {
-            "name": "idOffreEmploi",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreCompetences"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreCompetences"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreCompetences"
+                  }
+                }
+              }
+            }
           }
         }
-      }
-    },
-    "/api/OffreCompetences": {
+      },
       "post": {
         "tags": [
           "OffreCompetences"
@@ -1425,45 +1472,91 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetenceDTO"
+                "$ref": "#/components/schemas/OffreCompetences"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetenceDTO"
+                "$ref": "#/components/schemas/OffreCompetences"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetenceDTO"
+                "$ref": "#/components/schemas/OffreCompetences"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreCompetences"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreCompetences"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreCompetences"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/OffreCompetences/{idOffreEmploi}/{idCompetence}": {
-      "put": {
+    "/api/OffreCompetences/{id}": {
+      "get": {
         "tags": [
           "OffreCompetences"
         ],
         "parameters": [
           {
-            "name": "idOffreEmploi",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string",
               "format": "uuid"
             }
-          },
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreCompetences"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreCompetences"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreCompetences"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OffreCompetences"
+        ],
+        "parameters": [
           {
-            "name": "idCompetence",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -1476,17 +1569,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetenceDTO"
+                "$ref": "#/components/schemas/OffreCompetences"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetenceDTO"
+                "$ref": "#/components/schemas/OffreCompetences"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetenceDTO"
+                "$ref": "#/components/schemas/OffreCompetences"
               }
             }
           }
@@ -1503,16 +1596,7 @@
         ],
         "parameters": [
           {
-            "name": "idOffreEmploi",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "name": "idCompetence",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -1547,17 +1631,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreEmploiDTO"
+                "$ref": "#/components/schemas/CreateOffreEmploiRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreEmploiDTO"
+                "$ref": "#/components/schemas/CreateOffreEmploiRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreEmploiDTO"
+                "$ref": "#/components/schemas/CreateOffreEmploiRequest"
               }
             }
           }
@@ -1610,17 +1694,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreEmploiDTO"
+                "$ref": "#/components/schemas/OffreEmploiDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreEmploiDTO"
+                "$ref": "#/components/schemas/OffreEmploiDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreEmploiDTO"
+                "$ref": "#/components/schemas/OffreEmploiDto"
               }
             }
           }
@@ -1653,10 +1737,40 @@
         }
       }
     },
-    "/api/OffreEmplois/Recruteurs": {
+    "/api/OffreEmplois/search": {
       "get": {
         "tags": [
           "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "titrePoste",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "specialite",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "typeContrat",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statut",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -1665,121 +1779,7 @@
         }
       }
     },
-    "/api/OffreEmplois/enums/typeContrat": {
-      "get": {
-        "tags": [
-          "OffreEmplois"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/OffreEmplois/enums/statut": {
-      "get": {
-        "tags": [
-          "OffreEmplois"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/OffreEmplois/enums/modeTravail": {
-      "get": {
-        "tags": [
-          "OffreEmplois"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/OffreEmplois/filiale/{idFiliale}": {
+    "/api/OffreEmplois/by-filiale/{idFiliale}": {
       "get": {
         "tags": [
           "OffreEmplois"
@@ -1802,10 +1802,22 @@
         }
       }
     },
-    "/api/OffreEmplois/enums/niveauxRequis": {
+    "/api/OffreEmplois/recruteurs": {
       "get": {
         "tags": [
           "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreMissions": {
+      "get": {
+        "tags": [
+          "OffreMissions"
         ],
         "responses": {
           "200": {
@@ -1815,7 +1827,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/OffreMission"
                   }
                 }
               },
@@ -1823,7 +1835,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/OffreMission"
                   }
                 }
               },
@@ -1831,8 +1843,54 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/OffreMission"
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OffreMissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMission"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMission"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreMission"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreMission"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreMission"
                 }
               }
             }
@@ -1840,53 +1898,282 @@
         }
       }
     },
-    "/api/OffreEmplois/search": {
+    "/api/OffreMissions/{id}": {
       "get": {
         "tags": [
-          "OffreEmplois"
+          "OffreMissions"
         ],
         "parameters": [
           {
-            "name": "titre",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "specialite",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "statut",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/StatutOffre"
-            }
-          },
-          {
-            "name": "idFiliale",
-            "in": "query",
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "modeTravail",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/ModeTravail"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreMission"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreMission"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreMission"
+                }
+              }
             }
-          },
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OffreMissions"
+        ],
+        "parameters": [
           {
-            "name": "typeContrat",
-            "in": "query",
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
-              "$ref": "#/components/schemas/TypeContratEnum"
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMission"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMission"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OffreMissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Postes": {
+      "get": {
+        "tags": [
+          "Postes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Poste"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Poste"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Poste"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Postes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poste"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poste"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poste"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Poste"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Poste"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Poste"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Postes/{id}": {
+      "get": {
+        "tags": [
+          "Postes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Poste"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Poste"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Poste"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Postes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poste"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poste"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Poste"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Postes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -1933,6 +2220,689 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Questions": {
+      "get": {
+        "tags": [
+          "Questions"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Questions"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Questions/{id}": {
+      "get": {
+        "tags": [
+          "Questions"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Questions"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Questions"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Quiz": {
+      "get": {
+        "tags": [
+          "Quiz"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuizDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Quiz"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Quiz/{id}": {
+      "get": {
+        "tags": [
+          "Quiz"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuizDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Quiz"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Quiz"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reponses": {
+      "get": {
+        "tags": [
+          "Reponses"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReponseDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReponseDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReponseDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reponses"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReponseCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReponseCreateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReponseCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reponses/{id}": {
+      "get": {
+        "tags": [
+          "Reponses"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reponses"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReponseUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReponseUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReponseUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reponses"
+        ],
+        "parameters": [
+          {
+            "name": "quizId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "questionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -2413,6 +3383,20 @@
               "$ref": "#/components/schemas/AppUserCompetence"
             },
             "nullable": true
+          },
+          "quizzesTentés": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Quiz"
+            },
+            "nullable": true
+          },
+          "tentatives": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TentativeQuiz"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2440,25 +3424,6 @@
           },
           "competence": {
             "$ref": "#/components/schemas/Competence"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CandidateCompetenceDto": {
-        "required": [
-          "competenceId",
-          "niveauPossede"
-        ],
-        "type": "object",
-        "properties": {
-          "competenceId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "niveauPossede": {
-            "maxLength": 20,
-            "minLength": 1,
-            "type": "string"
           }
         },
         "additionalProperties": false
@@ -2505,115 +3470,6 @@
         },
         "additionalProperties": false
       },
-      "CandidatureFormDto": {
-        "type": "object",
-        "properties": {
-          "idCandidature": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "appUserId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "offreId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "fullName": {
-            "type": "string",
-            "nullable": true
-          },
-          "nom": {
-            "type": "string",
-            "nullable": true
-          },
-          "prenom": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateNaissance": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "adresse": {
-            "type": "string",
-            "nullable": true
-          },
-          "ville": {
-            "type": "string",
-            "nullable": true
-          },
-          "pays": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "niveauEtude": {
-            "type": "string",
-            "nullable": true
-          },
-          "diplome": {
-            "type": "string",
-            "nullable": true
-          },
-          "universite": {
-            "type": "string",
-            "nullable": true
-          },
-          "specialite": {
-            "type": "string",
-            "nullable": true
-          },
-          "cv": {
-            "type": "string",
-            "nullable": true
-          },
-          "linkedIn": {
-            "type": "string",
-            "nullable": true
-          },
-          "github": {
-            "type": "string",
-            "nullable": true
-          },
-          "portfolio": {
-            "type": "string",
-            "nullable": true
-          },
-          "userStatut": {
-            "type": "string",
-            "nullable": true
-          },
-          "statut": {
-            "type": "string",
-            "nullable": true
-          },
-          "messageMotivation": {
-            "type": "string",
-            "nullable": true
-          },
-          "experiences": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ExperienceDto"
-            },
-            "nullable": true
-          },
-          "competences": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CandidateCompetenceDto"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Certificat": {
         "required": [
           "dateObtention",
@@ -2656,33 +3512,6 @@
           },
           "experience": {
             "$ref": "#/components/schemas/Experience"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CertificatDto": {
-        "type": "object",
-        "properties": {
-          "nom": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateObtention": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "organisme": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "urlDocument": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2737,35 +3566,8 @@
         },
         "additionalProperties": false
       },
-      "CompetenceCreateDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "nom": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "estTechnique": {
-            "type": "boolean"
-          },
-          "estSoftSkill": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CompetenceUpdateDTO": {
+      "CompetenceDto": {
         "required": [
-          "description",
-          "estSoftSkill",
-          "estTechnique",
           "nom"
         ],
         "type": "object",
@@ -2775,14 +3577,12 @@
             "format": "uuid"
           },
           "nom": {
-            "maxLength": 50,
             "minLength": 1,
             "type": "string"
           },
           "description": {
-            "maxLength": 200,
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "dateModification": {
             "type": "string",
@@ -2873,6 +3673,18 @@
         },
         "additionalProperties": false
       },
+      "CreateOffreEmploiRequest": {
+        "required": [
+          "dto"
+        ],
+        "type": "object",
+        "properties": {
+          "dto": {
+            "$ref": "#/components/schemas/OffreEmploiDto"
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateUserModel": {
         "type": "object",
         "properties": {
@@ -2944,6 +3756,50 @@
           "idFiliale": {
             "type": "string",
             "format": "uuid"
+          },
+          "offresEmploi": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreEmploi"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Diplome": {
+        "required": [
+          "niveau",
+          "nomDiplome"
+        ],
+        "type": "object",
+        "properties": {
+          "idDiplome": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nomDiplome": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "niveau": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "domaine": {
+            "type": "string",
+            "nullable": true
+          },
+          "institution": {
+            "type": "string",
+            "nullable": true
+          },
+          "offresEmploi": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreEmploi"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3000,45 +3856,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Certificat"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ExperienceDto": {
-        "type": "object",
-        "properties": {
-          "poste": {
-            "type": "string",
-            "nullable": true
-          },
-          "nomEntreprise": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "competenceAcquise": {
-            "type": "string",
-            "nullable": true
-          },
-          "dateDebut": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "dateFin": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "certificats": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CertificatDto"
             },
             "nullable": true
           }
@@ -3253,6 +4070,17 @@
         },
         "additionalProperties": false
       },
+      "Langue": {
+        "enum": [
+          "Francais",
+          "Anglais",
+          "Espagnol",
+          "Allemand",
+          "Arabe",
+          "Italien"
+        ],
+        "type": "string"
+      },
       "LoginModel": {
         "type": "object",
         "properties": {
@@ -3319,7 +4147,11 @@
         ],
         "type": "string"
       },
-      "OffreCompetenceDTO": {
+      "OffreCompetenceDto": {
+        "required": [
+          "idCompetence",
+          "niveauRequis"
+        ],
         "type": "object",
         "properties": {
           "idOffreEmploi": {
@@ -3334,7 +4166,7 @@
             "$ref": "#/components/schemas/NiveauRequisType"
           },
           "competence": {
-            "$ref": "#/components/schemas/CompetenceCreateDto"
+            "$ref": "#/components/schemas/CompetenceDto"
           }
         },
         "additionalProperties": false
@@ -3367,9 +4199,8 @@
       },
       "OffreEmploi": {
         "required": [
-          "description",
+          "niveauExperienceRequis",
           "statut",
-          "titre",
           "typeContrat"
         ],
         "type": "object",
@@ -3381,14 +4212,6 @@
           "specialite": {
             "type": "string",
             "nullable": true
-          },
-          "titre": {
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "minLength": 1,
-            "type": "string"
           },
           "datePublication": {
             "type": "string",
@@ -3410,12 +4233,8 @@
             "format": "double"
           },
           "niveauExperienceRequis": {
-            "type": "string",
-            "nullable": true
-          },
-          "diplomeRequis": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "typeContrat": {
             "$ref": "#/components/schemas/TypeContratEnum"
@@ -3426,11 +4245,8 @@
           "modeTravail": {
             "$ref": "#/components/schemas/ModeTravail"
           },
-          "nombrePostes": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
+          "estActif": {
+            "type": "boolean"
           },
           "avantages": {
             "type": "string",
@@ -3450,10 +4266,38 @@
           "filiale": {
             "$ref": "#/components/schemas/Filiale"
           },
-          "candidatures": {
+          "idDepartement": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "departement": {
+            "$ref": "#/components/schemas/Departement"
+          },
+          "diplomesRequis": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Candidature"
+              "$ref": "#/components/schemas/Diplome"
+            },
+            "nullable": true
+          },
+          "postes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Poste"
+            },
+            "nullable": true
+          },
+          "offreMissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreMission"
+            },
+            "nullable": true
+          },
+          "offreLangues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreLangue"
             },
             "nullable": true
           },
@@ -3463,15 +4307,33 @@
               "$ref": "#/components/schemas/OffreCompetences"
             },
             "nullable": true
+          },
+          "candidatures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Candidature"
+            },
+            "nullable": true
+          },
+          "quizzes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Quiz"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "OffreEmploiDTO": {
+      "OffreEmploiDto": {
         "required": [
-          "description",
+          "dateExpiration",
+          "idDepartement",
+          "idFiliale",
+          "idRecruteur",
+          "niveauExperienceRequis",
+          "specialite",
           "statut",
-          "titre",
           "typeContrat"
         ],
         "type": "object",
@@ -3480,15 +4342,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "titre": {
-            "minLength": 1,
-            "type": "string"
-          },
           "specialite": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
             "minLength": 1,
             "type": "string"
           },
@@ -3498,8 +4352,7 @@
           },
           "dateExpiration": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           },
           "salaireMin": {
             "minimum": 0,
@@ -3512,12 +4365,8 @@
             "format": "double"
           },
           "niveauExperienceRequis": {
-            "type": "string",
-            "nullable": true
-          },
-          "diplomeRequis": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "typeContrat": {
             "$ref": "#/components/schemas/TypeContratEnum"
@@ -3528,11 +4377,16 @@
           "modeTravail": {
             "$ref": "#/components/schemas/ModeTravail"
           },
-          "nombrePostes": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "idDepartement": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "estActif": {
+            "type": "boolean"
           },
           "avantages": {
             "type": "string",
@@ -3542,15 +4396,524 @@
             "type": "string",
             "format": "uuid"
           },
-          "idFiliale": {
-            "type": "string",
-            "format": "uuid"
+          "postes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PosteDto"
+            },
+            "nullable": true
+          },
+          "offreMissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreMissionDto"
+            },
+            "nullable": true
+          },
+          "offreLangues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OffreLangueDto"
+            },
+            "nullable": true
           },
           "offreCompetences": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OffreCompetenceDTO"
+              "$ref": "#/components/schemas/OffreCompetenceDto"
             },
+            "nullable": true
+          },
+          "diplomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreLangue": {
+        "required": [
+          "langue"
+        ],
+        "type": "object",
+        "properties": {
+          "idOffreLangue": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreEmploi": {
+            "$ref": "#/components/schemas/OffreEmploi"
+          },
+          "langue": {
+            "$ref": "#/components/schemas/Langue"
+          },
+          "niveauRequis": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreLangueDto": {
+        "required": [
+          "langue"
+        ],
+        "type": "object",
+        "properties": {
+          "langue": {
+            "$ref": "#/components/schemas/Langue"
+          },
+          "niveauRequis": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreMission": {
+        "required": [
+          "descriptionMission"
+        ],
+        "type": "object",
+        "properties": {
+          "idOffreMission": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreEmploi": {
+            "$ref": "#/components/schemas/OffreEmploi"
+          },
+          "descriptionMission": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "priorite": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreMissionDto": {
+        "required": [
+          "descriptionMission"
+        ],
+        "type": "object",
+        "properties": {
+          "descriptionMission": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "priorite": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Poste": {
+        "required": [
+          "description",
+          "niveauHierarchique",
+          "titrePoste"
+        ],
+        "type": "object",
+        "properties": {
+          "idPoste": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titrePoste": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombrePostes": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "experienceSouhaitee": {
+            "type": "string",
+            "nullable": true
+          },
+          "niveauHierarchique": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreEmploi": {
+            "$ref": "#/components/schemas/OffreEmploi"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosteDto": {
+        "required": [
+          "description",
+          "niveauHierarchique",
+          "titrePoste"
+        ],
+        "type": "object",
+        "properties": {
+          "titrePoste": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombrePostes": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "experienceSouhaitee": {
+            "type": "string",
+            "nullable": true
+          },
+          "niveauHierarchique": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Question": {
+        "required": [
+          "quizId",
+          "texte"
+        ],
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "texte": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeQuestion"
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tempsRecommande": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "quizId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quiz": {
+            "$ref": "#/components/schemas/Quiz"
+          },
+          "reponses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Reponse"
+            },
+            "nullable": true
+          },
+          "reponsesUtilisateur": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReponseUtilisateur"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionCreateDto": {
+        "required": [
+          "texte"
+        ],
+        "type": "object",
+        "properties": {
+          "texte": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeQuestion"
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tempsRecommande": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionDto": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "texte": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeQuestion"
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tempsRecommande": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "quizId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionUpdateDto": {
+        "type": "object",
+        "properties": {
+          "texte": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeQuestion"
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tempsRecommande": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Quiz": {
+        "required": [
+          "titre"
+        ],
+        "type": "object",
+        "properties": {
+          "quizId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titre": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estActif": {
+            "type": "boolean"
+          },
+          "duree": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scoreMinimum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offreEmploiId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "offreEmploi": {
+            "$ref": "#/components/schemas/OffreEmploi"
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Question"
+            },
+            "nullable": true
+          },
+          "tentatives": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TentativeQuiz"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuizCreateDto": {
+        "required": [
+          "titre"
+        ],
+        "type": "object",
+        "properties": {
+          "titre": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "duree": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scoreMinimum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offreEmploiId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuizDto": {
+        "type": "object",
+        "properties": {
+          "quizId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titre": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estActif": {
+            "type": "boolean"
+          },
+          "duree": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "scoreMinimum": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offreEmploiId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuizUpdateDto": {
+        "type": "object",
+        "properties": {
+          "titre": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "duree": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "scoreMinimum": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "offreEmploiId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "estActif": {
+            "type": "boolean",
             "nullable": true
           }
         },
@@ -3597,6 +4960,185 @@
         },
         "additionalProperties": false
       },
+      "Reponse": {
+        "required": [
+          "questionId",
+          "texte"
+        ],
+        "type": "object",
+        "properties": {
+          "reponseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "texte": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "estCorrecte": {
+            "type": "boolean"
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "explication": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "question": {
+            "$ref": "#/components/schemas/Question"
+          },
+          "reponsesUtilisateur": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReponseUtilisateur"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReponseCreateDto": {
+        "required": [
+          "texte"
+        ],
+        "type": "object",
+        "properties": {
+          "texte": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "estCorrecte": {
+            "type": "boolean"
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "explication": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReponseDto": {
+        "type": "object",
+        "properties": {
+          "reponseId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "texte": {
+            "type": "string",
+            "nullable": true
+          },
+          "estCorrecte": {
+            "type": "boolean"
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "explication": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReponseUpdateDto": {
+        "type": "object",
+        "properties": {
+          "texte": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "estCorrecte": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "ordre": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "explication": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReponseUtilisateur": {
+        "required": [
+          "questionId",
+          "tentativeId"
+        ],
+        "type": "object",
+        "properties": {
+          "reponseUtilisateurId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tentativeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reponseId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "texteReponse": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "tempsReponse": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "estCorrecte": {
+            "type": "boolean"
+          },
+          "tentative": {
+            "$ref": "#/components/schemas/TentativeQuiz"
+          },
+          "question": {
+            "$ref": "#/components/schemas/Question"
+          },
+          "reponse": {
+            "$ref": "#/components/schemas/Reponse"
+          }
+        },
+        "additionalProperties": false
+      },
       "ResendConfirmationEmailRequest": {
         "required": [
           "email"
@@ -3633,12 +5175,134 @@
         },
         "additionalProperties": false
       },
+      "ResultatQuiz": {
+        "required": [
+          "tentativeId"
+        ],
+        "type": "object",
+        "properties": {
+          "resultatId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tentativeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          },
+          "questionsCorrectes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tempsTotal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reussi": {
+            "type": "boolean"
+          },
+          "commentaire": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "dateResultat": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tentative": {
+            "$ref": "#/components/schemas/TentativeQuiz"
+          },
+          "quizId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "StatutOffre": {
         "enum": [
           "Ouvert",
           "cloturer"
         ],
         "type": "string"
+      },
+      "StatutTentative": {
+        "enum": [
+          "EnCours",
+          "Terminee",
+          "Abandonnee",
+          "Expiree"
+        ],
+        "type": "string"
+      },
+      "TentativeQuiz": {
+        "required": [
+          "appUserId",
+          "quizId"
+        ],
+        "type": "object",
+        "properties": {
+          "tentativeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quizId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "statut": {
+            "$ref": "#/components/schemas/StatutTentative"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          },
+          "quiz": {
+            "$ref": "#/components/schemas/Quiz"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "resultat": {
+            "$ref": "#/components/schemas/ResultatQuiz"
+          },
+          "reponsesUtilisateur": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReponseUtilisateur"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "TwoFactorRequest": {
         "type": "object",
@@ -3703,6 +5367,15 @@
           "Freelance",
           "Stage",
           "Alternance"
+        ],
+        "type": "string"
+      },
+      "TypeQuestion": {
+        "enum": [
+          "ChoixUnique",
+          "ChoixMultiple",
+          "VraiFaux",
+          "ReponseTexte"
         ],
         "type": "string"
       },

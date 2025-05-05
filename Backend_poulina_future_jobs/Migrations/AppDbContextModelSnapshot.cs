@@ -179,7 +179,34 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.HasIndex("IdFiliale");
 
-                    b.ToTable("Departements");
+                    b.ToTable("Departements", (string)null);
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Diplome", b =>
+                {
+                    b.Property<Guid>("IdDiplome")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Domaine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Institution")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Niveau")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomDiplome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdDiplome");
+
+                    b.ToTable("Diplomes");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Experience", b =>
@@ -318,13 +345,8 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<DateTime>("DatePublication")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DiplomeRequis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("IdDepartement")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdFiliale")
                         .HasColumnType("uniqueidentifier");
@@ -338,9 +360,6 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<string>("NiveauExperienceRequis")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NombrePostes")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("SalaireMax")
                         .HasPrecision(18, 2)
@@ -357,20 +376,177 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<int>("Statut")
                         .HasColumnType("int");
 
-                    b.Property<string>("Titre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TypeContrat")
                         .HasColumnType("int");
 
+                    b.Property<bool>("estActif")
+                        .HasColumnType("bit");
+
                     b.HasKey("IdOffreEmploi");
+
+                    b.HasIndex("IdDepartement");
 
                     b.HasIndex("IdFiliale");
 
                     b.HasIndex("IdRecruteur");
 
                     b.ToTable("OffresEmploi", (string)null);
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreLangue", b =>
+                {
+                    b.Property<Guid>("IdOffreLangue")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdOffreEmploi")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Langue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NiveauRequis")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdOffreLangue");
+
+                    b.HasIndex("IdOffreEmploi");
+
+                    b.ToTable("OffreLangues");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreMission", b =>
+                {
+                    b.Property<Guid>("IdOffreMission")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DescriptionMission")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdOffreEmploi")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Priorite")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdOffreMission");
+
+                    b.HasIndex("IdOffreEmploi");
+
+                    b.ToTable("OffreMissions");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Poste", b =>
+                {
+                    b.Property<Guid>("IdPoste")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExperienceSouhaitee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdOffreEmploi")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NiveauHierarchique")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NombrePostes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TitrePoste")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdPoste");
+
+                    b.HasIndex("IdOffreEmploi");
+
+                    b.ToTable("Postes");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Question", b =>
+                {
+                    b.Property<Guid>("QuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Ordre")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TempsRecommande")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Texte")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuestionId");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Quiz", b =>
+                {
+                    b.Property<Guid>("QuizId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Duree")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("EstActif")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("OffreEmploiId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ScoreMinimum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("QuizId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("OffreEmploiId");
+
+                    b.ToTable("Quizzes");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.RefreshToken", b =>
@@ -396,6 +572,174 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Reponse", b =>
+                {
+                    b.Property<Guid>("ReponseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("EstCorrecte")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Explication")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Ordre")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Texte")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("ReponseId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Reponses");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.ReponseUtilisateur", b =>
+                {
+                    b.Property<Guid>("ReponseUtilisateurId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("EstCorrecte")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ReponseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("TempsReponse")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TentativeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TexteReponse")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("ReponseUtilisateurId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("ReponseId");
+
+                    b.HasIndex("TentativeId");
+
+                    b.ToTable("ReponsesUtilisateur");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.ResultatQuiz", b =>
+                {
+                    b.Property<Guid>("ResultatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Commentaire")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("DateResultat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NombreQuestions")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionsCorrectes")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Reussi")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TempsTotal")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TentativeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ResultatId");
+
+                    b.HasIndex("TentativeId")
+                        .IsUnique();
+
+                    b.ToTable("ResultatsQuiz");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.TentativeQuiz", b =>
+                {
+                    b.Property<Guid>("TentativeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AppUserId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("QuizId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
+
+                    b.HasKey("TentativeId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("AppUserId1");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("TentativesQuiz");
+                });
+
+            modelBuilder.Entity("DiplomeOffreEmploi", b =>
+                {
+                    b.Property<Guid>("DiplomesRequisIdDiplome")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OffresEmploiIdOffreEmploi")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DiplomesRequisIdDiplome", "OffresEmploiIdOffreEmploi");
+
+                    b.HasIndex("OffresEmploiIdOffreEmploi");
+
+                    b.ToTable("OffreEmploiDiplomes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -803,10 +1147,16 @@ namespace Backend_poulina_future_jobs.Migrations
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreEmploi", b =>
                 {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Departement", "Departement")
+                        .WithMany("OffresEmploi")
+                        .HasForeignKey("IdDepartement")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Backend_poulina_future_jobs.Models.Filiale", "Filiale")
                         .WithMany("OffresEmploi")
                         .HasForeignKey("IdFiliale")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Backend_poulina_future_jobs.Models.AppUser", "Recruteur")
@@ -815,9 +1165,69 @@ namespace Backend_poulina_future_jobs.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Departement");
+
                     b.Navigation("Filiale");
 
                     b.Navigation("Recruteur");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreLangue", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.OffreEmploi", "OffreEmploi")
+                        .WithMany("OffreLangues")
+                        .HasForeignKey("IdOffreEmploi")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OffreEmploi");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.OffreMission", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.OffreEmploi", "OffreEmploi")
+                        .WithMany("OffreMissions")
+                        .HasForeignKey("IdOffreEmploi")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OffreEmploi");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Poste", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.OffreEmploi", "OffreEmploi")
+                        .WithMany("Postes")
+                        .HasForeignKey("IdOffreEmploi")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OffreEmploi");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Question", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Quiz", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.AppUser", null)
+                        .WithMany("QuizzesTentés")
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.OffreEmploi", "OffreEmploi")
+                        .WithMany("Quizzes")
+                        .HasForeignKey("OffreEmploiId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("OffreEmploi");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.RefreshToken", b =>
@@ -829,6 +1239,92 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Reponse", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Question", "Question")
+                        .WithMany("Reponses")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.ReponseUtilisateur", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Question", "Question")
+                        .WithMany("ReponsesUtilisateur")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.Reponse", "Reponse")
+                        .WithMany("ReponsesUtilisateur")
+                        .HasForeignKey("ReponseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.TentativeQuiz", "Tentative")
+                        .WithMany("ReponsesUtilisateur")
+                        .HasForeignKey("TentativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("Reponse");
+
+                    b.Navigation("Tentative");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.ResultatQuiz", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.TentativeQuiz", "Tentative")
+                        .WithOne("Resultat")
+                        .HasForeignKey("Backend_poulina_future_jobs.Models.ResultatQuiz", "TentativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tentative");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.TentativeQuiz", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.AppUser", null)
+                        .WithMany("Tentatives")
+                        .HasForeignKey("AppUserId1");
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.Quiz", "Quiz")
+                        .WithMany("Tentatives")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Quiz");
+                });
+
+            modelBuilder.Entity("DiplomeOffreEmploi", b =>
+                {
+                    b.HasOne("Backend_poulina_future_jobs.Models.Diplome", null)
+                        .WithMany()
+                        .HasForeignKey("DiplomesRequisIdDiplome")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend_poulina_future_jobs.Models.OffreEmploi", null)
+                        .WithMany()
+                        .HasForeignKey("OffresEmploiIdOffreEmploi")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -905,6 +1401,11 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("OffreCompetences");
                 });
 
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Departement", b =>
+                {
+                    b.Navigation("OffresEmploi");
+                });
+
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Experience", b =>
                 {
                     b.Navigation("Certificats");
@@ -924,6 +1425,41 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("Candidatures");
 
                     b.Navigation("OffreCompetences");
+
+                    b.Navigation("OffreLangues");
+
+                    b.Navigation("OffreMissions");
+
+                    b.Navigation("Postes");
+
+                    b.Navigation("Quizzes");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Question", b =>
+                {
+                    b.Navigation("Reponses");
+
+                    b.Navigation("ReponsesUtilisateur");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Quiz", b =>
+                {
+                    b.Navigation("Questions");
+
+                    b.Navigation("Tentatives");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Reponse", b =>
+                {
+                    b.Navigation("ReponsesUtilisateur");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.TentativeQuiz", b =>
+                {
+                    b.Navigation("ReponsesUtilisateur");
+
+                    b.Navigation("Resultat")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.AppUser", b =>
@@ -935,6 +1471,10 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Navigation("Experiences");
 
                     b.Navigation("OffresEmploi");
+
+                    b.Navigation("QuizzesTentés");
+
+                    b.Navigation("Tentatives");
 
                     b.Navigation("UserRoles");
                 });

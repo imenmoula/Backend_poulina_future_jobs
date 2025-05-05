@@ -40,15 +40,13 @@ namespace Backend_poulina_future_jobs.Models
 
         public string Specialite { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Le champ 'Titre' est obligatoire.")]
-        public string Titre { get; set; } = string.Empty;
+     
 
-        [Required(ErrorMessage = "Le champ 'Description' est obligatoire.")]
-        public string Description { get; set; } = string.Empty;
-
+     
         public DateTime DatePublication { get; set; } = DateTime.UtcNow;
 
         public DateTime? DateExpiration { get; set; }
+
 
         [Range(0, double.MaxValue, ErrorMessage = "Le salaire minimum doit être positif.")]
         public decimal SalaireMin { get; set; }
@@ -56,9 +54,12 @@ namespace Backend_poulina_future_jobs.Models
         [Range(0, double.MaxValue, ErrorMessage = "Le salaire maximum doit être positif.")]
         public decimal SalaireMax { get; set; }
 
+
+        // Niveau d'expérience requis, par exemple "Débutant", "Intermédiaire", "Senior"
+        [Required(ErrorMessage = "Le niveau d'expérience requis est obligatoire.")]
         public string NiveauExperienceRequis { get; set; } = string.Empty;
 
-        public string DiplomeRequis { get; set; } = string.Empty;
+
 
         [Required(ErrorMessage = "Le type de contrat est obligatoire.")]
         public TypeContratEnum TypeContrat { get; set; }
@@ -68,8 +69,7 @@ namespace Backend_poulina_future_jobs.Models
 
         public ModeTravail ModeTravail { get; set; } = ModeTravail.Presentiel;
 
-        [Range(1, int.MaxValue, ErrorMessage = "Le nombre de postes doit être au moins 1.")]
-        public int NombrePostes { get; set; } = 1;
+       public bool estActif { get; set; } = true;
 
         public string Avantages { get; set; } = string.Empty;
 
@@ -77,12 +77,33 @@ namespace Backend_poulina_future_jobs.Models
         [ForeignKey("IdRecruteur")]
         public virtual AppUser Recruteur { get; set; }
 
+        // Relation avec Filiale (décommentée et active)
         public Guid IdFiliale { get; set; }
         [ForeignKey("IdFiliale")]
         public virtual Filiale Filiale { get; set; }
 
-        public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>();
-        public virtual ICollection<OffreCompetences> OffreCompetences { get; set; } = new List<OffreCompetences>();
 
+        // Relation avec Departement correctement configurée
+        // ✅ Colonne existante dans la base
+        public Guid IdDepartement { get; set; }
+
+        // ✅ Relation configurée avec la bonne clé étrangère
+        [ForeignKey("IdDepartement")] // Correspond au nom de la colonne
+        public virtual Departement Departement { get; set; }
+
+
+
+
+        // Relations avec les nouvelles classes
+
+        public virtual ICollection<Diplome> DiplomesRequis { get; set; } = new List<Diplome>();
+        public virtual ICollection<Poste> Postes { get; set; } = new List<Poste>();
+        public virtual ICollection<OffreMission> OffreMissions { get; set; } = new List<OffreMission>();
+        public virtual ICollection<OffreLangue> OffreLangues { get; set; } = new List<OffreLangue>();
+        public virtual ICollection<OffreCompetences> OffreCompetences { get; set; } = new List<OffreCompetences>();
+        /*quize*/
+        public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>();
+        // Relations
+        public virtual ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
     }
 }

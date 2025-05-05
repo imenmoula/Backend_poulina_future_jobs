@@ -16,7 +16,7 @@ namespace Backend_poulina_future_jobs.Models
             ConcurrencyStamp = null;
         }
 
-        public string?ConcurrencyStamp { get; set; } 
+        public string? ConcurrencyStamp { get; set; }
 
     }
 }

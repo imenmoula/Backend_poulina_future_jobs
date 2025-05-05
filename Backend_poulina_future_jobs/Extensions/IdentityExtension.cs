@@ -17,7 +17,7 @@ namespace Backend_poulina_future_jobs.Extensions
                     .AddRoles<IdentityRole<Guid>>()
                     .AddEntityFrameworkStores<AppDbContext>()
                     .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
-            .AddDefaultTokenProviders();
+                    .AddDefaultTokenProviders();
 
             return services;
         }

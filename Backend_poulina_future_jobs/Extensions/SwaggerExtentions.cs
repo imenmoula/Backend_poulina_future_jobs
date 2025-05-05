@@ -48,7 +48,8 @@ namespace Backend_poulina_future_jobs.Extensions
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-               
+                app.UseDeveloperExceptionPage();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend_poulina_future_jobs v1"));
             }
             return app;
         }

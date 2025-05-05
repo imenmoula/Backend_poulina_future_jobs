@@ -157,122 +157,6 @@
     ]
   },
   {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "GetAllCandidatures",
-    "RelativePath": "api/Candidatures",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "CreateCandidature",
-    "RelativePath": "api/Candidatures",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "candidatureDto",
-        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureFormDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "GetCandidature",
-    "RelativePath": "api/Candidatures/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "UpdateCandidature",
-    "RelativePath": "api/Candidatures/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "candidatureDto",
-        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureFormDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "DeleteCandidature",
-    "RelativePath": "api/Candidatures/{id}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "SetCandidatureStatus",
-    "RelativePath": "api/Candidatures/{id}/status",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "statut",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CandidaturesController",
-    "Method": "DownloadCandidateCV",
-    "RelativePath": "api/Candidatures/download-cv/{userId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
     "Method": "GetCompetences",
     "RelativePath": "api/Competences",
@@ -280,7 +164,17 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Models.Competence, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
@@ -291,12 +185,22 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "competenceDto",
-        "Type": "CompetenceCreateDto",
+        "Name": "competence",
+        "Type": "Backend_poulina_future_jobs.Models.Competence",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.Competence",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
@@ -312,7 +216,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.Competence",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
@@ -328,8 +242,8 @@
         "IsRequired": true
       },
       {
-        "Name": "competenceDto",
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.CompetenceUpdateDTO",
+        "Name": "competence",
+        "Type": "Backend_poulina_future_jobs.Models.Competence",
         "IsRequired": true
       }
     ],
@@ -347,22 +261,6 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.CompetencesController",
-    "Method": "SearchCompetences",
-    "RelativePath": "api/Competences/search",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "term",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -524,6 +422,115 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.DiplomesController",
+    "Method": "GetDiplomes",
+    "RelativePath": "api/Diplomes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Models.Diplome, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.DiplomesController",
+    "Method": "PostDiplome",
+    "RelativePath": "api/Diplomes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "diplome",
+        "Type": "Backend_poulina_future_jobs.Models.Diplome",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.Diplome",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.DiplomesController",
+    "Method": "GetDiplome",
+    "RelativePath": "api/Diplomes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.Diplome",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.DiplomesController",
+    "Method": "PutDiplome",
+    "RelativePath": "api/Diplomes/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "diplome",
+        "Type": "Backend_poulina_future_jobs.Models.Diplome",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.DiplomesController",
+    "Method": "DeleteDiplome",
+    "RelativePath": "api/Diplomes/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.FilialesController",
@@ -813,77 +820,107 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
-    "Method": "AddCompetenceToOffre",
+    "Method": "GetOffreCompetences",
+    "RelativePath": "api/OffreCompetences",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Models.OffreCompetences, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
+    "Method": "PostOffreCompetences",
     "RelativePath": "api/OffreCompetences",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "OffreCompetenceDTO",
+        "Name": "offreCompetences",
+        "Type": "Backend_poulina_future_jobs.Models.OffreCompetences",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
-    "Method": "UpdateOffreCompetence",
-    "RelativePath": "api/OffreCompetences/{idOffreEmploi}/{idCompetence}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+    "ReturnTypes": [
       {
-        "Name": "idOffreEmploi",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "idCompetence",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "dto",
-        "Type": "OffreCompetenceDTO",
-        "IsRequired": true
+        "Type": "Backend_poulina_future_jobs.Models.OffreCompetences",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
-    ],
-    "ReturnTypes": []
+    ]
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
-    "Method": "DeleteOffreCompetence",
-    "RelativePath": "api/OffreCompetences/{idOffreEmploi}/{idCompetence}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "idOffreEmploi",
-        "Type": "System.Guid",
-        "IsRequired": true
-      },
-      {
-        "Name": "idCompetence",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
-    "Method": "GetCompetencesByOffre",
-    "RelativePath": "api/OffreCompetences/offre/{idOffreEmploi}",
+    "Method": "GetOffreCompetences",
+    "RelativePath": "api/OffreCompetences/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idOffreEmploi",
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.OffreCompetences",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
+    "Method": "PutOffreCompetences",
+    "RelativePath": "api/OffreCompetences/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "offreCompetences",
+        "Type": "Backend_poulina_future_jobs.Models.OffreCompetences",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreCompetencesController",
+    "Method": "DeleteOffreCompetences",
+    "RelativePath": "api/OffreCompetences/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
       }
@@ -909,8 +946,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.OffreEmploiDTO",
+        "Name": "request",
+        "Type": "Backend_poulina_future_jobs.Dtos.CreateOffreEmploiRequest",
         "IsRequired": true
       }
     ],
@@ -947,7 +984,7 @@
       },
       {
         "Name": "dto",
-        "Type": "Backend_poulina_future_jobs.Models.DTOs.OffreEmploiDTO",
+        "Type": "Backend_poulina_future_jobs.Dtos.OffreEmploiDto",
         "IsRequired": true
       }
     ],
@@ -971,88 +1008,8 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetModeTravailEnums",
-    "RelativePath": "api/OffreEmplois/enums/modeTravail",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetNiveauxRequisEnums",
-    "RelativePath": "api/OffreEmplois/enums/niveauxRequis",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetStatutEnums",
-    "RelativePath": "api/OffreEmplois/enums/statut",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetTypeContratEnums",
-    "RelativePath": "api/OffreEmplois/enums/typeContrat",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetOffreEmploisByFiliale",
-    "RelativePath": "api/OffreEmplois/filiale/{idFiliale}",
+    "Method": "GetOffresByFiliale",
+    "RelativePath": "api/OffreEmplois/by-filiale/{idFiliale}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1067,8 +1024,8 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "GetRecruteurIds",
-    "RelativePath": "api/OffreEmplois/Recruteurs",
+    "Method": "GetRecruteurs",
+    "RelativePath": "api/OffreEmplois/recruteurs",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1077,14 +1034,14 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
-    "Method": "SearchOffreEmplois",
+    "Method": "Search",
     "RelativePath": "api/OffreEmplois/search",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "titre",
+        "Name": "titrePoste",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -1094,24 +1051,232 @@
         "IsRequired": false
       },
       {
-        "Name": "statut",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "idFiliale",
-        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "modeTravail",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "typeContrat",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "statut",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreMissionsController",
+    "Method": "GetOffreMissions",
+    "RelativePath": "api/OffreMissions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Models.OffreMission, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreMissionsController",
+    "Method": "PostOffreMission",
+    "RelativePath": "api/OffreMissions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "offreMission",
+        "Type": "Backend_poulina_future_jobs.Models.OffreMission",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.OffreMission",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreMissionsController",
+    "Method": "GetOffreMission",
+    "RelativePath": "api/OffreMissions/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.OffreMission",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreMissionsController",
+    "Method": "PutOffreMission",
+    "RelativePath": "api/OffreMissions/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "offreMission",
+        "Type": "Backend_poulina_future_jobs.Models.OffreMission",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreMissionsController",
+    "Method": "DeleteOffreMission",
+    "RelativePath": "api/OffreMissions/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostesController",
+    "Method": "GetPostes",
+    "RelativePath": "api/Postes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Models.Poste, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostesController",
+    "Method": "PostPoste",
+    "RelativePath": "api/Postes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "poste",
+        "Type": "Backend_poulina_future_jobs.Models.Poste",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.Poste",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostesController",
+    "Method": "GetPoste",
+    "RelativePath": "api/Postes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Models.Poste",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostesController",
+    "Method": "PutPoste",
+    "RelativePath": "api/Postes/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "poste",
+        "Type": "Backend_poulina_future_jobs.Models.Poste",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostesController",
+    "Method": "DeletePoste",
+    "RelativePath": "api/Postes/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1137,6 +1302,250 @@
       {
         "Name": "updatedUser",
         "Type": "Backend_poulina_future_jobs.Models.AppUser",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuestionsController",
+    "Method": "GetQuestions",
+    "RelativePath": "api/Questions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Controllers.QuestionDto, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuestionsController",
+    "Method": "CreateQuestion",
+    "RelativePath": "api/Questions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "Backend_poulina_future_jobs.Controllers.QuestionCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.QuestionDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuestionsController",
+    "Method": "GetQuestion",
+    "RelativePath": "api/Questions/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.QuestionDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuestionsController",
+    "Method": "UpdateQuestion",
+    "RelativePath": "api/Questions/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Backend_poulina_future_jobs.Controllers.QuestionUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuestionsController",
+    "Method": "DeleteQuestion",
+    "RelativePath": "api/Questions/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuizController",
+    "Method": "GetQuizzes",
+    "RelativePath": "api/Quiz",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Controllers.QuizController\u002BQuizDto, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuizController",
+    "Method": "CreateQuiz",
+    "RelativePath": "api/Quiz",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Backend_poulina_future_jobs.Controllers.QuizController\u002BQuizCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.QuizController\u002BQuizDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuizController",
+    "Method": "GetQuiz",
+    "RelativePath": "api/Quiz/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.QuizController\u002BQuizDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuizController",
+    "Method": "UpdateQuiz",
+    "RelativePath": "api/Quiz/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Backend_poulina_future_jobs.Controllers.QuizController\u002BQuizUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.QuizController",
+    "Method": "DeleteQuiz",
+    "RelativePath": "api/Quiz/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
         "IsRequired": true
       }
     ],
@@ -1234,6 +1643,166 @@
         "StatusCode": 400
       }
     ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ReponsesController",
+    "Method": "GetReponses",
+    "RelativePath": "api/Reponses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Backend_poulina_future_jobs.Controllers.ReponseDto, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ReponsesController",
+    "Method": "CreateReponse",
+    "RelativePath": "api/Reponses",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "dto",
+        "Type": "Backend_poulina_future_jobs.Controllers.ReponseCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.ReponseDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ReponsesController",
+    "Method": "GetReponse",
+    "RelativePath": "api/Reponses/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.ReponseDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ReponsesController",
+    "Method": "UpdateReponse",
+    "RelativePath": "api/Reponses/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Backend_poulina_future_jobs.Controllers.ReponseUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.ReponsesController",
+    "Method": "DeleteReponse",
+    "RelativePath": "api/Reponses/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "quizId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Microsoft.AspNetCore.Routing.IdentityApiEndpointRouteBuilderExtensions\u002B\u003C\u003Ec__DisplayClass1_0\u00601[[Backend_poulina_future_jobs.Models.AppUser, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",

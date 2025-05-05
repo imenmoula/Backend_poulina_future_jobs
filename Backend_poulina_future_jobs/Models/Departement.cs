@@ -28,6 +28,10 @@ namespace Backend_poulina_future_jobs.Models
         [JsonIgnore]
         public Filiale Filiale { get; set; }
 
+        // Relation inverse (facultatif)
+        public virtual ICollection<OffreEmploi> OffresEmploi { get; set; } = new List<OffreEmploi>();
+
+
 
     }
 

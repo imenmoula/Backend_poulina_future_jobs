@@ -333,7 +333,7 @@ namespace Backend_poulina_future_jobs.Controllers
                     issuer: configuration["AppSettings:Issuer"],
                     audience: configuration["AppSettings:Audience"],
                     claims: authClaims,
-                    expires: DateTime.Now.AddDays(7), // Increased from 1 hour to 7 days
+                    expires: DateTime.Now.AddHours(3), // Increased from 1 hour to 7 days
                     signingCredentials: creds
                 );
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);

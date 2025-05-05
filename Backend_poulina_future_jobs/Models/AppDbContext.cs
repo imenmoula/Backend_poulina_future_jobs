@@ -1,37 +1,46 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Backend_poulina_future_jobs.Models;
-using Backend_poulina_future_jobs.Migrations;
 using System.Text;
 using System.Globalization;
-using Backend_poulina_future_jobs.Controllers;
 
 namespace Backend_poulina_future_jobs.Models
 {
-
     public class AppDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-        // public DbSet<Backend_poulina_future_jobs.Models.AppRole> Role { get; set; } = default!;
-        public DbSet<IdentityRole<Guid>> AppRole { get; set; } // Pour accéder aux rôles
+
+        // DbSets pour les tables de la base de données
+        public DbSet<IdentityRole<Guid>> AppRole { get; set; }
         public DbSet<Filiale> Filiales { get; set; }
         public DbSet<Departement> Departements { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-
         public DbSet<OffreEmploi> OffresEmploi { get; set; }
+        public DbSet<Poste> Postes { get; set; }
+        public DbSet<OffreMission> OffreMissions { get; set; }
+        public DbSet<OffreLangue> OffreLangues { get; set; }
+        public DbSet<Diplome> Diplomes { get; set; }
         public DbSet<Competence> Competences { get; set; }
-        public DbSet<OffreCompetences> OffreCompetences { get; set; }        //public DbSet<Competence> Competences { get; set; }
-
+        public DbSet<OffreCompetences> OffreCompetences { get; set; }
         public DbSet<Experience> Experiences { get; set; }
         public DbSet<Certificat> Certificats { get; set; }
         public DbSet<Candidature> Candidatures { get; set; }
-
         public DbSet<AppUserCompetence> AppUserCompetences { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Reponse> Reponses { get; set; }
+        public DbSet<TentativeQuiz> TentativesQuiz { get; set; }
+        public DbSet<ReponseUtilisateur> ReponsesUtilisateur { get; set; }
+        public DbSet<ResultatQuiz> ResultatsQuiz { get; set; }
+        public DbSet<AppUser> AppUser { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // Configuration pour Filiale et Département
             modelBuilder.Entity<Filiale>()
                 .Property(f => f.IdFiliale)
                 .HasDefaultValueSql("NEWID()");
@@ -39,15 +48,12 @@ namespace Backend_poulina_future_jobs.Models
             modelBuilder.Entity<Departement>()
                 .Property(d => d.IdDepartement)
                 .HasDefaultValueSql("NEWID()");
-            ;
 
-            // Configuration optionnelle si besoin
             modelBuilder.Entity<Departement>()
-         .HasOne(d => d.Filiale)
-         .WithMany(f => f.Departements)
-         .HasForeignKey(d => d.IdFiliale)
-         .OnDelete(DeleteBehavior.Cascade);
-            /********************************************************/
+                .HasOne(d => d.Filiale)
+                .WithMany(f => f.Departements)
+                .HasForeignKey(d => d.IdFiliale)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Définition de la relation Many-to-Many entre AppUser et IdentityRole
             modelBuilder.Entity<IdentityUserRole<Guid>>()
@@ -64,10 +70,8 @@ namespace Backend_poulina_future_jobs.Models
                 .WithMany()
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
-            /********************************************************************/
-            // Configuration des relations pour OffreEmploi
-            // Configure many-to-many relationship
 
+            // Configuration pour OffreEmploi et compétences
             modelBuilder.Entity<OffreCompetences>()
                 .HasKey(oc => new { oc.IdOffreEmploi, oc.IdCompetence });
 
@@ -83,10 +87,10 @@ namespace Backend_poulina_future_jobs.Models
                 .HasForeignKey(oc => oc.IdCompetence)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Configure StatutOffre enum to be stored as string
+            // Configuration des propriétés d'OffreEmploi
             modelBuilder.Entity<OffreEmploi>()
-         .Property(r => r.TypeContrat)
-         .HasColumnType("int");
+                .Property(r => r.TypeContrat)
+                .HasColumnType("int");
 
             modelBuilder.Entity<OffreEmploi>()
                 .Property(o => o.Statut)
@@ -97,34 +101,71 @@ namespace Backend_poulina_future_jobs.Models
                 .HasConversion<int>();
 
             modelBuilder.Entity<OffreCompetences>()
-                    .Property(o => o.NiveauRequis)
-                    .HasConversion<int>();
+                .Property(o => o.NiveauRequis)
+                .HasConversion<int>();
 
-
-            modelBuilder.Entity<OffreEmploi>()
-                .Property(o => o.NombrePostes)
-                .IsRequired()
-                .HasColumnType("int");
-
-
+          
 
             modelBuilder.Entity<OffreEmploi>()
-           .Property(o => o.Avantages)
-           .HasMaxLength(500);
-
+                .Property(o => o.Avantages)
+                .HasMaxLength(500);
 
             modelBuilder.Entity<OffreEmploi>()
-     .Property(o => o.SalaireMin)
-     .HasPrecision(18, 2);
+                .Property(o => o.SalaireMin)
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<OffreEmploi>()
                 .Property(o => o.SalaireMax)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OffreEmploi>()
+                .HasMany(o => o.DiplomesRequis)
+                .WithMany(d => d.OffresEmploi)
+                .UsingEntity(j => j.ToTable("OffreEmploiDiplomes"));
+
+            modelBuilder.Entity<OffreEmploi>()
+                .HasMany(o => o.Postes)
+                .WithOne(p => p.OffreEmploi)
+                .HasForeignKey(p => p.IdOffreEmploi)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OffreEmploi>()
+                .HasMany(o => o.OffreMissions)
+                .WithOne(om => om.OffreEmploi)
+                .HasForeignKey(om => om.IdOffreEmploi)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OffreEmploi>()
+                .HasMany(o => o.OffreLangues)
+                .WithOne(ol => ol.OffreEmploi)
+                .HasForeignKey(ol => ol.IdOffreEmploi)
+                .OnDelete(DeleteBehavior.Cascade);
+            // Configuration de la relation OffreEmploi -> Filiale
+
+            modelBuilder.Entity<OffreEmploi>()
+               .HasOne(o => o.Filiale)
+               .WithMany(f => f.OffresEmploi)
+               .HasForeignKey(o => o.IdFiliale)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            // Configuration de la relation entre OffreEmploi et Departement
+            // Configuration de la relation OffreEmploi -> Departement
+            modelBuilder.Entity<OffreEmploi>()
+            .HasOne(o => o.Departement)
+            .WithMany(d => d.OffresEmploi)
+            .HasForeignKey(o => o.IdDepartement);
+            // Assurez-vous que Departement est mappé à la table correcte
+            modelBuilder.Entity<Departement>()
+                .ToTable("Departements"); // Utilisez le nom exact de la table dans la base de données
+
+
+
+            // Définition des noms de tables
             modelBuilder.Entity<OffreEmploi>().ToTable("OffresEmploi");
             modelBuilder.Entity<Competence>().ToTable("Competences");
             modelBuilder.Entity<OffreCompetences>().ToTable("OffreCompetences");
-            /************************postuler**********************************************/
-            // Configuration des clés primaires et génération automatique des Guid
+
+            // Configuration pour les expériences et certificats
             modelBuilder.Entity<Experience>()
                 .Property(e => e.IdExperience)
                 .ValueGeneratedOnAdd();
@@ -133,20 +174,15 @@ namespace Backend_poulina_future_jobs.Models
                 .Property(c => c.IdCertificat)
                 .ValueGeneratedOnAdd();
 
-
             modelBuilder.Entity<Candidature>()
                 .Property(c => c.IdCandidature)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<AppUserCompetence>()
+                .Property(uc => uc.Id)
+                .ValueGeneratedOnAdd();
 
-
-            modelBuilder.Entity<AppUserCompetence>() // Updated
-                 .Property(uc => uc.Id)
-                 .ValueGeneratedOnAdd();
-
-
-
-            // Configuration des relations
+            // Relations pour les expériences et certificats
             modelBuilder.Entity<Experience>()
                 .HasOne(e => e.AppUser)
                 .WithMany(u => u.Experiences)
@@ -159,8 +195,7 @@ namespace Backend_poulina_future_jobs.Models
                 .HasForeignKey(c => c.ExperienceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
-
+            // Relations pour les candidatures
             modelBuilder.Entity<Candidature>()
                 .HasOne(c => c.AppUser)
                 .WithMany(u => u.Candidatures)
@@ -171,73 +206,165 @@ namespace Backend_poulina_future_jobs.Models
                 .HasOne(c => c.Offre)
                 .WithMany(o => o.Candidatures)
                 .HasForeignKey(c => c.OffreId)
-            .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);
 
+            // Relations pour les compétences des utilisateurs
+            modelBuilder.Entity<AppUserCompetence>()
+                .HasOne(cc => cc.AppUser)
+                .WithMany(u => u.AppUserCompetences)
+                .HasForeignKey(cc => cc.AppUserId);
 
             modelBuilder.Entity<AppUserCompetence>()
-           .HasOne(cc => cc.AppUser) // Updated to specify the navigation property
-           .WithMany(u => u.AppUserCompetences)
-           .HasForeignKey(cc => cc.AppUserId);
-
+                .HasOne(cc => cc.Competence)
+                .WithMany(c => c.AppUserCompetences)
+                .HasForeignKey(cc => cc.CompetenceId);
 
             modelBuilder.Entity<AppUserCompetence>()
-       .HasOne(cc => cc.Competence) // Updated
-       .WithMany(c => c.AppUserCompetences)
-       .HasForeignKey(cc => cc.CompetenceId);
-
-            // Explicitly set the table name to AppUserCompetences
-            modelBuilder.Entity<AppUserCompetence>() // Updated
                 .ToTable("AppUserCompetences");
 
-            // Configure NiveauPossede with a custom value converter to handle accents
-            // In OnModelCreating method
             modelBuilder.Entity<AppUserCompetence>()
                 .Property(cc => cc.NiveauPossede)
                 .HasConversion<int>();
 
-
             modelBuilder.Entity<AppUserCompetence>()
-                .Property(cc => cc.NiveauPossede)
-                .HasConversion<int>();
-            modelBuilder.Entity<AppUserCompetence>()
-                 .HasIndex(cc => new { cc.AppUserId, cc.CompetenceId })
-                 .IsUnique();
+                .HasIndex(cc => new { cc.AppUserId, cc.CompetenceId })
+                .IsUnique();
 
-            // Add index for Candidature
+            // Index pour Candidature
             modelBuilder.Entity<Candidature>()
                 .HasIndex(c => new { c.AppUserId, c.OffreId })
-                   .IsUnique();
+                .IsUnique();
 
-
-            // Exemple : Configuration de la relation entre Filiale et AppUser (optionnel, car déjà géré par les annotations)
+            // Relation Filiale-AppUser
             modelBuilder.Entity<AppUser>()
                 .HasOne(u => u.Filiale)
                 .WithMany(f => f.Users)
                 .HasForeignKey(u => u.IdFiliale)
-                .OnDelete(DeleteBehavior.SetNull); // Si la Filiale est supprimée, IdFiliale sera défini à null
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // === RELATIONS POUR LES QUIZ ===
+
+            // Relations OffreEmploi-Quiz
+            modelBuilder.Entity<OffreEmploi>()
+                .HasMany(o => o.Quizzes)
+                .WithOne(q => q.OffreEmploi)
+                .HasForeignKey(q => q.OffreEmploiId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Relations Quiz
+            modelBuilder.Entity<Quiz>()
+                .HasOne(q => q.OffreEmploi)
+                .WithMany(o => o.Quizzes)
+                .HasForeignKey(q => q.OffreEmploiId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Quiz>()
+                .HasMany(q => q.Questions)
+                .WithOne(qu => qu.Quiz)
+                .HasForeignKey(qu => qu.QuizId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Quiz>()
+                .HasMany(q => q.Tentatives)
+                .WithOne(t => t.Quiz)
+                .HasForeignKey(t => t.QuizId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relations Question
+            modelBuilder.Entity<Question>()
+                .HasOne(q => q.Quiz)
+                .WithMany(qz => qz.Questions)
+                .HasForeignKey(q => q.QuizId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Question>()
+                .HasMany(q => q.Reponses)
+                .WithOne(r => r.Question)
+                .HasForeignKey(r => r.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Question>()
+                .HasMany(q => q.ReponsesUtilisateur)
+                .WithOne(ru => ru.Question)
+                .HasForeignKey(ru => ru.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relations Reponse
+            modelBuilder.Entity<Reponse>()
+                .HasOne(r => r.Question)
+                .WithMany(q => q.Reponses)
+                .HasForeignKey(r => r.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Reponse>()
+                .HasMany(r => r.ReponsesUtilisateur)
+                .WithOne(ru => ru.Reponse)
+                .HasForeignKey(ru => ru.ReponseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relations TentativeQuiz
+            modelBuilder.Entity<TentativeQuiz>()
+                .HasOne(t => t.Quiz)
+                .WithMany(q => q.Tentatives)
+                .HasForeignKey(t => t.QuizId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TentativeQuiz>()
+               .HasOne<AppUser>(t => t.AppUser)
+               .WithMany()
+               .HasForeignKey(t => t.AppUserId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TentativeQuiz>()
+                .HasOne(t => t.Resultat)
+                .WithOne(r => r.Tentative)
+                .HasForeignKey<ResultatQuiz>(r => r.TentativeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TentativeQuiz>()
+                .HasMany(t => t.ReponsesUtilisateur)
+                .WithOne(ru => ru.Tentative)
+                .HasForeignKey(ru => ru.TentativeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Relations ReponseUtilisateur
+            modelBuilder.Entity<ReponseUtilisateur>()
+                .HasOne(ru => ru.Tentative)
+                .WithMany(t => t.ReponsesUtilisateur)
+                .HasForeignKey(ru => ru.TentativeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ReponseUtilisateur>()
+                .HasOne(ru => ru.Question)
+                .WithMany(q => q.ReponsesUtilisateur)
+                .HasForeignKey(ru => ru.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ReponseUtilisateur>()
+                .HasOne(ru => ru.Reponse)
+                .WithMany(r => r.ReponsesUtilisateur)
+                .HasForeignKey(ru => ru.ReponseId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relations ResultatQuiz
+            modelBuilder.Entity<ResultatQuiz>()
+                .HasOne(r => r.Tentative)
+                .WithOne(t => t.Resultat)
+                .HasForeignKey<ResultatQuiz>(r => r.TentativeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+           
         }
 
-
-
-        /*****relation user ---departement ***************************/
-
-        
-
-
-
-
-
-
-
-
-        // Add the following helper method to handle string normalization:
+        // Méthode auxiliaire pour gérer la normalisation des chaînes
         private static string RemoveDiacritics(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return text;
 
             var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new System.Text.StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             foreach (var c in normalizedString)
             {
@@ -250,11 +377,5 @@ namespace Backend_poulina_future_jobs.Models
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
-
-
-
-        public DbSet<Backend_poulina_future_jobs.Models.AppUser> AppUser { get; set; } = default!;
     }
-
-
 }

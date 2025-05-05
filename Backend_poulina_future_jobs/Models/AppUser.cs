@@ -72,9 +72,9 @@ namespace Backend_poulina_future_jobs.Models
         public ICollection<Experience> Experiences { get; set; } = new List<Experience>(); // Pour un candidat
         public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>(); // Pour un candidat
         public ICollection<AppUserCompetence> AppUserCompetences { get; set; } = new List<AppUserCompetence>(); // Nouvelle relation
-
-
-
+        public List<Quiz> QuizzesTentés { get; set; } = new List<Quiz>();
+        // Dans la classe AppUser
+        public virtual ICollection<TentativeQuiz> Tentatives { get; set; } = new List<TentativeQuiz>();
 
     }
 }
