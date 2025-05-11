@@ -104,6 +104,7 @@ wwwroot\uploads\logoFooter_2b6c41d9-c575-45a1-968d-b9bd146e3f86.png
 wwwroot\uploads\logoFooter_40f10a4e-d466-4e70-9aa8-4b1b5bde2371.png
 wwwroot\uploads\logoFooter_489850dc-624f-48d6-8cfb-a5a7acee6871.png
 wwwroot\uploads\logoFooter_5eb83023-8826-4ad5-aaa9-a4bc0494eee3.png
+wwwroot\uploads\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png
 wwwroot\uploads\logoFooter_8eeb7619-eae3-4183-a3c1-87707c7c2857.png
 wwwroot\uploads\logoFooter_ca051993-6e13-4bd8-a01a-3f178ec2da99.png
 wwwroot\uploads\logoFooter_cb8d1980-237c-4bfc-9843-4728c69ba61d.png

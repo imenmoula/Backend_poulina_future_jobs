@@ -6,116 +6,203 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
+using Backend_poulina_future_jobs.Dtos;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OffreCompetencesController : ControllerBase
-    {
-        private readonly AppDbContext _context;
-
-        public OffreCompetencesController(AppDbContext context)
+   
+    
+        [Route("api/[controller]")]
+        [ApiController]
+        public class OffreCompetencesController : ControllerBase
         {
-            _context = context;
-        }
+            private readonly AppDbContext _context;
 
-        // GET: api/OffreCompetences
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<OffreCompetences>>> GetOffreCompetences()
-        {
-            return await _context.OffreCompetences.ToListAsync();
-        }
+            public OffreCompetencesController(AppDbContext context)
+            {
+                _context = context;
+            }
+
+            // GET: api/OffreCompetences
+            [HttpGet]
+            public async Task<ActionResult<object>> GetAll()
+            {
+                var competences = await _context.OffreCompetences
+                    .Include(oc => oc.Competence)
+                    .ToListAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Liste des relations offre-compétence récupérée",
+                    data = competences
+                });
+            }
 
         // GET: api/OffreCompetences/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OffreCompetences>> GetOffreCompetences(Guid id)
+        [HttpGet("{idOffreEmploi}/{idCompetence}")]
+        public async Task<ActionResult<OffreCompetences>> GetById(Guid idOffreEmploi, Guid idCompetence)
         {
-            var offreCompetences = await _context.OffreCompetences.FindAsync(id);
-
-            if (offreCompetences == null)
+            var competence = await _context.OffreCompetences
+                .FirstOrDefaultAsync(oc => oc.IdOffreEmploi == idOffreEmploi && oc.IdCompetence == idCompetence);
+            if (competence == null)
             {
                 return NotFound();
             }
-
-            return offreCompetences;
-        }
-
-        // PUT: api/OffreCompetences/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOffreCompetences(Guid id, OffreCompetences offreCompetences)
-        {
-            if (id != offreCompetences.IdOffreEmploi)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(offreCompetences).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OffreCompetencesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return competence;
         }
 
         // POST: api/OffreCompetences
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OffreCompetences>> PostOffreCompetences(OffreCompetences offreCompetences)
+        public async Task<ActionResult<object>> Create([FromBody] OffreCompetenceDto dto)
         {
-            _context.OffreCompetences.Add(offreCompetences);
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Données invalides",
+                        errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
+                    });
+                }
+
+                if (!await _context.OffresEmploi.AnyAsync(o => o.IdOffreEmploi == dto.IdOffreEmploi))
+                {
+                    return BadRequest(new { success = false, message = "L'offre spécifiée n'existe pas" });
+                }
+
+                if (!await _context.Competences.AnyAsync(c => c.Id == dto.IdCompetence))
+                {
+                    return BadRequest(new { success = false, message = "La compétence spécifiée n'existe pas" });
+                }
+
+                var entity = new OffreCompetences
+                {
+                    IdOffreEmploi = dto.IdOffreEmploi,
+                    IdCompetence = dto.IdCompetence,
+                    NiveauRequis = dto.NiveauRequis
+                };
+
+                _context.OffreCompetences.Add(entity);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OffreCompetencesExists(offreCompetences.IdOffreEmploi))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetOffreCompetences", new { id = offreCompetences.IdOffreEmploi }, offreCompetences);
+                return CreatedAtAction(nameof(GetById), new { idOffreEmploi = entity.IdOffreEmploi, idCompetence = entity.IdCompetence }, new
+                {
+                    success = true,
+                    message = "Compétence ajoutée avec succès",
+                    data = entity
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur interne du serveur",
+                    detail = ex.Message
+                });
+            }
         }
 
+        [HttpPut("{idOffreEmploi}/{idCompetence}")]
+        public async Task<ActionResult<object>> Update(Guid idOffreEmploi, Guid idCompetence, [FromBody] OffreCompetenceDto dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Données invalides",
+                        errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
+                    });
+                }
+
+                if (idOffreEmploi != dto.IdOffreEmploi || idCompetence != dto.IdCompetence)
+                {
+                    return BadRequest(new { success = false, message = "Les IDs dans l'URL et le corps ne correspondent pas" });
+                }
+
+                var entity = await _context.OffreCompetences
+                    .FirstOrDefaultAsync(oc => oc.IdOffreEmploi == idOffreEmploi && oc.IdCompetence == idCompetence);
+                if (entity == null)
+                {
+                    return NotFound(new { success = false, message = "Compétence non trouvée" });
+                }
+
+                if (!await _context.OffresEmploi.AnyAsync(o => o.IdOffreEmploi == dto.IdOffreEmploi))
+                {
+                    return BadRequest(new { success = false, message = "L'offre spécifiée n'existe pas" });
+                }
+
+                if (!await _context.Competences.AnyAsync(c => c.Id == dto.IdCompetence))
+                {
+                    return BadRequest(new { success = false, message = "La compétence spécifiée n'existe pas" });
+                }
+
+                entity.NiveauRequis = dto.NiveauRequis;
+
+                _context.Entry(entity).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Compétence mise à jour avec succès",
+                    data = entity
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur interne du serveur",
+                    detail = ex.Message
+                });
+            }
+        }
         // DELETE: api/OffreCompetences/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOffreCompetences(Guid id)
-        {
-            var offreCompetences = await _context.OffreCompetences.FindAsync(id);
-            if (offreCompetences == null)
+        [HttpDelete("{idOffre}/{idCompetence}")]
+            public async Task<IActionResult> Delete(Guid idOffre, Guid idCompetence)
             {
-                return NotFound();
+                try
+                {
+                    var entity = await _context.OffreCompetences
+                        .FirstOrDefaultAsync(oc => oc.IdOffreEmploi == idOffre && oc.IdCompetence == idCompetence);
+
+                    if (entity == null)
+                    {
+                        return NotFound(new
+                        {
+                            success = false,
+                            message = "Relation non trouvée"
+                        });
+                    }
+
+                    _context.OffreCompetences.Remove(entity);
+                    await _context.SaveChangesAsync();
+
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "Relation supprimée"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, new
+                    {
+                        success = false,
+                        message = "Erreur serveur",
+                        detail = ex.Message
+                    });
+                }
             }
-
-            _context.OffreCompetences.Remove(offreCompetences);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
-
-        private bool OffreCompetencesExists(Guid id)
-        {
-            return _context.OffreCompetences.Any(e => e.IdOffreEmploi == id);
-        }
-    }
+    
 }
+

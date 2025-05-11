@@ -1,47 +1,49 @@
-﻿using Backend_poulina_future_jobs.Dtos;
-using Backend_poulina_future_jobs.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
+using Backend_poulina_future_jobs.Models;
+using Backend_poulina_future_jobs.Dtos;
 
-namespace YourNamespace.Controllers
+namespace Backend_poulina_future_jobs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OffreMissionsController : ControllerBase
+    public class OffreLanguesController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public OffreMissionsController(AppDbContext context)
+        public OffreLanguesController(AppDbContext context)
         {
             _context = context;
         }
-        // GET: api/OffreMissions?IdOffreEmploi=f3e85470-743c-44d9-b762-41ad3adbdf43
+
+        // GET: api/OffreLangues
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OffreMission>>> GetOffreMissions([FromQuery] Guid IdOffreEmploi)
+        public async Task<ActionResult<IEnumerable<OffreLangue>>> GetOffreLangues()
         {
-            if (IdOffreEmploi == Guid.Empty)
-            {
-                return BadRequest(new { success = false, message = "L'ID de l'offre d'emploi est requis." });
-            }
-
-            // Verify that the OffreEmploi exists
-            if (!await _context.OffresEmploi.AnyAsync(oe => oe.IdOffreEmploi == IdOffreEmploi))
-            {
-                return NotFound(new { success = false, message = $"L'offre d'emploi avec ID {IdOffreEmploi} n'existe pas." });
-            }
-
-            var offreMissions = await _context.OffreMissions
-                .Where(om => om.IdOffreEmploi == IdOffreEmploi)
-                .ToListAsync();
-
-            return Ok(new { success = true, data = offreMissions });
+            return await _context.OffreLangues.ToListAsync();
         }
-    
 
+        // GET: api/OffreLangues/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OffreLangue>> GetById(Guid id)
+        {
+            var langue = await _context.OffreLangues.FindAsync(id);
+            if (langue == null)
+            {
+                return NotFound();
+            }
+            return langue;
+        }
+
+        // PUT: api/OffreLangues/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<object>> Create([FromBody] OffreMissionDto dto)
+        public async Task<ActionResult<object>> Create([FromBody] OffreLangueDto dto)
         {
             try
             {
@@ -60,21 +62,21 @@ namespace YourNamespace.Controllers
                     return BadRequest(new { success = false, message = "L'offre spécifiée n'existe pas" });
                 }
 
-                var entity = new OffreMission
+                var entity = new OffreLangue
                 {
-                    IdOffreMission = Guid.NewGuid(),
+                    IdOffreLangue = Guid.NewGuid(),
                     IdOffreEmploi = dto.IdOffreEmploi,
-                    DescriptionMission = dto.DescriptionMission,
-                    Priorite = dto.Priorite
+                    Langue = dto.Langue,
+                    NiveauRequis = dto.NiveauRequis
                 };
 
-                _context.OffreMissions.Add(entity);
+                _context.OffreLangues.Add(entity);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetById), new { id = entity.IdOffreMission }, new
+                return CreatedAtAction(nameof(GetById), new { id = entity.IdOffreLangue }, new
                 {
                     success = true,
-                    message = "Mission créée avec succès",
+                    message = "Langue ajoutée avec succès",
                     data = entity
                 });
             }
@@ -90,7 +92,7 @@ namespace YourNamespace.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<object>> Update(Guid id, [FromBody] OffreMissionDto dto)
+        public async Task<ActionResult<object>> Update(Guid id, [FromBody] OffreLangueDto dto)
         {
             try
             {
@@ -104,10 +106,10 @@ namespace YourNamespace.Controllers
                     });
                 }
 
-                var entity = await _context.OffreMissions.FindAsync(id);
+                var entity = await _context.OffreLangues.FindAsync(id);
                 if (entity == null)
                 {
-                    return NotFound(new { success = false, message = "Mission non trouvée" });
+                    return NotFound(new { success = false, message = "Langue non trouvée" });
                 }
 
                 if (!await _context.OffresEmploi.AnyAsync(o => o.IdOffreEmploi == dto.IdOffreEmploi))
@@ -116,8 +118,8 @@ namespace YourNamespace.Controllers
                 }
 
                 entity.IdOffreEmploi = dto.IdOffreEmploi;
-                entity.DescriptionMission = dto.DescriptionMission;
-                entity.Priorite = dto.Priorite;
+                entity.Langue = dto.Langue;
+                entity.NiveauRequis = dto.NiveauRequis;
 
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -125,7 +127,7 @@ namespace YourNamespace.Controllers
                 return Ok(new
                 {
                     success = true,
-                    message = "Mission mise à jour avec succès",
+                    message = "Langue mise à jour avec succès",
                     data = entity
                 });
             }
@@ -140,33 +142,26 @@ namespace YourNamespace.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<OffreMission>> GetById(Guid id)
+        // DELETE: api/OffreLangues/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOffreLangue(Guid id)
         {
-            var mission = await _context.OffreMissions.FindAsync(id);
-            if (mission == null)
+            var offreLangue = await _context.OffreLangues.FindAsync(id);
+            if (offreLangue == null)
             {
                 return NotFound();
             }
-            return mission;
-        }
-        // Add this method to the existing OffreMissionsController
 
-        // DELETE: api/OffreMissions/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOffreMission(Guid id)
-        {
-            var offreMission = await _context.OffreMissions.FindAsync(id);
-            if (offreMission == null)
-            {
-                return NotFound(new { success = false, message = $"La mission avec ID {id} n'existe pas." });
-            }
-
-            _context.OffreMissions.Remove(offreMission);
+            _context.OffreLangues.Remove(offreLangue);
             await _context.SaveChangesAsync();
 
-            return Ok(new { success = true, message = "Mission supprimée avec succès." });
+            return NoContent();
+        }
+
+        private bool OffreLangueExists(Guid id)
+        {
+            return _context.OffreLangues.Any(e => e.IdOffreLangue == id);
         }
     }
-
+   
 }

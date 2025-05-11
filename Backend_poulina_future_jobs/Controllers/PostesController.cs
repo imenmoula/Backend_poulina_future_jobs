@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -35,23 +36,45 @@ namespace Backend_poulina_future_jobs.Controllers
 
             if (poste == null)
             {
-                return NotFound();
+                return NotFound(new { success = false, message = $"Le poste avec ID {id} n'existe pas." });
             }
 
-            return poste;
+            return Ok(new { success = true, data = poste });
         }
 
         // PUT: api/Postes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPoste(Guid id, Poste poste)
+        public async Task<IActionResult> PutPoste(Guid id, [FromBody] PosteUpdateDto posteDto)
         {
-            if (id != poste.IdPoste)
+            if (id != posteDto.IdPoste)
             {
-                return BadRequest();
+                return BadRequest(new { success = false, message = "L'ID dans l'URL ne correspond pas à l'ID du poste." });
             }
 
-            _context.Entry(poste).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Les données fournies sont invalides.", errors = ModelState });
+            }
+
+            // Validate that the related OffreEmploi exists
+            if (!await _context.OffresEmploi.AnyAsync(oe => oe.IdOffreEmploi == posteDto.IdOffreEmploi))
+            {
+                return BadRequest(new { success = false, message = $"L'offre d'emploi avec ID {posteDto.IdOffreEmploi} n'existe pas." });
+            }
+
+            var poste = await _context.Postes.FindAsync(id);
+            if (poste == null)
+            {
+                return NotFound(new { success = false, message = $"Le poste avec ID {id} n'existe pas." });
+            }
+
+            // Update properties
+            poste.TitrePoste = posteDto.TitrePoste;
+            poste.Description = posteDto.Description;
+            poste.NombrePostes = posteDto.NombrePostes;
+            poste.ExperienceSouhaitee = posteDto.ExperienceSouhaitee;
+            poste.NiveauHierarchique = posteDto.NiveauHierarchique;
+            poste.IdOffreEmploi = posteDto.IdOffreEmploi;
 
             try
             {
@@ -61,7 +84,7 @@ namespace Backend_poulina_future_jobs.Controllers
             {
                 if (!PosteExists(id))
                 {
-                    return NotFound();
+                    return NotFound(new { success = false, message = $"Le poste avec ID {id} n'existe pas." });
                 }
                 else
                 {
@@ -73,14 +96,35 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
         // POST: api/Postes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Poste>> PostPoste(Poste poste)
+        public async Task<ActionResult<Poste>> PostPoste([FromBody] PosteCreateDto posteDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Les données fournies sont invalides.", errors = ModelState });
+            }
+
+            // Validate that the related OffreEmploi exists
+            if (!await _context.OffresEmploi.AnyAsync(oe => oe.IdOffreEmploi == posteDto.IdOffreEmploi))
+            {
+                return BadRequest(new { success = false, message = $"L'offre d'emploi avec ID {posteDto.IdOffreEmploi} n'existe pas." });
+            }
+
+            var poste = new Poste
+            {
+                IdPoste = Guid.NewGuid(),
+                IdOffreEmploi = posteDto.IdOffreEmploi,
+                TitrePoste = posteDto.TitrePoste,
+                Description = posteDto.Description,
+                NombrePostes = posteDto.NombrePostes,
+                ExperienceSouhaitee = posteDto.ExperienceSouhaitee,
+                NiveauHierarchique = posteDto.NiveauHierarchique
+            };
+
             _context.Postes.Add(poste);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPoste", new { id = poste.IdPoste }, poste);
+            return CreatedAtAction("GetPoste", new { id = poste.IdPoste }, new { success = true, message = "Poste créé avec succès.", data = poste });
         }
 
         // DELETE: api/Postes/5
@@ -90,18 +134,53 @@ namespace Backend_poulina_future_jobs.Controllers
             var poste = await _context.Postes.FindAsync(id);
             if (poste == null)
             {
-                return NotFound();
+                return NotFound(new { success = false, message = $"Le poste avec ID {id} n'existe pas." });
             }
 
             _context.Postes.Remove(poste);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new { success = true, message = "Poste supprimé avec succès." });
         }
 
         private bool PosteExists(Guid id)
         {
             return _context.Postes.Any(e => e.IdPoste == id);
         }
+    }
+
+    // DTO for creating a new Poste
+    public class PosteCreateDto
+    {
+        [Required]
+        public Guid IdOffreEmploi { get; set; }
+        [Required]
+        public string TitrePoste { get; set; }
+        [Required]
+        public string Description { get; set; }
+        [Required]
+        public int NombrePostes { get; set; }
+        [Required]
+        public string ExperienceSouhaitee { get; set; }
+        [Required]
+        public string NiveauHierarchique { get; set; }
+    }
+
+    // DTO for updating an existing Poste
+    public class PosteUpdateDto
+    {
+        public Guid IdPoste { get; set; }
+        [Required]
+        public Guid IdOffreEmploi { get; set; }
+        [Required]
+        public string TitrePoste { get; set; }
+        [Required]
+        public string Description { get; set; }
+        [Required]
+        public int NombrePostes { get; set; }
+        [Required]
+        public string ExperienceSouhaitee { get; set; }
+        [Required]
+        public string NiveauHierarchique { get; set; }
     }
 }

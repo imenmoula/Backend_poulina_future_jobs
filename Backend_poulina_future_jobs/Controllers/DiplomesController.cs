@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -23,78 +22,120 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // GET: api/Diplomes
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Diplome>>> GetDiplomes()
+        public async Task<ActionResult<object>> GetDiplomes()
         {
-            return await _context.Diplomes.ToListAsync();
+            var diplomes = await _context.Diplomes.ToListAsync();
+            return Ok(new { success = true, message = "Liste des diplômes récupérée", data = diplomes });
         }
 
         // GET: api/Diplomes/5
         [HttpGet("{id}")]
-        [AllowAnonymous]
-
-        public async Task<ActionResult<Diplome>> GetDiplome(Guid id)
+        public async Task<ActionResult<Diplome>> GetById(Guid id)
         {
             var diplome = await _context.Diplomes.FindAsync(id);
-
             if (diplome == null)
             {
                 return NotFound();
             }
-
             return diplome;
         }
 
         // PUT: api/Diplomes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [AllowAnonymous]
-
-        public async Task<IActionResult> PutDiplome(Guid id, Diplome diplome)
+        public async Task<ActionResult<object>> Update(Guid id, [FromBody] DiplomeDto dto)
         {
-            if (id != diplome.IdDiplome)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(diplome).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DiplomeExists(id))
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Données invalides",
+                        errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
+                    });
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                var entity = await _context.Diplomes.FindAsync(id);
+                if (entity == null)
+                {
+                    return NotFound(new { success = false, message = "Diplôme non trouvé" });
+                }
+
+                entity.NomDiplome = dto.NomDiplome;
+                entity.Niveau = dto.Niveau;
+                entity.Domaine = dto.Domaine;
+                entity.Institution = dto.Institution;
+
+                _context.Entry(entity).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Diplôme mis à jour avec succès",
+                    data = entity
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur interne du serveur",
+                    detail = ex.Message
+                });
+            }
         }
 
         // POST: api/Diplomes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [AllowAnonymous]
-
-        public async Task<ActionResult<Diplome>> PostDiplome(Diplome diplome)
+        public async Task<ActionResult<object>> Create([FromBody] DiplomeDto dto)
         {
-            _context.Diplomes.Add(diplome);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Données invalides",
+                        errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
+                    });
+                }
 
-            return CreatedAtAction("GetDiplome", new { id = diplome.IdDiplome }, diplome);
+                var entity = new Diplome
+                {
+                    IdDiplome = Guid.NewGuid(),
+                    NomDiplome = dto.NomDiplome,
+                    Niveau = dto.Niveau,
+                    Domaine = dto.Domaine,
+                    Institution = dto.Institution
+                };
+
+                _context.Diplomes.Add(entity);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetById), new { id = entity.IdDiplome }, new
+                {
+                    success = true,
+                    message = "Diplôme créé avec succès",
+                    data = entity
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur interne du serveur",
+                    detail = ex.Message
+                });
+            }
         }
 
         // DELETE: api/Diplomes/5
         [HttpDelete("{id}")]
-        [AllowAnonymous]
-
         public async Task<IActionResult> DeleteDiplome(Guid id)
         {
             var diplome = await _context.Diplomes.FindAsync(id);
@@ -113,5 +154,13 @@ namespace Backend_poulina_future_jobs.Controllers
         {
             return _context.Diplomes.Any(e => e.IdDiplome == id);
         }
+    }
+
+    public class DiplomeDto
+    {
+        public string NomDiplome { get; set; }
+        public string Niveau { get; set; }
+        public string Domaine { get; set; }
+        public string Institution { get; set; }
     }
 }

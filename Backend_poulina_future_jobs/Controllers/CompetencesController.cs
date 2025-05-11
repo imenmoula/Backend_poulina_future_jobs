@@ -35,22 +35,27 @@ namespace Backend_poulina_future_jobs.Controllers
 
             if (competence == null)
             {
-                return NotFound();
+                return NotFound(new { success = false, message = $"La compétence avec ID {id} n'existe pas." });
             }
 
-            return competence;
+            return Ok(new { success = true, data = competence });
         }
 
         // PUT: api/Competences/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCompetence(Guid id, Competence competence)
         {
             if (id != competence.Id)
             {
-                return BadRequest();
+                return BadRequest(new { success = false, message = "L'ID dans l'URL ne correspond pas à l'ID de la compétence." });
             }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Les données fournies sont invalides.", errors = ModelState });
+            }
+
+            competence.DateModification = DateTime.UtcNow; // Update modification date
             _context.Entry(competence).State = EntityState.Modified;
 
             try
@@ -61,7 +66,7 @@ namespace Backend_poulina_future_jobs.Controllers
             {
                 if (!CompetenceExists(id))
                 {
-                    return NotFound();
+                    return NotFound(new { success = false, message = $"La compétence avec ID {id} n'existe pas." });
                 }
                 else
                 {
@@ -73,14 +78,20 @@ namespace Backend_poulina_future_jobs.Controllers
         }
 
         // POST: api/Competences
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Competence>> PostCompetence(Competence competence)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Les données fournies sont invalides.", errors = ModelState });
+            }
+
+            competence.Id = Guid.NewGuid(); // Ensure a new GUID if not provided
+            competence.DateModification = DateTime.UtcNow; // Set initial modification date
             _context.Competences.Add(competence);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCompetence", new { id = competence.Id }, competence);
+            return CreatedAtAction("GetCompetence", new { id = competence.Id }, new { success = true, message = "Compétence créée avec succès.", data = competence });
         }
 
         // DELETE: api/Competences/5
@@ -90,13 +101,13 @@ namespace Backend_poulina_future_jobs.Controllers
             var competence = await _context.Competences.FindAsync(id);
             if (competence == null)
             {
-                return NotFound();
+                return NotFound(new { success = false, message = $"La compétence avec ID {id} n'existe pas." });
             }
 
             _context.Competences.Remove(competence);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new { success = true, message = "Compétence supprimée avec succès." });
         }
 
         private bool CompetenceExists(Guid id)

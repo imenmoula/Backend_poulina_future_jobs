@@ -977,33 +977,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Diplome"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Diplome"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Diplome"
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -1015,41 +989,24 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Diplome"
+                "$ref": "#/components/schemas/DiplomeDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Diplome"
+                "$ref": "#/components/schemas/DiplomeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Diplome"
+                "$ref": "#/components/schemas/DiplomeDto"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Diplome"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Diplome"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Diplome"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -1112,17 +1069,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Diplome"
+                "$ref": "#/components/schemas/DiplomeDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Diplome"
+                "$ref": "#/components/schemas/DiplomeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Diplome"
+                "$ref": "#/components/schemas/DiplomeDto"
               }
             }
           }
@@ -1434,33 +1391,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OffreCompetences"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OffreCompetences"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OffreCompetences"
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -1472,53 +1403,45 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetences"
+                "$ref": "#/components/schemas/OffreCompetenceDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetences"
+                "$ref": "#/components/schemas/OffreCompetenceDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetences"
+                "$ref": "#/components/schemas/OffreCompetenceDto"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/OffreCompetences"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OffreCompetences"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OffreCompetences"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
     },
-    "/api/OffreCompetences/{id}": {
+    "/api/OffreCompetences/{idOffreEmploi}/{idCompetence}": {
       "get": {
         "tags": [
           "OffreCompetences"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "idOffreEmploi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "idCompetence",
             "in": "path",
             "required": true,
             "schema": {
@@ -1556,7 +1479,16 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "idOffreEmploi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "idCompetence",
             "in": "path",
             "required": true,
             "schema": {
@@ -1569,17 +1501,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetences"
+                "$ref": "#/components/schemas/OffreCompetenceDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetences"
+                "$ref": "#/components/schemas/OffreCompetenceDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreCompetences"
+                "$ref": "#/components/schemas/OffreCompetenceDto"
               }
             }
           }
@@ -1589,14 +1521,25 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/api/OffreCompetences/{idOffre}/{idCompetence}": {
       "delete": {
         "tags": [
           "OffreCompetences"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "idOffre",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "idCompetence",
             "in": "path",
             "required": true,
             "schema": {
@@ -1770,6 +1713,21 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "niveauExperienceRequis",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idFiliale",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -1802,6 +1760,66 @@
         }
       }
     },
+    "/api/OffreEmplois/Statuts": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/TypesContrat": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/ModesTravail": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/NiveauxRequis": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/Competences": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/OffreEmplois/recruteurs": {
       "get": {
         "tags": [
@@ -1814,10 +1832,188 @@
         }
       }
     },
+    "/api/OffreLangues": {
+      "get": {
+        "tags": [
+          "OffreLangues"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreLangue"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreLangue"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OffreLangue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OffreLangues"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreLangueDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreLangueDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreLangueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreLangues/{id}": {
+      "get": {
+        "tags": [
+          "OffreLangues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreLangue"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreLangue"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OffreLangue"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OffreLangues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreLangueDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreLangueDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreLangueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OffreLangues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/OffreMissions": {
       "get": {
         "tags": [
           "OffreMissions"
+        ],
+        "parameters": [
+          {
+            "name": "IdOffreEmploi",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -1859,46 +2055,69 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreMission"
+                "$ref": "#/components/schemas/OffreMissionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreMission"
+                "$ref": "#/components/schemas/OffreMissionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OffreMission"
+                "$ref": "#/components/schemas/OffreMissionDto"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/OffreMission"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OffreMission"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OffreMission"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
     },
     "/api/OffreMissions/{id}": {
+      "put": {
+        "tags": [
+          "OffreMissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMissionDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMissionDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OffreMissionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "get": {
         "tags": [
           "OffreMissions"
@@ -1934,46 +2153,6 @@
                 }
               }
             }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "OffreMissions"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OffreMission"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OffreMission"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/OffreMission"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       },
@@ -2044,17 +2223,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Poste"
+                "$ref": "#/components/schemas/PosteCreateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Poste"
+                "$ref": "#/components/schemas/PosteCreateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Poste"
+                "$ref": "#/components/schemas/PosteCreateDto"
               }
             }
           }
@@ -2141,17 +2320,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Poste"
+                "$ref": "#/components/schemas/PosteUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Poste"
+                "$ref": "#/components/schemas/PosteUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Poste"
+                "$ref": "#/components/schemas/PosteUpdateDto"
               }
             }
           }
@@ -3712,16 +3891,17 @@
             "type": "string",
             "nullable": true
           },
-          "entreprise": {
-            "type": "string",
-            "nullable": true
-          },
           "poste": {
             "type": "string",
             "nullable": true
           },
           "role": {
             "type": "string",
+            "nullable": true
+          },
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid",
             "nullable": true
           }
         },
@@ -3799,6 +3979,28 @@
             "items": {
               "$ref": "#/components/schemas/OffreEmploi"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiplomeDto": {
+        "type": "object",
+        "properties": {
+          "nomDiplome": {
+            "type": "string",
+            "nullable": true
+          },
+          "niveau": {
+            "type": "string",
+            "nullable": true
+          },
+          "domaine": {
+            "type": "string",
+            "nullable": true
+          },
+          "institution": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -4464,16 +4666,21 @@
       },
       "OffreLangueDto": {
         "required": [
-          "langue"
+          "langue",
+          "niveauRequis"
         ],
         "type": "object",
         "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
           "langue": {
             "$ref": "#/components/schemas/Langue"
           },
           "niveauRequis": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -4512,6 +4719,10 @@
         ],
         "type": "object",
         "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
           "descriptionMission": {
             "minLength": 1,
             "type": "string"
@@ -4567,6 +4778,44 @@
         },
         "additionalProperties": false
       },
+      "PosteCreateDto": {
+        "required": [
+          "description",
+          "experienceSouhaitee",
+          "idOffreEmploi",
+          "niveauHierarchique",
+          "nombrePostes",
+          "titrePoste"
+        ],
+        "type": "object",
+        "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titrePoste": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombrePostes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "experienceSouhaitee": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "niveauHierarchique": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "PosteDto": {
         "required": [
           "description",
@@ -4592,6 +4841,48 @@
           "experienceSouhaitee": {
             "type": "string",
             "nullable": true
+          },
+          "niveauHierarchique": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PosteUpdateDto": {
+        "required": [
+          "description",
+          "experienceSouhaitee",
+          "idOffreEmploi",
+          "niveauHierarchique",
+          "nombrePostes",
+          "titrePoste"
+        ],
+        "type": "object",
+        "properties": {
+          "idPoste": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titrePoste": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombrePostes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "experienceSouhaitee": {
+            "minLength": 1,
+            "type": "string"
           },
           "niveauHierarchique": {
             "minLength": 1,
@@ -5474,16 +5765,17 @@
             "type": "string",
             "nullable": true
           },
-          "entreprise": {
-            "type": "string",
-            "nullable": true
-          },
           "poste": {
             "type": "string",
             "nullable": true
           },
           "role": {
             "type": "string",
+            "nullable": true
+          },
+          "idFiliale": {
+            "type": "string",
+            "format": "uuid",
             "nullable": true
           }
         },

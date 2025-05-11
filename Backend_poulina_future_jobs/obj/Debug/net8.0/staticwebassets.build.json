@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "aohwmX0HpEvJDREQJtTzdCTZyQjFnRM+NmqhBWyCdqk=",
+  "Hash": "0w5XwQbLvBzvpXF0A7vvP/nLKzKktqIXPTSiuxrEeE0=",
   "Source": "Backend_poulina_future_jobs",
   "BasePath": "_content/Backend_poulina_future_jobs",
   "Mode": "Default",
@@ -2241,6 +2241,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\logoFooter_5eb83023-8826-4ad5-aaa9-a4bc0494eee3.png"
+    },
+    {
+      "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png",
+      "SourceId": "Backend_poulina_future_jobs",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\",
+      "BasePath": "_content/Backend_poulina_future_jobs",
+      "RelativePath": "uploads/logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1esfc85m88",
+      "Integrity": "ebnguVYoCxJMoNzf52obctD89BNf7o0/RqAbfgbIb3A=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png"
     },
     {
       "Identity": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logoFooter_8eeb7619-eae3-4183-a3c1-87707c7c2857.png",
@@ -11238,6 +11259,88 @@
         {
           "Name": "Last-Modified",
           "Value": "Tue, 25 Mar 2025 23:26:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ebnguVYoCxJMoNzf52obctD89BNf7o0/RqAbfgbIb3A="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.1esfc85m88.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "29096"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ebnguVYoCxJMoNzf52obctD89BNf7o0/RqAbfgbIb3A=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 20:54:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1esfc85m88"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ebnguVYoCxJMoNzf52obctD89BNf7o0/RqAbfgbIb3A="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png",
+      "AssetFile": "C:\\Users\\LENOVO\\OneDrive\\Bureau\\Platforme_2025\\Backend_poulina_future_jobs\\Backend_poulina_future_jobs\\wwwroot\\uploads\\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "29096"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ebnguVYoCxJMoNzf52obctD89BNf7o0/RqAbfgbIb3A=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 10 May 2025 20:54:57 GMT"
         },
         {
           "Name": "Cache-Control",

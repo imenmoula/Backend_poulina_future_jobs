@@ -1890,6 +1890,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\logoFooter_5eb83023-8826-4ad5-aaa9-a4bc0494eee3.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Backend_poulina_future_jobs</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Backend_poulina_future_jobs</BasePath>
+      <RelativePath>uploads/logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>1esfc85m88</Fingerprint>
+      <Integrity>ebnguVYoCxJMoNzf52obctD89BNf7o0/RqAbfgbIb3A=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\logoFooter_741c0ab9-6d95-440c-91b1-202bbd82f7ee.png'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\logoFooter_8eeb7619-eae3-4183-a3c1-87707c7c2857.png'))">
       <SourceType>Package</SourceType>
       <SourceId>Backend_poulina_future_jobs</SourceId>
