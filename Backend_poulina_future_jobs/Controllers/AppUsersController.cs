@@ -932,6 +932,7 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(new ApiResponse<object> { Success = true, Message = "Utilisateur mis à jour avec succès" });
         }
 
+         
         // DELETE: api/AppUsers/{id} - Supprimer un utilisateur
         [HttpDelete("{id}")]
 [AllowAnonymous]

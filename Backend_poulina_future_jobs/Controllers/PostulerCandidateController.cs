@@ -1,342 +1,854 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using Microsoft.AspNetCore.Http;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using Backend_poulina_future_jobs.Models;
-//using Backend_poulina_future_jobs.DTOs;
-//using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Identity;
-//using System.ComponentModel.DataAnnotations;
-//using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Backend_poulina_future_jobs.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.Data.SqlClient;
 
-//namespace Backend_poulina_future_jobs.Controllers
-//{
-//    [Route("api/[controller]")]
-//    [ApiController]
-//    public class PostulerCandidateController : ControllerBase
-//    {
-//        private readonly AppDbContext _context;
-//        private readonly UserManager<AppUser> _userManager;
+namespace Backend_poulina_future_jobs.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PostulerCandidateController : ControllerBase
+    {
+        private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-//        public PostulerCandidateController(AppDbContext context, UserManager<AppUser> userManager)
-//        {
-//            _context = context;
-//            _userManager = userManager;
-//        } 
+        public PostulerCandidateController(AppDbContext context, UserManager<AppUser> userManager)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+        }
 
+        // POST: api/PostulerCandidate/Soumettre
+        [HttpPost]
+        [Route("Soumettre")]
+        // POST: api/PostulerCandidate/Soumettre
 
-//        // Action pour soumettre une candidature
-//        [HttpPost]
-//        [Route("Soumettre")]
-//        public async Task<IActionResult> SoumettreCandidature([FromBody] CandidatureViewModel model)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                return BadRequest(ModelState);
-//            }
+        public async Task<IActionResult> SoumettreCandidature([FromBody] CandidatureInputDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-//            // Vérifiez si l'utilisateur et l'offre existent
-//            var user = await _context.Users.FindAsync(model.AppUserId);
-//            var offre = await _context.OffresEmploi.FindAsync(model.OffreId);
-//            if (user == null || offre == null)
-//            {
-//                return NotFound("Utilisateur ou offre non trouvés.");
-//            }
+            var user = await _context.Users.FindAsync(model.AppUserId);
+            var offre = await _context.OffresEmploi.FindAsync(model.OffreId);
+            if (user == null || offre == null)
+            {
+                return NotFound("Utilisateur ou offre non trouvés.");
+            }
 
-//            // Créez une nouvelle candidature
-//            var candidature = new Models.Candidatures
-//            {
-//                IdCandidature = Guid.NewGuid(),
-//                AppUserId = model.AppUserId,
-//                OffreId = model.OffreId,
-//                Statut = "En cours",
-//                MessageMotivation = model.MessageMotivation,
-//                DateSoumission = DateTime.UtcNow
-//            };
+            // Check for existing candidature
+            var existingCandidature = await _context.Candidatures.AnyAsync(
+                c => c.AppUserId == model.AppUserId && c.OffreId == model.OffreId);
+            if (existingCandidature)
+            {
+                return BadRequest("Vous avez déjà postulé pour cette offre.");
+            }
 
-//            _context.Candidatures.Add(candidature);
-//            await _context.SaveChangesAsync();
+            var candidature = new Candidature
+            {
+                IdCandidature = Guid.NewGuid(),
+                AppUserId = model.AppUserId,
+                OffreId = model.OffreId,
+                Statut = "En cours",
+                MessageMotivation = model.MessageMotivation,
+                DateSoumission = DateTime.UtcNow
+            };
 
-//            return Ok(new { Message = "Candidature soumise avec succès.", CandidatureId = candidature.IdCandidature });
-//        }
+            _context.Candidatures.Add(candidature);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException is SqlException sqlException && (sqlException.Number == 2601 || sqlException.Number == 2627)) // SQL Server error codes for unique index violation
+                {
+                    return BadRequest("Vous avez déjà postulé pour cette offre.");
+                }
+                else
+                {
+                    // Handle other database errors
+                    return StatusCode(500, "An error occurred while saving the application.");
+                }
+            }
 
+            return Ok(new { Message = "Candidature soumise avec succès.", CandidatureId = candidature.IdCandidature });
+        }
+        // POST: api/PostulerCandidate (Apply for a job)
 
+        [HttpPost]
+        [Authorize(Roles = "Candidate")]
+        public async Task<ActionResult<CandidatureDto>> PostCandidature([FromBody] CandidatureInputDto input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized("User ID not found in token.");
+            }
 
-//        // POST: api/Candidatures (Apply for a job)
-//        [HttpPost]
-//        [Authorize(Roles = "Candidat")] // Only candidates can apply
-//        public async Task<ActionResult<CandidatureDto>> PostCandidature([FromBody] CandidatureDto candidatureDto)
-//        {
-//            if (!ModelState.IsValid)
-//            {
-//                return BadRequest(ModelState);
-//            }
+            if (!Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized("Invalid User ID in token.");
+            }
 
-//            // Get the authenticated user's ID
-//            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-//            if (candidatureDto.AppUserId != userId)
-//            {
-//                return Unauthorized("Vous ne pouvez postuler que pour vous-même.");
-//            }
+            if (input.AppUserId != userId)
+            {
+                return Unauthorized("Vous ne pouvez postuler que pour vous-même.");
+            }
 
-//            // Verify Offer exists and is open
-//            var offre = await _context.OffresEmploi.FindAsync(candidatureDto.OffreId);
-//            if (offre == null || offre.Statut != StatutOffre.Ouvert)
-//            {
-//                return BadRequest("L'offre n'existe pas ou est clôturée.");
-//            }
+            var offre = await _context.OffresEmploi.FindAsync(input.OffreId);
+            if (offre == null || offre.Statut != StatutOffre.Ouvert)
+            {
+                return BadRequest("L'offre n'existe pas ou est clôturée.");
+            }
 
-//            // Verify User exists
-//            var user = await _context.Users.FindAsync(candidatureDto.AppUserId);
-//            if (user == null)
-//            {
-//                return BadRequest("L'utilisateur n'existe pas.");
-//            }
+            var user = await _context.Users.FindAsync(input.AppUserId);
+            if (user == null)
+            {
+                return BadRequest("L'utilisateur n'existe pas.");
+            }
 
-//            // Check if user already applied
-//            var existingCandidature = await _context.Candidatures
-//                .AnyAsync(c => c.AppUserId == candidatureDto.AppUserId && c.OffreId == candidatureDto.OffreId);
-//            if (existingCandidature)
-//            {
-//                return BadRequest("Vous avez déjà postulé pour cette offre.");
-//            }
+            // Check for existing candidature
+            var existingCandidature = await _context.Candidatures
+                .AnyAsync(c => c.AppUserId == input.AppUserId && c.OffreId == input.OffreId);
+            if (existingCandidature)
+            {
+                return BadRequest("Vous avez déjà postulé pour cette offre.");
+            }
 
-//            // Map DTO to Entity
-//            var candidature = _mapper.Map<Models.Candidatures>(candidatureDto);
-//            candidature.IdCandidature = Guid.NewGuid();
-//            candidature.DateSoumission = DateTime.UtcNow;
-//            candidature.Statut = "Soumise"; // Initial status
+            // Mettre à jour les propriétés de l'utilisateur si nécessaire
+            _context.Entry(user).State = EntityState.Modified;
 
-//            _context.Candidatures.Add(candidature);
-//            await _context.SaveChangesAsync();
+            var candidature = new Candidature
+            {
+                IdCandidature = Guid.NewGuid(),
+                AppUserId = input.AppUserId,
+                OffreId = input.OffreId,
+                Statut = "Soumise",
+                MessageMotivation = input.MessageMotivation,
+                DateSoumission = DateTime.UtcNow
+            };
 
-//            // Load related data and map back to DTO
-//            var savedCandidature = await _context.Candidatures
-//                .Include(c => c.AppUser)
-//                    .ThenInclude(u => u.Experiences)
-//                    .ThenInclude(e => e.Certificats)
-//                .Include(c => c.AppUser)
-//                    .ThenInclude(u => u.AppUserCompetences)
-//                    .ThenInclude(cc => cc.Competence)
-//                .Include(c => c.Offre)
-//                .FirstOrDefaultAsync(c => c.IdCandidature == candidature.IdCandidature);
+            _context.Candidatures.Add(candidature);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException is SqlException sqlException && (sqlException.Number == 2601 || sqlException.Number == 2627))
+                {
+                    return BadRequest("Vous avez déjà postulé pour cette offre.");
+                }
+                else
+                {
+                    return StatusCode(500, "Une erreur s'est produite lors de l'enregistrement de la candidature.");
+                }
+            }
 
-//            var resultDto = _mapper.Map<CandidatureDto>(savedCandidature);
-//            return CreatedAtAction(nameof(GetCandidature), new { id = resultDto.IdCandidature }, resultDto);
-//        }
+            // Récupérer la candidature complète avec toutes les relations
+            var savedCandidature = await _context.Candidatures
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.Experiences)
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.AppUserCompetences)
+                    .ThenInclude(cc => cc.Competence)
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.Certificats)
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.DiplomesCandidate)
+                .Include(c => c.Offre)
+                .FirstOrDefaultAsync(c => c.IdCandidature == candidature.IdCandidature);
 
-//        // PUT: api/Candidatures/{id} (Modify an existing candidature)
-//        [HttpPut("{id}")]
-//        [Authorize] // Candidates can modify their own, recruiters can modify any
-//        public async Task<IActionResult> PutCandidature(Guid id, [FromBody] CandidatureDto candidatureDto)
-//        {
-//            if (id != candidatureDto.IdCandidature)
-//            {
-//                return BadRequest("L'ID de la candidature ne correspond pas.");
-//            }
+            if (savedCandidature == null)
+            {
+                return StatusCode(500, "Impossible de récupérer la candidature enregistrée.");
+            }
 
-//            var existingCandidature = await _context.Candidatures
-//                .Include(c => c.AppUser)
-//                .Include(c => c.Offre)
-//                .FirstOrDefaultAsync(c => c.IdCandidature == id);
-//            if (existingCandidature == null)
-//            {
-//                return NotFound("Candidature non trouvée.");
-//            }
+            var resultDto = new CandidatureDto
+            {
+                IdCandidature = savedCandidature.IdCandidature,
+                AppUserId = savedCandidature.AppUserId,
+                OffreId = savedCandidature.OffreId,
+                Statut = savedCandidature.Statut,
+                MessageMotivation = savedCandidature.MessageMotivation,
+                DateSoumission = savedCandidature.DateSoumission,
+                AppUser = savedCandidature.AppUser != null ? new AppUserDto
+                {
+                    Id = savedCandidature.AppUser.Id,
+                    FullName = savedCandidature.AppUser.FullName,
+                    Nom = savedCandidature.AppUser.Nom,
+                    Prenom = savedCandidature.AppUser.Prenom,
+                    Email = savedCandidature.AppUser.Email,
+                    Phone = savedCandidature.AppUser.phone,
+                    NiveauEtude = savedCandidature.AppUser.NiveauEtude,
+                    Diplome = savedCandidature.AppUser.Diplome,
+                    Universite = savedCandidature.AppUser.Universite,
+                    Specialite = savedCandidature.AppUser.specialite,
+                    Cv = savedCandidature.AppUser.cv,
+                    LinkedIn = savedCandidature.AppUser.linkedIn,
+                    Github = savedCandidature.AppUser.github,
+                    Portfolio = savedCandidature.AppUser.portfolio,
+                    Statut = savedCandidature.AppUser.Statut,
+                    LettreMotivation = savedCandidature.AppUser.LettreMotivation,
+                    Experiences = savedCandidature.AppUser.Experiences?.Select(e => new ExperienceDto
+                    {
+                        IdExperience = e.IdExperience,
+                        Poste = e.Poste,
+                        Description = e.Description,
+                        NomEntreprise = e.NomEntreprise,
+                        CompetenceAcquise = e.CompetenceAcquise,
+                        DateDebut = e.DateDebut,
+                        DateFin = e.DateFin
+                    }).ToList() ?? new List<ExperienceDto>(),
+                    AppUserCompetences = savedCandidature.AppUser.AppUserCompetences?.Select(ac => new CandidateCompetenceDto
+                    {
+                        Id = ac.Id,
+                        CompetenceId = ac.CompetenceId,
+                        NiveauPossede = ac.NiveauPossede.ToString(),
+                        Competence = new CompetenceCandidateDto
+                        {
+                            Id = ac.Competence.Id,
+                            Nom = ac.Competence.Nom,
+                            Description = ac.Competence.Description,
+                            EstTechnique = ac.Competence.estTechnique,
+                            EstSoftSkill = ac.Competence.estSoftSkill
+                        }
+                    }).ToList() ?? new List<CandidateCompetenceDto>(),
+                    Certificats = savedCandidature.AppUser.Certificats?.Select(c => new CertificatDto
+                    {
+                        IdCertificat = c.IdCertificat,
+                        Nom = c.Nom,
+                        DateObtention = c.DateObtention,
+                        Organisme = c.Organisme,
+                        Description = c.Description,
+                        UrlDocument = c.UrlDocument
+                    }).ToList() ?? new List<CertificatDto>(),
+                    DiplomesCandidate = savedCandidature.AppUser.DiplomesCandidate?.Select(d => new DiplomeCandidateDto
+                    {
+                        IdDiplome = d.IdDiplome,
+                        AppUserId = d.AppUserId,
+                        NomDiplome = d.NomDiplome,
+                        Institution = d.Institution,
+                        DateObtention = d.DateObtention,
+                        Specialite = d.Specialite,
+                        UrlDocument = d.UrlDocument
+                    }).ToList() ?? new List<DiplomeCandidateDto>()
+                } : null,
+                Offre = savedCandidature.Offre != null ? new OffreEmploicandidateDto
+                {
+                    IdOffreEmploi = savedCandidature.Offre.IdOffreEmploi
+                } : null
+            };
 
-//            // Authorization check
-//            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-//            var isRecruteur = User.IsInRole("Recruteur");
-//            if (existingCandidature.AppUserId != userId && !isRecruteur)
-//            {
-//                return Unauthorized("Vous n'êtes pas autorisé à modifier cette candidature.");
-//            }
+            return CreatedAtAction(nameof(GetCandidature), new { id = resultDto.IdCandidature }, resultDto);
+        }
 
-//            // Update allowed fields
-//            existingCandidature.MessageMotivation = candidatureDto.MessageMotivation;
-//            if (isRecruteur)
-//            {
-//                // Only recruiters can change status
-//                existingCandidature.Statut = candidatureDto.Statut;
-//            }
+        // PUT: api/PostulerCandidate/{id} (Modify an existing candidature)
+      
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> PutCandidature(Guid id, [FromBody] CandidatureDto candidatureDto)
+        {
+            if (id != candidatureDto.IdCandidature)
+            {
+                return BadRequest("L'ID de la candidature ne correspond pas.");
+            }
 
-//            _context.Entry(existingCandidature).State = EntityState.Modified;
+            var existingCandidature = await _context.Candidatures
+                .Include(c => c.AppUser)
+                .Include(c => c.Offre)
+                .FirstOrDefaultAsync(c => c.IdCandidature == id);
 
-//            try
-//            {
-//                await _context.SaveChangesAsync();
-//            }
-//            catch (DbUpdateConcurrencyException)
-//            {
-//                if (!CandidatureExists(id))
-//                {
-//                    return NotFound("Candidature non trouvée.");
-//                }
-//                throw;
-//            }
+            if (existingCandidature == null)
+            {
+                return NotFound("Candidature non trouvée.");
+            }
 
-//            return NoContent();
-//        }
+            // Vérification de l'utilisateur actuel
+            if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+            {
+                return Unauthorized("Invalid User ID in token.");
+            }
 
-//        // GET: api/Candidatures/{id} (Helper method for retrieving a candidature)
-//        [HttpGet("{id}")]
-//        [Authorize]
-//        public async Task<ActionResult<CandidatureDto>> GetCandidature(Guid id)
-//        {
-//            var candidature = await _context.Candidatures
-//                .Include(c => c.AppUser)
-//                    .ThenInclude(u => u.Experiences)
-//                    .ThenInclude(e => e.Certificats)
-//                .Include(c => c.AppUser)
-//                    .ThenInclude(u => u.AppUserCompetences)
-//                    .ThenInclude(cc => cc.Competence)
-//                .Include(c => c.Offre)
-//                .FirstOrDefaultAsync(c => c.IdCandidature == id);
+            var isRecruteur = User.IsInRole("Recruteur");
+            if (existingCandidature.AppUserId != userId && !isRecruteur)
+            {
+                return Unauthorized("Vous n'êtes pas autorisé à modifier cette candidature.");
+            }
 
-//            if (candidature == null)
-//            {
-//                return NotFound("Candidature non trouvée.");
-//            }
+            // Mise à jour des champs modifiables
+            existingCandidature.MessageMotivation = candidatureDto.MessageMotivation;
+            if (isRecruteur)
+            {
+                existingCandidature.Statut = candidatureDto.Statut;
+            }
 
-//            // Authorization check
-//            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-//            var isRecruteur = User.IsInRole("Recruteur");
-//            if (candidature.AppUserId != userId && !isRecruteur)
-//            {
-//                return Unauthorized("Vous n'êtes pas autorisé à voir cette candidature.");
-//            }
+            // Mise à jour de l'utilisateur si c'est le candidat qui modifie sa candidature
+            if (existingCandidature.AppUserId == userId)
+            {
+                var user = await _context.Users.FindAsync(existingCandidature.AppUserId);
+                if (user != null)
+                {
+                    _context.Entry(user).State = EntityState.Modified;
+                }
+            }
 
-//            var candidatureDto = _mapper.Map<CandidatureDto>(candidature);
-//            return candidatureDto;
-//        }
+            _context.Entry(existingCandidature).State = EntityState.Modified;
 
-//        private bool CandidatureExists(Guid id)
-//        {
-//            return _context.Candidatures.Any(e => e.IdCandidature == id);
-//        }
-//    }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CandidatureExists(id))
+                {
+                    return NotFound("Candidature non trouvée.");
+                }
+                return StatusCode(500, "Erreur de concurrence lors de la mise à jour.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Une erreur s'est produite : {ex.Message}");
+            }
 
-//    // ViewModel pour simplifier l'entrée des données de candidature
-//    public class CandidatureViewModel
-//    {
-//        [Required]
-//        public Guid AppUserId { get; set; }
+            return NoContent();
+        }
 
-//        [Required]
-//        public Guid OffreId { get; set; }
+        // GET: api/PostulerCandidate/{id} (Retrieve a candidature)
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<ActionResult<CandidatureDto>> GetCandidature(Guid id)
+        {
+            var candidature = await _context.Candidatures
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.Experiences)
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.AppUserCompetences)
+                    .ThenInclude(cc => cc.Competence)
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.Certificats)
+                .Include(c => c.AppUser)
+                    .ThenInclude(u => u.DiplomesCandidate)
+                .Include(c => c.Offre)
+                .FirstOrDefaultAsync(c => c.IdCandidature == id);
 
-//        [MaxLength(1000)]
-//        public string MessageMotivation { get; set; }
-//    }
+            if (candidature == null)
+            {
+                return NotFound("Candidature non trouvée.");
+            }
 
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var isRecruteur = User.IsInRole("Recruteur");
+            if (candidature.AppUserId != userId && !isRecruteur)
+            {
+                return Unauthorized("Vous n'êtes pas autorisé à voir cette candidature.");
+            }
 
-//    public class CandidatureDto
-//    {
-//        public Guid IdCandidature { get; set; }
+            var candidatureDto = new CandidatureDto
+            {
+                IdCandidature = candidature.IdCandidature,
+                AppUserId = candidature.AppUserId,
+                OffreId = candidature.OffreId,
+                Statut = candidature.Statut,
+                MessageMotivation = candidature.MessageMotivation,
+                DateSoumission = candidature.DateSoumission,
+                AppUser = candidature.AppUser != null ? new AppUserDto
+                {
+                    Id = candidature.AppUser.Id,
+                    FullName = candidature.AppUser.FullName,
+                    Nom = candidature.AppUser.Nom,
+                    Prenom = candidature.AppUser.Prenom,
+                    Email = candidature.AppUser.Email,
+                    Phone = candidature.AppUser.phone,
+                    NiveauEtude = candidature.AppUser.NiveauEtude,
+                    Diplome = candidature.AppUser.Diplome,
+                    Universite = candidature.AppUser.Universite,
+                    Specialite = candidature.AppUser.specialite,
+                    Cv = candidature.AppUser.cv,
+                    LinkedIn = candidature.AppUser.linkedIn,
+                    Github = candidature.AppUser.github,
+                    Portfolio = candidature.AppUser.portfolio,
+                    Statut = candidature.AppUser.Statut,
+                    LettreMotivation = candidature.AppUser.LettreMotivation,
+                    Experiences = candidature.AppUser.Experiences?.Select(e => new ExperienceDto
+                    {
+                        IdExperience = e.IdExperience,
+                        Poste = e.Poste,
+                        Description = e.Description,
+                        NomEntreprise = e.NomEntreprise,
+                        CompetenceAcquise = e.CompetenceAcquise,
+                        DateDebut = e.DateDebut,
+                        DateFin = e.DateFin
+                    }).ToList() ?? new List<ExperienceDto>(),
+                    AppUserCompetences = candidature.AppUser.AppUserCompetences?.Select(ac => new CandidateCompetenceDto
+                    {
+                        Id = ac.Id,
+                        CompetenceId = ac.CompetenceId,
+                        NiveauPossede = ac.NiveauPossede.ToString(),
+                        Competence = new CompetenceCandidateDto
+                        {
+                            Id = ac.Competence.Id,
+                            Nom = ac.Competence.Nom,
+                            Description = ac.Competence.Description,
+                            EstTechnique = ac.Competence.estTechnique,
+                            EstSoftSkill = ac.Competence.estSoftSkill
+                        }
+                    }).ToList() ?? new List<CandidateCompetenceDto>(),
+                    Certificats = candidature.AppUser.Certificats?.Select(c => new CertificatDto
+                    {
+                        IdCertificat = c.IdCertificat,
+                        Nom = c.Nom,
+                        DateObtention = c.DateObtention,
+                        Organisme = c.Organisme,
+                        Description = c.Description,
+                        UrlDocument = c.UrlDocument
+                    }).ToList() ?? new List<CertificatDto>(),
+                    DiplomesCandidate = candidature.AppUser.DiplomesCandidate?.Select(d => new DiplomeCandidateDto
+                    {
+                        IdDiplome = d.IdDiplome,
+                        AppUserId = d.AppUserId,
+                        NomDiplome = d.NomDiplome,
+                        Institution = d.Institution,
+                        DateObtention = d.DateObtention,
+                        Specialite = d.Specialite,
+                        UrlDocument = d.UrlDocument
+                    }).ToList() ?? new List<DiplomeCandidateDto>()
+                } : null,
+                Offre = candidature.Offre != null ? new OffreEmploicandidateDto
+                {
+                    IdOffreEmploi = candidature.Offre.IdOffreEmploi
+                } : null
+            };
 
-//        [Required]
-//        public Guid AppUserId { get; set; }
+            return Ok(candidatureDto);
+        }
 
-//        [Required]
-//        public Guid OffreId { get; set; }
+        // GET: api/PostulerCandidate/GetPotentialCandidates/{offreId}
+        [HttpGet("GetPotentialCandidates/{offreId}")]
+        [Authorize(Roles = "Recruteur")]
+        public async Task<ActionResult<List<AppUserDto>>> GetPotentialCandidates(Guid offreId)
+        {
+            try
+            {
+                var candidatureIds = await _context.Candidatures
+                    .Where(c => c.OffreId == offreId)
+                    .Select(c => c.AppUserId)
+                    .ToListAsync();
 
-//        [Required]
-//        [MaxLength(50)]
-//        public string Statut { get; set; }
+                var candidates = await _context.AppUser
+                    .Where(u => candidatureIds.Contains(u.Id))
+                    .Include(u => u.AppUserCompetences)
+                        .ThenInclude(ac => ac.Competence)
+                    .Include(u => u.DiplomesCandidate)
+                    .Include(u => u.Experiences)
+                    .Include(u => u.Certificats)
+                    .ToListAsync();
 
-//        [MaxLength(1000)]
-//        public string MessageMotivation { get; set; }
+                if (candidates == null || candidates.Count == 0)
+                {
+                    return NotFound("No potential candidates found for this job offer.");
+                }
 
-//        [Required]
-//        public DateTime DateSoumission { get; set; }
+                var candidateDtos = candidates.Select(u => new AppUserDto
+                {
+                    Id = u.Id,
+                    FullName = u.FullName,
+                    Nom = u.Nom,
+                    Prenom = u.Prenom,
+                    Email = u.Email,
+                    Phone = u.phone,
+                    NiveauEtude = u.NiveauEtude,
+                    Diplome = u.Diplome,
+                    Universite = u.Universite,
+                    Specialite = u.specialite,
+                    Cv = u.cv,
+                    LinkedIn = u.linkedIn,
+                    Github = u.github,
+                    Portfolio = u.portfolio,
+                    Statut = u.Statut,
+                    LettreMotivation = u.LettreMotivation,
+                    Experiences = u.Experiences?.Select(e => new ExperienceDto
+                    {
+                        IdExperience = e.IdExperience,
+                        Poste = e.Poste,
+                        Description = e.Description,
+                        NomEntreprise = e.NomEntreprise,
+                        CompetenceAcquise = e.CompetenceAcquise,
+                        DateDebut = e.DateDebut,
+                        DateFin = e.DateFin
+                    }).ToList() ?? new List<ExperienceDto>(),
+                    AppUserCompetences = u.AppUserCompetences?.Select(ac => new CandidateCompetenceDto
+                    {
+                        Id = ac.Id,
+                        CompetenceId = ac.CompetenceId,
+                        NiveauPossede = ac.NiveauPossede.ToString(),
+                        Competence = new CompetenceCandidateDto
+                        {
+                            Id = ac.Competence.Id,
+                            Nom = ac.Competence.Nom,
+                            Description = ac.Competence.Description,
+                            EstTechnique = ac.Competence.estTechnique,
+                            EstSoftSkill = ac.Competence.estSoftSkill
+                        }
+                    }).ToList() ?? new List<CandidateCompetenceDto>(),
+                    Certificats = u.Certificats?.Select(c => new CertificatDto
+                    {
+                        IdCertificat = c.IdCertificat,
+                        Nom = c.Nom,
+                        DateObtention = c.DateObtention,
+                        Organisme = c.Organisme,
+                        Description = c.Description,
+                        UrlDocument = c.UrlDocument
+                    }).ToList() ?? new List<CertificatDto>(),
+                    DiplomesCandidate = u.DiplomesCandidate?.Select(d => new DiplomeCandidateDto
+                    {
+                        IdDiplome = d.IdDiplome,
+                        AppUserId = d.AppUserId,
+                        NomDiplome = d.NomDiplome,
+                        Institution = d.Institution,
+                        DateObtention = d.DateObtention,
+                        Specialite = d.Specialite,
+                        UrlDocument = d.UrlDocument
+                    }).ToList() ?? new List<DiplomeCandidateDto>()
+                }).ToList();
 
-//        public AppUserDto AppUser { get; set; }
-//        public OffreEmploiDto Offre { get; set; }
-//    }
+                return Ok(candidateDtos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
 
-//    public class AppUserDto
-//    {
-//        public Guid Id { get; set; }
-//        public string FullName { get; set; }
-//        public string Nom { get; set; }
-//        public string Prenom { get; set; }
-//        public string Email { get; set; }
-//        public string Phone { get; set; }
-//        public string NiveauEtude { get; set; }
-//        public string Diplome { get; set; }
-//        public string Universite { get; set; }
-//        public string Specialite { get; set; }
-//        public string Cv { get; set; }
-//        public string LinkedIn { get; set; }
-//        public string Github { get; set; }
-//        public string Portfolio { get; set; }
-//        public string Statut { get; set; }
-//        public List<ExperienceDto> Experiences { get; set; }
-//        public List<CandidateCompetenceDto> AppUserCompetences { get; set; }
-//    }
+        // GET: api/PostulerCandidate/GetCandidatesForOffre/{offreId}
+        [HttpGet("GetCandidatesForOffre/{offreId}")]
+        [Authorize(Roles = "Recruteur")]
+        public async Task<ActionResult<List<CandidatureDto>>> GetCandidatesForOffre(Guid offreId)
+        {
+            try
+            {
+                var candidates = await _context.Candidatures
+                    .Where(c => c.OffreId == offreId)
+                    .Include(c => c.AppUser)
+                    .Include(c => c.Offre)
+                    .ToListAsync();
 
-//    public class OffreEmploiDto
-//    {
-//        public Guid IdOffreEmploi { get; set; }
-//        public string Specialite { get; set; }
-//        public string Titre { get; set; }
-//        public string Description { get; set; }
-//        public DateTime DatePublication { get; set; }
-//        public DateTime? DateExpiration { get; set; }
-//        public decimal SalaireMin { get; set; }
-//        public decimal SalaireMax { get; set; }
-//        public string NiveauExperienceRequis { get; set; }
-//        public string DiplomeRequis { get; set; }
-//        public TypeContratEnum TypeContrat { get; set; }
-//        public StatutOffre Statut { get; set; }
-//        public ModeTravail ModeTravail { get; set; }
-//        public int NombrePostes { get; set; }
-//        public string Avantages { get; set; }
-//    }
+                if (candidates == null || candidates.Count == 0)
+                {
+                    return NotFound("No candidates found for this job offer.");
+                }
 
-//    public class ExperienceDto
-//    {
-//        public Guid IdExperience { get; set; }
-//        public string Poste { get; set; }
-//        public string Description { get; set; }
-//        public string NomEntreprise { get; set; }
-//        public string CompetenceAcquise { get; set; }
-//        public DateTime? DateDebut { get; set; }
-//        public DateTime? DateFin { get; set; }
-//        public List<CertificatDto> Certificats { get; set; }
-//    }
+                var candidateDtos = candidates.Select(c => new CandidatureDto
+                {
+                    IdCandidature = c.IdCandidature,
+                    AppUserId = c.AppUserId,
+                    OffreId = c.OffreId,
+                    Statut = c.Statut,
+                    MessageMotivation = c.MessageMotivation,
+                    DateSoumission = c.DateSoumission,
+                    AppUser = c.AppUser != null ? new AppUserDto
+                    {
+                        Id = c.AppUser.Id,
+                        FullName = c.AppUser.FullName,
+                        Nom = c.AppUser.Nom,
+                        Prenom = c.AppUser.Prenom,
+                        Email = c.AppUser.Email,
+                        Phone = c.AppUser.phone,
+                        NiveauEtude = c.AppUser.NiveauEtude,
+                        Diplome = c.AppUser.Diplome,
+                        Universite = c.AppUser.Universite,
+                        Specialite = c.AppUser.specialite,
+                        Cv = c.AppUser.cv,
+                        LinkedIn = c.AppUser.linkedIn,
+                        Github = c.AppUser.github,
+                        Portfolio = c.AppUser.portfolio,
+                        Statut = c.AppUser.Statut,
+                        LettreMotivation = c.AppUser.LettreMotivation
+                    } : null,
+                    Offre = c.Offre != null ? new OffreEmploicandidateDto
+                    {
+                        IdOffreEmploi = c.Offre.IdOffreEmploi
+                    } : null
+                }).ToList();
 
-//    public class CertificatDto
-//    {
-//        public Guid IdCertificat { get; set; }
-//        public string Nom { get; set; }
-//        public DateTime DateObtention { get; set; }
-//        public string Organisme { get; set; }
-//        public string Description { get; set; }
-//        public string UrlDocument { get; set; }
-//    }
+                return Ok(candidateDtos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
 
-//    public class CandidateCompetenceDto
-//    {
-//        public Guid Id { get; set; }
-//        public Guid CompetenceId { get; set; }
-//        public string NiveauPossede { get; set; }
-//        public CompetenceDto Competence { get; set; }
-//    }
+        // DELETE: api/PostulerCandidate/DeleteCandidate/{candidatureId}
+        [HttpDelete("DeleteCandidate/{candidatureId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteCandidate(Guid candidatureId)
+        {
+            try
+            {
+                var candidature = await _context.Candidatures
+                    .Include(c => c.AppUser)
+                    .FirstOrDefaultAsync(c => c.IdCandidature == candidatureId);
 
-//    public class CompetenceDto
-//    {
-//        public Guid Id { get; set; }
-//        public string Nom { get; set; }
-//        public string Description { get; set; }
-//        public bool EstTechnique { get; set; }
-//        public bool EstSoftSkill { get; set; }
-//    }
-//}
-    
+                if (candidature == null)
+                {
+                    return NotFound("Candidature not found.");
+                }
 
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var isRecruteur = User.IsInRole("Recruteur");
+                if (candidature.AppUserId != userId && !isRecruteur)
+                {
+                    return Unauthorized("Vous n'êtes pas autorisé à supprimer cette candidature.");
+                }
 
+                _context.Candidatures.Remove(candidature);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        // GET: api/PostulerCandidate/GetSortedCandidates/{offreId}?sortBy=DateSoumission&ascending=true
+        [HttpGet("GetSortedCandidates/{offreId}")]
+        [Authorize(Roles = "Recruteur")]
+        public async Task<ActionResult<List<CandidatureDto>>> GetSortedCandidates(Guid offreId, [FromQuery] string sortBy = "DateSoumission", [FromQuery] bool ascending = true)
+        {
+            try
+            {
+                var query = _context.Candidatures
+                    .Where(c => c.OffreId == offreId)
+                    .Include(c => c.AppUser)
+                    .Include(c => c.Offre);
+
+                if (sortBy.ToLower() == "datesoumission")
+                {
+                    query = (Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Candidature, OffreEmploi>)(ascending ? query.OrderBy(c => c.DateSoumission) : query.OrderByDescending(c => c.DateSoumission));
+                }
+                else if (sortBy.ToLower() == "statut")
+                {
+                    query = (Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Candidature, OffreEmploi>)(ascending ? query.OrderBy(c => c.Statut) : query.OrderByDescending(c => c.Statut));
+                }
+
+                var sortedCandidates = await query.ToListAsync();
+                if (sortedCandidates == null || sortedCandidates.Count == 0)
+                {
+                    return NotFound("No candidates found for this job offer.");
+                }
+
+                var candidateDtos = sortedCandidates.Select(c => new CandidatureDto
+                {
+                    IdCandidature = c.IdCandidature,
+                    AppUserId = c.AppUserId,
+                    OffreId = c.OffreId,
+                    Statut = c.Statut,
+                    MessageMotivation = c.MessageMotivation,
+                    DateSoumission = c.DateSoumission,
+                    AppUser = c.AppUser != null ? new AppUserDto
+                    {
+                        Id = c.AppUser.Id,
+                        FullName = c.AppUser.FullName,
+                        Nom = c.AppUser.Nom,
+                        Prenom = c.AppUser.Prenom,
+                        Email = c.AppUser.Email,
+                        Phone = c.AppUser.phone,
+                        NiveauEtude = c.AppUser.NiveauEtude,
+                        Diplome = c.AppUser.Diplome,
+                        Universite = c.AppUser.Universite,
+                        Specialite = c.AppUser.specialite,
+                        Cv = c.AppUser.cv,
+                        LinkedIn = c.AppUser.linkedIn,
+                        Github = c.AppUser.github,
+                        Portfolio = c.AppUser.portfolio,
+                        Statut = c.AppUser.Statut,
+                        LettreMotivation = c.AppUser.LettreMotivation
+                    } : null,
+                    Offre = c.Offre != null ? new OffreEmploicandidateDto
+                    {
+                        IdOffreEmploi = c.Offre.IdOffreEmploi
+                    } : null
+                }).ToList();
+
+                return Ok(candidateDtos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        // PUT: api/PostulerCandidate/UpdateCandidatureStatus/{candidatureId}
+        [HttpPut("UpdateCandidatureStatus/{candidatureId}")]
+        [Authorize(Roles = "Recruteur")]
+        public async Task<IActionResult> UpdateCandidatureStatus(Guid candidatureId, [FromBody] string newStatus)
+        {
+            if (string.IsNullOrEmpty(newStatus) || newStatus.Length > 50)
+            {
+                return BadRequest("Status must be a non-empty string with a maximum length of 50 characters.");
+            }
+
+            try
+            {
+                var candidature = await _context.Candidatures.FindAsync(candidatureId);
+                if (candidature == null)
+                {
+                    return NotFound("Candidature not found.");
+                }
+
+                candidature.Statut = newStatus;
+                await _context.SaveChangesAsync();
+
+                return Ok("Candidate status updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+        private bool CandidatureExists(Guid id)
+        {
+            return _context.Candidatures.Any(e => e.IdCandidature == id);
+        }
+    }
+
+    #region DTOs for Candidature
+
+    public class CandidatureDto
+    {
+        public Guid IdCandidature { get; set; }
+
+        [Required(ErrorMessage = "AppUserId is required.")]
+        public Guid AppUserId { get; set; }
+
+        [Required(ErrorMessage = "OffreId is required.")]
+        public Guid OffreId { get; set; }
+
+        [Required(ErrorMessage = "Statut is required.")]
+        [MaxLength(50)]
+        public string Statut { get; set; }
+
+        [MaxLength(1000)]
+        public string MessageMotivation { get; set; }
+
+        [Required]
+        public DateTime DateSoumission { get; set; }
+
+        public AppUserDto AppUser { get; set; }
+        public OffreEmploicandidateDto Offre { get; set; }
+    }
+
+    public class AppUserDto
+    {
+        public Guid Id { get; set; }
+        public string FullName { get; set; }
+        public string Nom { get; set; }
+        public string Prenom { get; set; }
+        [EmailAddress] public string Email { get; set; }
+        public string Phone { get; set; }
+        public string NiveauEtude { get; set; }
+        public string Diplome { get; set; }
+        public string Universite { get; set; }
+        public string Specialite { get; set; }
+        public string LettreMotivation { get; set; }
+        [MaxLength(255)] public string Cv { get; set; }
+        [MaxLength(255)] public string LinkedIn { get; set; }
+        [MaxLength(255)] public string Github { get; set; }
+        [MaxLength(255)] public string Portfolio { get; set; }
+        [MaxLength(20)] public string Statut { get; set; }
+
+        public List<ExperienceDto> Experiences { get; set; }
+        public List<CandidateCompetenceDto> AppUserCompetences { get; set; }
+        public List<CertificatDto> Certificats { get; set; }
+        public List<DiplomeCandidateDto> DiplomesCandidate { get; set; }
+    }
+
+    public class OffreEmploicandidateDto
+    {
+        public Guid IdOffreEmploi { get; set; }
+    }
+
+    public class ExperienceDto
+    {
+        public Guid IdExperience { get; set; }
+        [MaxLength(100)] public string Poste { get; set; }
+        [MaxLength(1000)] public string Description { get; set; }
+        [MaxLength(150)] public string NomEntreprise { get; set; }
+        [MaxLength(255)] public string CompetenceAcquise { get; set; }
+        public DateTime? DateDebut { get; set; }
+        public DateTime? DateFin { get; set; }
+    }
+
+    public class CertificatDto
+    {
+        public Guid IdCertificat { get; set; }
+        [MaxLength(100)] public string Nom { get; set; }
+        public DateTime DateObtention { get; set; }
+        [MaxLength(150)] public string Organisme { get; set; }
+        [MaxLength(1000)] public string Description { get; set; }
+        [MaxLength(255)] public string UrlDocument { get; set; }
+    }
+
+    public class CandidateCompetenceDto
+    {
+        public Guid Id { get; set; }
+        public Guid CompetenceId { get; set; }
+        public string NiveauPossede { get; set; }
+        public CompetenceCandidateDto Competence { get; set; }
+    }
+
+    public class CompetenceCandidateDto
+    {
+        public Guid Id { get; set; }
+        public string Nom { get; set; }
+        public string Description { get; set; }
+        public bool EstTechnique { get; set; }
+        public bool EstSoftSkill { get; set; }
+    }
+
+    public class DiplomeCandidateDto
+    {
+        public Guid IdDiplome { get; set; }
+        public Guid AppUserId { get; set; }
+        [MaxLength(150)] public string NomDiplome { get; set; }
+        [MaxLength(150)] public string Institution { get; set; }
+        public DateTime DateObtention { get; set; }
+        [MaxLength(255)] public string Specialite { get; set; }
+        [MaxLength(255)] public string UrlDocument { get; set; }
+    }
+
+    public class CandidatureInputDto
+    {
+        [Required(ErrorMessage = "AppUserId is required.")]
+        public Guid AppUserId { get; set; }
+
+        [Required(ErrorMessage = "OffreId is required.")]
+        public Guid OffreId { get; set; }
+
+        [MaxLength(1000)]
+        public string MessageMotivation { get; set; }
+    }
+
+    #endregion
+}

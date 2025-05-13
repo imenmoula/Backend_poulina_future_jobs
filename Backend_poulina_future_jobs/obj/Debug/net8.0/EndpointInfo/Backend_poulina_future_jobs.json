@@ -1832,6 +1832,75 @@
         }
       }
     },
+    "/api/OffreEmplois/by-recruteur-filiale/{idFiliale}": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "idFiliale",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/by-recruteur/{idRecruteur}": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "parameters": [
+          {
+            "name": "idRecruteur",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/specialites": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/OffreEmplois/niveaux-experience": {
+      "get": {
+        "tags": [
+          "OffreEmplois"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/OffreLangues": {
       "get": {
         "tags": [
@@ -2356,6 +2425,393 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/Soumettre": {
+      "post": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureInputDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureInputDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate": {
+      "post": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureInputDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureInputDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatureDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatureDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatureDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/{id}": {
+      "put": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CandidatureDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatureDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatureDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatureDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/GetPotentialCandidates/{offreId}": {
+      "get": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "offreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AppUserDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AppUserDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AppUserDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/GetCandidatesForOffre/{offreId}": {
+      "get": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "offreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidatureDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidatureDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidatureDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/DeleteCandidate/{candidatureId}": {
+      "delete": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "candidatureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/GetSortedCandidates/{offreId}": {
+      "get": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "offreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "DateSoumission"
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidatureDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidatureDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CandidatureDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PostulerCandidate/UpdateCandidatureStatus/{candidatureId}": {
+      "put": {
+        "tags": [
+          "PostulerCandidate"
+        ],
+        "parameters": [
+          {
+            "name": "candidatureId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -3520,6 +3976,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "lettreMotivation": {
+            "type": "string",
+            "nullable": true
+          },
           "idFiliale": {
             "type": "string",
             "format": "uuid",
@@ -3576,6 +4036,20 @@
               "$ref": "#/components/schemas/TentativeQuiz"
             },
             "nullable": true
+          },
+          "diplomesCandidate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiplomeCandidate"
+            },
+            "nullable": true
+          },
+          "certificats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Certificat"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3603,6 +4077,131 @@
           },
           "competence": {
             "$ref": "#/components/schemas/Competence"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AppUserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "prenom": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "niveauEtude": {
+            "type": "string",
+            "nullable": true
+          },
+          "diplome": {
+            "type": "string",
+            "nullable": true
+          },
+          "universite": {
+            "type": "string",
+            "nullable": true
+          },
+          "specialite": {
+            "type": "string",
+            "nullable": true
+          },
+          "lettreMotivation": {
+            "type": "string",
+            "nullable": true
+          },
+          "cv": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "linkedIn": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "github": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "portfolio": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "experiences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExperienceDto"
+            },
+            "nullable": true
+          },
+          "appUserCompetences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CandidateCompetenceDto"
+            },
+            "nullable": true
+          },
+          "certificats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CertificatDto"
+            },
+            "nullable": true
+          },
+          "diplomesCandidate": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DiplomeCandidateDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CandidateCompetenceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "competenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "niveauPossede": {
+            "type": "string",
+            "nullable": true
+          },
+          "competence": {
+            "$ref": "#/components/schemas/CompetenceCandidateDto"
           }
         },
         "additionalProperties": false
@@ -3649,6 +4248,73 @@
         },
         "additionalProperties": false
       },
+      "CandidatureDto": {
+        "required": [
+          "appUserId",
+          "dateSoumission",
+          "offreId",
+          "statut"
+        ],
+        "type": "object",
+        "properties": {
+          "idCandidature": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "statut": {
+            "maxLength": 50,
+            "minLength": 1,
+            "type": "string"
+          },
+          "messageMotivation": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "dateSoumission": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUserDto"
+          },
+          "offre": {
+            "$ref": "#/components/schemas/OffreEmploicandidateDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CandidatureInputDto": {
+        "required": [
+          "appUserId",
+          "offreId"
+        ],
+        "type": "object",
+        "properties": {
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offreId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "messageMotivation": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Certificat": {
         "required": [
           "dateObtention",
@@ -3661,7 +4327,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "experienceId": {
+          "appUserId": {
             "type": "string",
             "format": "uuid"
           },
@@ -3689,8 +4355,42 @@
             "type": "string",
             "nullable": true
           },
-          "experience": {
-            "$ref": "#/components/schemas/Experience"
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CertificatDto": {
+        "type": "object",
+        "properties": {
+          "idCertificat": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nom": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "dateObtention": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "organisme": {
+            "maxLength": 150,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "urlDocument": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3741,6 +4441,30 @@
               "$ref": "#/components/schemas/OffreCompetences"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompetenceCandidateDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "estTechnique": {
+            "type": "boolean"
+          },
+          "estSoftSkill": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -3984,6 +4708,90 @@
         },
         "additionalProperties": false
       },
+      "DiplomeCandidate": {
+        "required": [
+          "dateObtention",
+          "institution",
+          "nomDiplome"
+        ],
+        "type": "object",
+        "properties": {
+          "idDiplome": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nomDiplome": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "institution": {
+            "maxLength": 150,
+            "minLength": 1,
+            "type": "string"
+          },
+          "dateObtention": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "specialite": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "urlDocument": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "appUser": {
+            "$ref": "#/components/schemas/AppUser"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DiplomeCandidateDto": {
+        "type": "object",
+        "properties": {
+          "idDiplome": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "appUserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nomDiplome": {
+            "maxLength": 150,
+            "type": "string",
+            "nullable": true
+          },
+          "institution": {
+            "maxLength": 150,
+            "type": "string",
+            "nullable": true
+          },
+          "dateObtention": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "specialite": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "urlDocument": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DiplomeDto": {
         "type": "object",
         "properties": {
@@ -4053,12 +4861,45 @@
           },
           "appUser": {
             "$ref": "#/components/schemas/AppUser"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExperienceDto": {
+        "type": "object",
+        "properties": {
+          "idExperience": {
+            "type": "string",
+            "format": "uuid"
           },
-          "certificats": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Certificat"
-            },
+          "poste": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "maxLength": 1000,
+            "type": "string",
+            "nullable": true
+          },
+          "nomEntreprise": {
+            "maxLength": 150,
+            "type": "string",
+            "nullable": true
+          },
+          "competenceAcquise": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "dateDebut": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateFin": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
@@ -4633,6 +5474,16 @@
               "format": "uuid"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OffreEmploicandidateDto": {
+        "type": "object",
+        "properties": {
+          "idOffreEmploi": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -5576,11 +6427,11 @@
             "type": "number",
             "format": "double"
           },
-          "quiz": {
-            "$ref": "#/components/schemas/Quiz"
-          },
           "appUser": {
             "$ref": "#/components/schemas/AppUser"
+          },
+          "quiz": {
+            "$ref": "#/components/schemas/Quiz"
           },
           "resultat": {
             "$ref": "#/components/schemas/ResultatQuiz"

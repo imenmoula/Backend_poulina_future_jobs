@@ -57,6 +57,9 @@ namespace Backend_poulina_future_jobs.Models
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
+      // Adjust length as needed
+        public string LettreMotivation { get; set; } = string.Empty;
+
         /************relatione with departement -**********************************/
         // Nouvelle relation avec Filiale
         public Guid? IdFiliale { get; set; }
@@ -74,7 +77,14 @@ namespace Backend_poulina_future_jobs.Models
         public ICollection<AppUserCompetence> AppUserCompetences { get; set; } = new List<AppUserCompetence>(); // Nouvelle relation
         public List<Quiz> QuizzesTentés { get; set; } = new List<Quiz>();
         // Dans la classe AppUser
+
+
         public virtual ICollection<TentativeQuiz> Tentatives { get; set; } = new List<TentativeQuiz>();
+        // New relationship with Diplome
+        public ICollection<DiplomeCandidate> DiplomesCandidate { get; set; } = new List<DiplomeCandidate>();
+
+        // New relationship with Certificat
+        public ICollection<Certificat> Certificats { get; set; } = new List<Certificat>();
 
     }
 }

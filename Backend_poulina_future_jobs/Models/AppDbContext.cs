@@ -35,6 +35,8 @@ namespace Backend_poulina_future_jobs.Models
         public DbSet<ReponseUtilisateur> ReponsesUtilisateur { get; set; }
         public DbSet<ResultatQuiz> ResultatsQuiz { get; set; }
         public DbSet<AppUser> AppUser { get; set; } = default!;
+        // New DbSet for Diplome
+        public DbSet<DiplomeCandidate> DiplomesCandidate { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -189,10 +191,25 @@ namespace Backend_poulina_future_jobs.Models
                 .HasForeignKey(e => e.AppUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<DiplomeCandidate>()
+                 .HasOne(d => d.AppUser)
+                 .WithMany(u => u.DiplomesCandidate)
+                 .HasForeignKey(d => d.AppUserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure AppUser-Certificat relationship
+            // In AppDbContext.cs, update the TentativeQuiz configuration
+            modelBuilder.Entity<TentativeQuiz>()
+                .HasOne(t => t.AppUser)
+                .WithMany(u => u.Tentatives)
+                .HasForeignKey(t => t.AppUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Ensure Certificat configuration is correct
             modelBuilder.Entity<Certificat>()
-                .HasOne(c => c.Experience)
-                .WithMany(e => e.Certificats)
-                .HasForeignKey(c => c.ExperienceId)
+                .HasOne(c => c.AppUser)
+                .WithMany(u => u.Certificats)
+                .HasForeignKey(c => c.AppUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Relations pour les candidatures
@@ -308,12 +325,12 @@ namespace Backend_poulina_future_jobs.Models
                 .WithMany(q => q.Tentatives)
                 .HasForeignKey(t => t.QuizId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<TentativeQuiz>()
-               .HasOne<AppUser>(t => t.AppUser)
-               .WithMany()
-               .HasForeignKey(t => t.AppUserId)
-               .OnDelete(DeleteBehavior.Restrict);
+            /***********************************************/
+    //        modelBuilder.Entity<TentativeQuiz>()
+    //.HasOne(t => t.AppUser)
+    //.WithMany(u => u.Tentatives) // Specify the navigation property
+    //.HasForeignKey(t => t.AppUserId)
+    //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<TentativeQuiz>()
                 .HasOne(t => t.Resultat)

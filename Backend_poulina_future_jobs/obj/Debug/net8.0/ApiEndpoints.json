@@ -999,6 +999,38 @@
   },
   {
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetOffresByRecruteurOfFiliale",
+    "RelativePath": "api/OffreEmplois/by-recruteur-filiale/{idFiliale}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idFiliale",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetOffresByRecruteur",
+    "RelativePath": "api/OffreEmplois/by-recruteur/{idRecruteur}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idRecruteur",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
     "Method": "GetCompetences",
     "RelativePath": "api/OffreEmplois/Competences",
     "HttpMethod": "GET",
@@ -1011,6 +1043,16 @@
     "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
     "Method": "GetModesTravail",
     "RelativePath": "api/OffreEmplois/ModesTravail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetNiveauxExperience",
+    "RelativePath": "api/OffreEmplois/niveaux-experience",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1076,6 +1118,16 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.OffreEmploisController",
+    "Method": "GetSpecialites",
+    "RelativePath": "api/OffreEmplois/specialites",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -1406,6 +1458,220 @@
       {
         "Name": "id",
         "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "PostCandidature",
+    "RelativePath": "api/PostulerCandidate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureInputDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "PutCandidature",
+    "RelativePath": "api/PostulerCandidate/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "candidatureDto",
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "GetCandidature",
+    "RelativePath": "api/PostulerCandidate/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "DeleteCandidate",
+    "RelativePath": "api/PostulerCandidate/DeleteCandidate/{candidatureId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "candidatureId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "GetCandidatesForOffre",
+    "RelativePath": "api/PostulerCandidate/GetCandidatesForOffre/{offreId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "offreId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Backend_poulina_future_jobs.Controllers.CandidatureDto, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "GetPotentialCandidates",
+    "RelativePath": "api/PostulerCandidate/GetPotentialCandidates/{offreId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "offreId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Backend_poulina_future_jobs.Controllers.AppUserDto, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "GetSortedCandidates",
+    "RelativePath": "api/PostulerCandidate/GetSortedCandidates/{offreId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "offreId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "sortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ascending",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Backend_poulina_future_jobs.Controllers.CandidatureDto, Backend_poulina_future_jobs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "SoumettreCandidature",
+    "RelativePath": "api/PostulerCandidate/Soumettre",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Backend_poulina_future_jobs.Controllers.CandidatureInputDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_poulina_future_jobs.Controllers.PostulerCandidateController",
+    "Method": "UpdateCandidatureStatus",
+    "RelativePath": "api/PostulerCandidate/UpdateCandidatureStatus/{candidatureId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "candidatureId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "newStatus",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Backend_poulina_future_jobs.Models
 {
@@ -7,8 +8,7 @@ namespace Backend_poulina_future_jobs.Models
         [Key]
         public Guid IdCertificat { get; set; }
 
-        public Guid ExperienceId { get; set; }
-
+        public Guid AppUserId { get; set; }
         [Required]
         [MaxLength(100)]
         public string Nom { get; set; }
@@ -26,7 +26,7 @@ namespace Backend_poulina_future_jobs.Models
         [MaxLength(255)]
         public string UrlDocument { get; set; } = string.Empty;
 
-        public Experience Experience { get; set; }
-
+        [ForeignKey("AppUserId")]
+        public AppUser AppUser { get; set; }
     }
 }

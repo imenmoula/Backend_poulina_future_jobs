@@ -27,6 +27,6 @@ namespace Backend_poulina_future_jobs.Models
         public DateTime? DateFin { get; set; }
 
         public AppUser AppUser { get; set; }
-        public ICollection<Certificat> Certificats { get; set; } = new List<Certificat>();
+        //public ICollection<Certificat> Certificats { get; set; } = new List<Certificat>();
     }
 }

@@ -33,11 +33,12 @@ namespace Backend_poulina_future_jobs.Models
 
         public double Score { get; set; }
 
-        [ForeignKey("QuizId")]
-        public virtual Quiz Quiz { get; set; }
-
+        // Navigation properties
         [ForeignKey("AppUserId")]
-        public virtual AppUser AppUser { get; set; }
+        public AppUser AppUser { get; set; }
+
+        [ForeignKey("QuizId")]
+        public Quiz Quiz { get; set; }
 
         public virtual ResultatQuiz Resultat { get; set; }
 
