@@ -17,7 +17,7 @@ namespace Backend_poulina_future_jobs.Models
 
         public string Domaine { get; set; } = string.Empty;
 
-        public string Institution { get; set; } = string.Empty;
+        public string? Institution { get; set; } = string.Empty;
 
         public virtual ICollection<OffreEmploi> OffresEmploi { get; set; } = new List<OffreEmploi>();
     }

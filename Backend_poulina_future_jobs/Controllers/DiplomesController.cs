@@ -43,7 +43,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // PUT: api/Diplomes/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<object>> Update(Guid id, [FromBody] DiplomeDto dto)
+        public async Task<ActionResult<object>> Update(Guid id, [FromBody] DiplomerequestDto dto)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace Backend_poulina_future_jobs.Controllers
             }
         }
 
-        public class DiplomeDto
+        public class DiplomerequestDto
         {
             public string NomDiplome { get; set; }
             public string Niveau { get; set; }

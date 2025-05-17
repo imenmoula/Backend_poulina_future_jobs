@@ -36,7 +36,7 @@ namespace Backend_poulina_future_jobs.Dtos
         public List<OffreMissionDto> OffreMissions { get; set; } = new List<OffreMissionDto>();
         public List<OffreLangueDto> OffreLangues { get; set; } = new List<OffreLangueDto>();
         public List<OffreCompetenceDto> OffreCompetences { get; set; } = new List<OffreCompetenceDto>();
-        public List<Guid> DiplomeIds { get; set; } = new List<Guid>();
+        public List<DiplomeDto> DiplomesRequis { get; set; }
     }
 
     public class PosteDto
@@ -89,6 +89,17 @@ namespace Backend_poulina_future_jobs.Dtos
         public bool EstTechnique { get; set; }
         public bool EstSoftSkill { get; set; }
     }
+    
+        public class DiplomeDto
+        {
+            public Guid IdDiplome { get; set; }
+            [Required(ErrorMessage = "Le nom du diplôme est obligatoire.")]
+            public string NomDiplome { get; set; } = string.Empty;
+            public string Domaine { get; set; } = string.Empty;
+            public string Niveau { get; set; } = string.Empty;
+        }
+    
+
 
     public class CreateOffreEmploiRequest
     {
