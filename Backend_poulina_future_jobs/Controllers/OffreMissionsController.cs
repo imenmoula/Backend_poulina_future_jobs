@@ -1,5 +1,6 @@
 ﻿using Backend_poulina_future_jobs.Dtos;
 using Backend_poulina_future_jobs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -166,6 +167,43 @@ namespace YourNamespace.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { success = true, message = "Mission supprimée avec succès." });
+        }
+        [HttpGet("by-offre/{idOffreEmploi}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetByOffreId(Guid idOffreEmploi)
+        {
+            try
+            {
+                if (!await _context.OffresEmploi.AnyAsync(o => o.IdOffreEmploi == idOffreEmploi))
+                {
+                    return NotFound(new { success = false, message = $"L'offre d'emploi avec ID {idOffreEmploi} n'existe pas." });
+                }
+
+                var missions = await _context.OffreMissions
+                    .Where(om => om.IdOffreEmploi == idOffreEmploi)
+                    .ToListAsync();
+
+                if (!missions.Any())
+                {
+                    return NotFound(new { success = false, message = "Aucune mission trouvée pour cette offre" });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Missions récupérées avec succès",
+                    data = missions
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des missions",
+                    detail = ex.Message
+                });
+            }
         }
     }
 

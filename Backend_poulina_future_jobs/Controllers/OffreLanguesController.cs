@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
 using Backend_poulina_future_jobs.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -156,6 +157,39 @@ namespace Backend_poulina_future_jobs.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("by-offre/{idOffreEmploi}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetByOffreId(Guid idOffreEmploi)
+        {
+            try
+            {
+                var langues = await _context.OffreLangues
+                    .Where(ol => ol.IdOffreEmploi == idOffreEmploi)
+                    .ToListAsync();
+
+                if (!langues.Any())
+                {
+                    return NotFound(new { success = false, message = "Aucune langue trouvée pour cette offre" });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Langues récupérées avec succès",
+                    data = langues
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des langues",
+                    detail = ex.Message
+                });
+            }
         }
 
         private bool OffreLangueExists(Guid id)

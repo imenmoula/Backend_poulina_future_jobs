@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
 using Backend_poulina_future_jobs.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -101,6 +102,63 @@ namespace Backend_poulina_future_jobs.Controllers
                 {
                     success = false,
                     message = "Erreur interne du serveur",
+                    detail = ex.Message
+                });
+            }
+        }
+        [HttpGet("by-offre/{idOffreEmploi}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetByOffreId(Guid idOffreEmploi)
+        {
+            try
+            {
+                var competences = await _context.OffreCompetences
+                    .Where(oc => oc.IdOffreEmploi == idOffreEmploi)
+                    .Include(oc => oc.Competence)
+                    .ToListAsync();
+
+                if (!competences.Any())
+                {
+                    return NotFound(new { success = false, message = "Aucune compétence trouvée pour cette offre." });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Compétences récupérées avec succès",
+                    data = competences
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des compétences",
+                    detail = ex.Message
+                });
+            }
+        }
+        [HttpGet("competences-disponibles")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetCompetencesDisponibles()
+        {
+            try
+            {
+                var competences = await _context.Competences.ToListAsync();
+                return Ok(new
+                {
+                    success = true,
+                    message = "Compétences disponibles récupérées",
+                    data = competences
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des compétences disponibles",
                     detail = ex.Message
                 });
             }

@@ -52,6 +52,7 @@ namespace Backend_poulina_future_jobs.Extensions
                         ValidAudience = config["AppSettings:Audience"],
                         ClockSkew = TimeSpan.Zero
                     };
+
                 });
 
             services.AddAuthorization(options =>

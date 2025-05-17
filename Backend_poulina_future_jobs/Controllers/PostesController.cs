@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -142,7 +143,43 @@ namespace Backend_poulina_future_jobs.Controllers
 
             return Ok(new { success = true, message = "Poste supprimé avec succès." });
         }
+        [HttpGet("by-offre/{idOffreEmploi}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetByOffreId(Guid idOffreEmploi)
+        {
+            try
+            {
+                if (!await _context.OffresEmploi.AnyAsync(o => o.IdOffreEmploi == idOffreEmploi))
+                {
+                    return NotFound(new { success = false, message = $"L'offre d'emploi avec ID {idOffreEmploi} n'existe pas." });
+                }
 
+                var postes = await _context.Postes
+                    .Where(p => p.IdOffreEmploi == idOffreEmploi)
+                    .ToListAsync();
+
+                if (!postes.Any())
+                {
+                    return NotFound(new { success = false, message = "Aucun poste trouvé pour cette offre" });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Postes récupérés avec succès",
+                    data = postes
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des postes",
+                    detail = ex.Message
+                });
+            }
+        }
         private bool PosteExists(Guid id)
         {
             return _context.Postes.Any(e => e.IdPoste == id);

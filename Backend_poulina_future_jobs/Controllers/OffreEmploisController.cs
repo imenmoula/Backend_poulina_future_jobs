@@ -1166,6 +1166,122 @@ namespace Backend_poulina_future_jobs.Controllers
                 });
             }
         }
+        [HttpGet("actives")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetOffresActives()
+        {
+            try
+            {
+                var offresActives = await _context.OffresEmploi
+                    .Where(o => o.estActif && o.DateExpiration >= DateTime.UtcNow)
+                    .Include(o => o.Postes)
+                    .Include(o => o.Filiale)
+                    .ToListAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Offres actives récupérées",
+                    offresEmploi = offresActives
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des offres actives",
+                    detail = ex.Message
+                });
+            }
+        }
+        [HttpGet("exists/{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> OffreExists(Guid id)
+        {
+            try
+            {
+                var exists = await _context.OffresEmploi.AnyAsync(o => o.IdOffreEmploi == id);
+                return Ok(new
+                {
+                    success = true,
+                    exists = exists
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la vérification",
+                    detail = ex.Message
+                });
+            }
+        }
+
+        [HttpGet("statistiques")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetStatistics()
+        {
+            try
+            {
+                var total = await _context.OffresEmploi.CountAsync();
+                var actives = await _context.OffresEmploi.CountAsync(o => o.estActif);
+                var expirees = await _context.OffresEmploi.CountAsync(o => o.DateExpiration < DateTime.UtcNow);
+
+                return Ok(new
+                {
+                    success = true,
+                    data = new
+                    {
+                        total,
+                        actives,
+                        expirees
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des statistiques",
+                    detail = ex.Message
+                });
+            }
+        }
+        [HttpPatch("{id}/toggle-activation")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> ToggleActivation(Guid id)
+        {
+            try
+            {
+                var offre = await _context.OffresEmploi.FindAsync(id);
+                if (offre == null)
+                {
+                    return NotFound(new { success = false, message = "Offre non trouvée" });
+                }
+
+                offre.estActif = !offre.estActif;
+                await _context.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    success = true,
+                    message = $"Offre {(offre.estActif ? "activée" : "désactivée")} avec succès",
+                    isActive = offre.estActif
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la modification du statut",
+                    detail = ex.Message
+                });
+            }
+        }
 
         /// <summary>
         /// Récupère tous les niveaux d'expérience distincts existants dans les offres d'emploi

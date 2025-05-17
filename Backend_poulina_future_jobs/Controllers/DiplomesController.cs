@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -154,13 +155,56 @@ namespace Backend_poulina_future_jobs.Controllers
         {
             return _context.Diplomes.Any(e => e.IdDiplome == id);
         }
-    }
 
-    public class DiplomeDto
-    {
-        public string NomDiplome { get; set; }
-        public string Niveau { get; set; }
-        public string Domaine { get; set; }
-        public string Institution { get; set; }
+        //[HttpGet("by-offre/{idOffreEmploi}")]
+        [HttpGet("by-offre/{idOffreEmploi}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<object>> GetByOffreId(Guid idOffreEmploi)
+        {
+            try
+            {
+                // Vérifier que l'offre existe
+                var offre = await _context.OffresEmploi
+                    .Include(o => o.DiplomesRequis)
+                    .FirstOrDefaultAsync(o => o.IdOffreEmploi == idOffreEmploi);
+
+                if (offre == null)
+                {
+                    return NotFound(new { success = false, message = $"L'offre d'emploi avec ID {idOffreEmploi} n'existe pas." });
+                }
+
+                // Récupérer les diplômes associés à l'offre via la navigation property
+                var diplomes = offre.DiplomesRequis;
+
+                if (diplomes == null || !diplomes.Any())
+                {
+                    return NotFound(new { success = false, message = "Aucun diplôme trouvé pour cette offre" });
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Diplômes récupérés avec succès",
+                    data = diplomes
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Erreur lors de la récupération des diplômes",
+                    detail = ex.Message
+                });
+            }
+        }
+
+        public class DiplomeDto
+        {
+            public string NomDiplome { get; set; }
+            public string Niveau { get; set; }
+            public string Domaine { get; set; }
+            public string Institution { get; set; }
+        }
     }
 }

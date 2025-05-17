@@ -1,8 +1,7 @@
-.vs/ 
-
 # Ignore .NET build output directories
 bin/
 obj/
+.vs/
 
 # Ignore specific file types
 *.dll

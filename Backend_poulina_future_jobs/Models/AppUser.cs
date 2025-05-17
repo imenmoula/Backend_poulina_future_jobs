@@ -83,6 +83,7 @@ namespace Backend_poulina_future_jobs.Models
         // New relationship with Diplome
         public ICollection<DiplomeCandidate> DiplomesCandidate { get; set; } = new List<DiplomeCandidate>();
 
+
         // New relationship with Certificat
         public ICollection<Certificat> Certificats { get; set; } = new List<Certificat>();
 
