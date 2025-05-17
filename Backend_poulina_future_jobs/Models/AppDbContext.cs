@@ -235,6 +235,16 @@ namespace Backend_poulina_future_jobs.Models
                 .HasOne(cc => cc.Competence)
                 .WithMany(c => c.AppUserCompetences)
                 .HasForeignKey(cc => cc.CompetenceId);
+            // Et dans OnModelCreating :
+            modelBuilder.Entity<AppUserCompetence>()
+                .HasOne(auc => auc.Offre)
+                .WithMany(o => o.CandidatCompetences)
+                .HasForeignKey(auc => auc.OffreId)
+                .IsRequired(false);
+
+            // Configuration de la clé primaire composée pour OffreCompetences
+            modelBuilder.Entity<OffreCompetences>()
+                .HasKey(oc => new { oc.IdOffreEmploi, oc.IdCompetence });
 
             modelBuilder.Entity<AppUserCompetence>()
                 .ToTable("AppUserCompetences");

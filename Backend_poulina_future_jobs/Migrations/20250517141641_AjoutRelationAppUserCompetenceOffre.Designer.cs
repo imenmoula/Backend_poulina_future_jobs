@@ -4,6 +4,7 @@ using Backend_poulina_future_jobs.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250517141641_AjoutRelationAppUserCompetenceOffre")]
+    partial class AjoutRelationAppUserCompetenceOffre
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -998,6 +1001,10 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<DateTime?>("DateNaissance")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Diplome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Entreprise")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1010,6 +1017,10 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LettreMotivation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NiveauEtude")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1044,6 +1055,10 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("Universite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Ville")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1065,6 +1080,10 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("portfolio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("specialite")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

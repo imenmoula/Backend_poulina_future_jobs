@@ -50,7 +50,10 @@ namespace Backend_poulina_future_jobs.Extensions
                         ValidateLifetime = true,
                         ValidIssuer = config["AppSettings:Issuer"], // Ajouter l'issuer
                         ValidAudience = config["AppSettings:Audience"],
-                        ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero,
+                        NameClaimType = "userId", // Si vous utilisez la solution 2
+                        RoleClaimType ="http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+
                     };
 
                 });

@@ -105,5 +105,8 @@ namespace Backend_poulina_future_jobs.Models
         public ICollection<Candidature> Candidatures { get; set; } = new List<Candidature>();
         // Relations
         public virtual ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
+        public virtual ICollection<AppUserCompetence> CandidatCompetences { get; set; } = new List<AppUserCompetence>();
+
+
     }
 }

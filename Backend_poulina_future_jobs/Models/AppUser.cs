@@ -33,12 +33,7 @@ namespace Backend_poulina_future_jobs.Models
         public string Ville { get; set; } = string.Empty;
         public string Pays { get; set; } = string.Empty;
         public string phone { get; set; } = string.Empty;
-        public string NiveauEtude { get; set; } = string.Empty;
-
-        public string Diplome { get; set; } = string.Empty;
-
-        public string Universite { get; set; } = string.Empty;
-        public string specialite { get; set; } = string.Empty;
+       
 
         public string cv { get; set; } = string.Empty;
         public string linkedIn { get; set; } = string.Empty;
@@ -86,6 +81,7 @@ namespace Backend_poulina_future_jobs.Models
 
         // New relationship with Certificat
         public ICollection<Certificat> Certificats { get; set; } = new List<Certificat>();
+
 
     }
 }

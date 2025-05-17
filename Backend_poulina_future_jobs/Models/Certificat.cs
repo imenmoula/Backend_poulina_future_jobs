@@ -6,7 +6,7 @@ namespace Backend_poulina_future_jobs.Models
     public class Certificat
     {
         [Key]
-        public Guid IdCertificat { get; set; }
+        public Guid IdCertificat { get; set;}
 
         public Guid AppUserId { get; set; }
         [Required]

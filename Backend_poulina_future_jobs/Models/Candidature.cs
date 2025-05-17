@@ -5,7 +5,7 @@ namespace Backend_poulina_future_jobs.Models
     public class Candidature
     {
         [Key]
-        public Guid IdCandidature { get; set; }
+        public Guid IdCandidature { get; set;}
 
         public Guid AppUserId { get; set; }
         public Guid OffreId { get; set; }
