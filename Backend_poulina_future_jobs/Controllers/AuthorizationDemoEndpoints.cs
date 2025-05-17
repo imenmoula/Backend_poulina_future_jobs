@@ -8,23 +8,7 @@ namespace Backend_poulina_future_jobs.Controllers
     {
         public static IEndpointRouteBuilder MapAuthorizationDemoEndpoints(this IEndpointRouteBuilder app)
         {
-            //app.MapGet("/AdminOnly", AdminOnly)
-            //   .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" });
-
-            //app.MapGet("/AdminOrRecruteur", [Authorize(Roles = "Admin,Recruteur")] () =>
-            //{
-            //    return "Admin OR Recruteur";
-            //});
-
-            //app.MapGet("/Recruteur", [Authorize(Roles = "Recruteur")] () =>
-            //{
-            //    return "Recruteur";
-            //});
-
-            //app.MapGet("/Candidate", [Authorize(Roles = "Candidate")] () =>
-            //{
-            //    return "Candidate";
-            //});
+            
 
             app.MapGet("/AdminOnly", AdminOnly).RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" });
             app.MapGet("/Recruteur", [Authorize(Roles = "Recruteur")] () => "Recruteur");

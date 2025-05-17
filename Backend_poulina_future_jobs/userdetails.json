@@ -1,41 +1,187 @@
 [
     {
-        "email": "recruteur@example.com",
-        "password": "Recruteur@123",
-        "fullName": "Recruteur User",
-        "role": "Recruteur",
-        "poste": "HR expert",
-        "filialeId": 2,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIyYjY0NjExNy1mZmI1LTQ4NTAtOGU4My1iZTQwNTIxZDNmZjEiLCJuYmYiOjE3NDA2NTE4MjEsImV4cCI6MTc0MTUxNTgyMSwiaWF0IjoxNzQwNjUxODIxfQ.G3WRo-s-tUAzhziIBa7o7hZHEB_lJ5NGQnpFjTlXv9s"
+
+        "email": "Zajmia2025@gmail.com",
+        "password": "Zajmia12$",
+        "fullName": "zreli ajmia ",
+        "nom": "zreli",
+        "prenom": "ajmia",
+        "role": "Candiadate",
+
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiWmFqbWlhMjAyNUBnbWFpbC5jb20iLCJ1c2VySWQiOiI4ZDZmY2E3NS05ZjVmLTRiNTMtNWYwYS0wOGRkNjYwYTk5OGEiLCJqdGkiOiI2OTlmYTNiZC0xYTg0LTQ0MGItODAxNC1lMWYxYmQxYzAxZWYiLCJGdWxsTmFtZSI6InpyZWxpIGFqbWlhICIsIk5vbSI6InpyZWxpIiwiUHJlbm9tIjoiYWptaWEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWFkYXRlIiwiZXhwIjoxNzQzMTU5NDYxfQ.hvk5-LZrr17DUuDzjYypyaf2A2dIh9siNBBTTvQXuNs"
     },
+
+    {
+        "email": "mohamed60@gmail.com",
+        "password": "med$2002$",
+        "fullName": "Moula Mohamed",
+        "nom": "Moula",
+        "prenom": "Mohamed",
+        "role": "Recruteur,,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibW9oYW1lZDYwQGdtYWlsLmNvbSIsInVzZXJJZCI6ImQ1ZGZjZjE2LWUxMDQtNDQ1ZC01ZjA5LTA4ZGQ2NjBhOTk4YSIsImp0aSI6IjQwMmM2M2ZhLTMyOTUtNDM0My05ZWIxLTZjOGQ0Yzg1Y2Q4MCIsIkZ1bGxOYW1lIjoiTW91bGEgTW9oYW1lZCIsIk5vbSI6Ik1vdWxhIiwiUHJlbm9tIjoiTW9oYW1lZCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJlY3J1dGV1ciIsImV4cCI6MTc0MzE1OTMwMH0.bscrQoaeNCnJufB7bEnaeMdluX2vSq3SxpgzghFKkME"
+
+    },
+
+    {
+
+        "email": "moulaienpfe2025@gmail.com",
+        "password": "pfe2025$",
+        "fullName": "Moula Imen",
+        "nom": "Moula",
+        "prenom": "Imen",
+        "role": "Admin",
+
+        "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibW91bGFpZW5wZmUyMDI1QGdtYWlsLmNvbSIsInVzZXJJZCI6ImVhZGRjZWY1LTAzNmEtNGVlNy02OTkwLTA4ZGQ2NmU4MmUzMCIsImp0aSI6ImNhZDNhN2RkLTQ2OTMtNDVhMy1iNDMzLWY0MzQ4MDBjYWVhZSIsIkZ1bGxOYW1lIjoiTW91bGEgSW1lbiIsIk5vbSI6Ik1vdWxhIiwiUHJlbm9tIjoiSW1lbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzQ0OTgyMTc2fQ.zEwiiSRE_2sOawGDOHPlDlpzLrT3HjQ2bdE2w4fJrAg"
+
+    },
+    {
+        "email": "test@example.com",
+        "password": "MotDePasse123!",
+        "fullName": "John Doe",
+        "nom": "Doe",
+        "prenom": "John",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdEBleGFtcGxlLmNvbSIsInVzZXJJZCI6IjU3Mjk1ZmUzLWMyNzUtNDgzMy01ZjA4LTA4ZGQ2NjBhOTk4YSIsImp0aSI6IjIxNWM0MDVmLTdiN2UtNDBmZC1hYWQ1LWUwNzE1MjUyMzI1YiIsIkZ1bGxOYW1lIjoiSm9obiBEb2UiLCJOb20iOiJEb2UiLCJQcmVub20iOiJKb2huIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FuZGlkYXRlIiwiZXhwIjoxNzQzMTU5MDAyfQ.oqVhhC_6Hso4xXx4oPrWP2Gprly2Usxb9xHlyLK39ts"
+    },
+
+    {
+        "email": "charouf@gmail.com",
+        "password": "charoufa1994$",
+        "fullName": "Moula ichraf",
+        "nom": "Moula",
+        "prenom": "ichraf",
+        "role": "Admin",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiY2hhcm91ZkBnbWFpbC5jb20iLCJ1c2VySWQiOiJkNWFjNWQ2Yi0zNWI5LTQ2ZmEtNjk5MS0wOGRkNjZlODJlMzAiLCJqdGkiOiI4ODEyODhkNi1kNTBkLTQ4ZWQtYmI3MS1jY2ZjOGYzZmI2ZWIiLCJGdWxsTmFtZSI6Ik1vdWxhIGljaHJhZiIsIk5vbSI6Ik1vdWxhIiwiUHJlbm9tIjoiaWNocmFmIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDQ5ODI1MTJ9.9XsyW-zQRAnuyjqMyL-7i4popZlKrffJgJxmw3h8zq0"
+    },
+    {
+        "email": "alyouta@gmail.com",
+        "password": "alyouta1972$",
+        "fullName": "Moula alyouta",
+        "nom": "Moula",
+        "prenom": "alyouta",
+        "role": "Admin",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaGJpYmFAZ21haWwuY29tIiwidXNlcklkIjoiNzMwMTcwYjAtMDYwNi00M2JjLTE4ZjMtMDhkZDgwZGY4ZjU1IiwianRpIjoiNjAwNjc2MzQtNWY2MS00MTMxLTg3OTQtMjE4OGUyYjY5M2FiIiwiRnVsbE5hbWUiOiJiZW5uYSBoYmliYSIsIk5vbSI6ImJlbm5hIiwiUHJlbm9tIjoiaGJpYmEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NTA0MjkyODd9.tKnefGl84avjzE2awFftJWJ0QyUWpglT3vapZkrhEJM",   
+
+    },
+    {
+        "email": "hbiba@gmail.com",
+        "password": "hbiba2001$",
+        "fullName": "benna hbiba",
+        "nom": "benna",
+        "prenom": "hbiba",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaGJpYmFAZ21haWwuY29tIiwidXNlcklkIjoiNzMwMTcwYjAtMDYwNi00M2JjLTE4ZjMtMDhkZDgwZGY4ZjU1IiwianRpIjoiNjAwNjc2MzQtNWY2MS00MTMxLTg3OTQtMjE4OGUyYjY5M2FiIiwiRnVsbE5hbWUiOiJiZW5uYSBoYmliYSIsIk5vbSI6ImJlbm5hIiwiUHJlbm9tIjoiaGJpYmEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NTA0MjkyODd9.tKnefGl84avjzE2awFftJWJ0QyUWpglT3vapZkrhEJM",
+    },
+    {
+        "email": "olfa@gmail.com",
+        "password": "olfa123$",
+        "fullName": "benna olfa",
+        "nom": "benna",
+        "prenom": "olfa",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoib2xmYUBnbWFpbC5jb20iLCJ1c2VySWQiOiJlODJlMjIyYy0wNWJlLTQ0ZjYtNzRkZi0wOGRkODEwMzI4NzciLCJqdGkiOiJiMjI4NjNjNS1kODYwLTQ1MjgtOTJjOC1jMDk0NGI4MGUxMjEiLCJGdWxsTmFtZSI6ImJlbm5hIG9sZmEiLCJOb20iOiJiZW5uYSIsIlByZW5vbSI6Im9sZmEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJDYW5kaWRhdGUiLCJleHAiOjE3NTA0NDQ1MjJ9.hHrWg1NiKu_fXE4wEqWT7hSkt7h2t7O19TQK4t6ACNM",
+    },
+    {
+        "email": "alisaleh@gmail.com",
+        "password": "alisaleh123$",
+        "fullName": "ali saleh",
+        "nom": "saleh",
+        "prenom": "ali",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWxpc2FsZWhAZ21haWwuY29tIiwidXNlcklkIjoiNWY4MWY3ZGQtNWNmNC00NDBhLTE4ZjQtMDhkZDgwZGY4ZjU1IiwianRpIjoiMTA1MTlkYTQtNDBhOS00NWY2LWIxZDItODY3MTczYTFkYzZhIiwiRnVsbE5hbWUiOiJhbGkgc2FsZWgiLCJOb20iOiJzYWxlaCIsIlByZW5vbSI6ImFsaSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkNhbmRpZGF0ZSIsImV4cCI6MTc1MDQzMDc4N30.heS3tuensu_WJK9VO9QMy2BheR_vXBb_sC3oT4dmIKk",
+
+    }
     
-   
+
+
     {
-        "email": "mi@gmail.com",
-        "password": "mi2002$",
-        "fullName": "mamouna$",
+        "email": "hbiba@gmail.com",
+        "password": "hbiba123$",
+        "fullName": "belhaj hbiba",
+        "nom": "belhaj",
+        "prenom": "hbiba",
         "role": "Admin",
-        "poste": "dev",
-        "filialeId": 3,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI5MTNhNWMzZC0yN2RjLTRlNDEtYjA2MC04NGRlNzRjOTY3MDYiLCJuYmYiOjE3NDA2NTkxNTIsImV4cCI6MTc0MTUyMzE1MiwiaWF0IjoxNzQwNjU5MTUyfQ.pz3w4VwSc0_FkiYMlGQeexXLmaFxnv0yM76fmRBap2A"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWx5b3V0YUBnbWFpbC5jb20iLCJ1c2VySWQiOiIxODAzNDhjNS1iNDdkLTQ3NmMtNjk5Mi0wOGRkNjZlODJlMzAiLCJqdGkiOiIyNjU0Nzk5ZC05NDcyLTQ2ZDYtOWExMS02NTNhZTllYzcyMmMiLCJGdWxsTmFtZSI6Ik1vdWxhIGFseW91dGEiLCJOb20iOiJNb3VsYSIsIlByZW5vbSI6ImFseW91dGEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NDk4MjgxMn0.BkLFiTZ2EK4pDNE3UWKkb-wVp4uD87pecRclVB8nrH0"
+
     },
     {
-        "email": "dadou@gmail.com",
-        "password": "041995$",
-        "fullName": "dadou",
-        "role": "Recruteur",
-        "poste": "hr",
-        "filialeId": 4,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZGFkb3VAZ21haWwuY29tIiwidXNlcklkIjoiYjQxYzlkNzEtMzU3Yi00YzRhLTg4MDUtZjFjNDZmOGU2MzlmIiwicG9zdGUiOiJociIsImp0aSI6ImVmOWVlNDZhLTNmOGEtNGE3Zi1iZWZhLWRjZmUxZmM0MzM2MSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlJlY3J1dGV1ciIsImZpbGlhbGVJZCI6IjQiLCJleHAiOjE3NDE1NTM1Njh9.OC4E_7jndh3h1w9wcJNuTbP8KYxOmKfxLvYeT8zaHHk"
-    }
+        {
+            "email": "haykel@example.com",
+            "password": "haykel2025$",
+            "fullName": "zreli hykal",
+            "nom": "zreli",
+            "prenom": "hykel",
+            "role": "Admin",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaGF5a2VsQGV4YW1wbGUuY29tIiwidXNlcklkIjoiZmE0NTdhYWYtMDY2My00ZGEwLTY5OTUtMDhkZDY2ZTgyZTMwIiwianRpIjoiNWM1ZGMxNGQtYjJjNi00ZTY3LWI2N2ItZmUyNWQ3MmZmZDFkIiwiRnVsbE5hbWUiOiJ6cmVsaSBoeWthbCIsIk5vbSI6InpyZWxpIiwiUHJlbm9tIjoiaHlrZWwiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc0NTQ0NDMxMH0.kzNs6FulKVGnVJNJ9I-ydnlxckpFu9rHHqUV5wquFaE"
+        }
+    },
+
+
     {
-        "email": "test123@example.com",
-        "password": "Password123",
-        "fullName": "Test User",
+        "email": "user2@example.com",
+        "password": "user2@$",
+        "fullName": "user2",
+        "nom": "user2",
+        "prenom": "user",
         "role": "Admin",
-        "poste": "Déve",
-        "filialeId": 1,
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdDEyM0BleGFtcGxlLmNvbSIsInVzZXJJZCI6ImEzN2ZjZDVlLTliMzQtNDU2ZC1iYjYwLTFiOTZiMmI3OTAyOCIsInBvc3RlIjoiRMOpdmUiLCJqdGkiOiJkODRmYWUxNi0xYzk0LTQyNjMtOTU4OS1hNzI3YzRkMmQzODIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImZpbGlhbGVJZCI6IjEiLCJleHAiOjE3NDE1NTMzNTF9.EaN5TmUypdro04ynMJZNgMH8aXPeTuUlZWldY5UN7SE"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlcjJAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiJlYjc2MjgwYi1jMGJjLTRjZjItOTk1ZS0wOGRkNzJkZTM1NzQiLCJqdGkiOiJhYTFmNjdkMC1mZDY4LTRkMjUtOTU5MS05NTg3ODBlNmQ0NTUiLCJGdWxsTmFtZSI6InVzZXIyIiwiTm9tIjoidXNlcjIiLCJQcmVub20iOiJ1c2VyIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDg4ODk0Njd9.YQ3VI60lqAQguAhF0MkP1R4PI6BAcPl639wVzEMJflc",
+        "
+    },
+    {
+        "email": "aya@gmail.com.com",
+        "password": "aya123$",
+        "confirmPassword": "aya123$",
+        "fullName": "aounallah aya",
+        "nom": "aounallah ",
+        "prenom": "aya",
+        "role": "Admin",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYXlhQGdtYWlsLmNvbS5jb20iLCJ1c2VySWQiOiI1Yjk1YThiOS1iM2Y2LTQ0OTgtZjE2Yi0wOGRkODU3OTk3NzMiLCJqdGkiOiI0ODZkNjc2Zi00OWYyLTRlNTQtOTQ0Ny1lNDUwODU2ZGY1MDAiLCJGdWxsTmFtZSI6ImFvdW5hbGxhaCBheWEiLCJOb20iOiJhb3VuYWxsYWggIiwiUHJlbm9tIjoiYXlhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDU3NTQ3NzEsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwNiJ9.A4NiSrEQmC7RA0IXZ9n6urZMM6rkHa9utW5GcxFOlvs"
+
+
+
+    },
+    {
+        "email": "souleima@gmail.com",
+        "password": "souleima123$",
+        "confirmPassword": "souleima123$",
+        "fullName": "souleima touati",
+        "nom": "Touati",
+        "prenom": "souleima",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic291bGVpbWFAZ21haWwuY29tIiwidXNlcklkIjoiNTEzNTRlYWYtYmFkOS00OWE3LWQyYzAtMDhkZDg1YmEwYjVjIiwianRpIjoiOTZiOGY1YWItZGU2NS00NTcwLThlZmQtZjI0NTEwNDExZGU4IiwiRnVsbE5hbWUiOiJzb3VsZWltYSB0b3VhdGkiLCJOb20iOiJUb3VhdGkiLCJQcmVub20iOiJzb3VsZWltYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkNhbmRpZGF0ZSIsImV4cCI6MTc0NjM4MzY5NywiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MDA2In0.E38xza0lUomQMUEnX4dPU5--_sFGBiYAzsqyI7LZ8Qk"
+    },
+    {
+        "email": "imenRecrute@gamil.com",
+        "password": "mi2002$",
+        "confirmPassword": "mi2002$",
+        "fullName": "Moula Imen",
+        "nom": "Moula",
+        "prenom": "Imen",
+        "role": "Admin",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaW1lblJlY3J1dGVAZ2FtaWwuY29tIiwidXNlcklkIjoiNzk2ODc1NTQtNTI2My00YmMwLTZiN2MtMDhkZDg3YzI0NTVjIiwianRpIjoiODM4ZTBiMTUtZTFlNi00ODU4LWIwODMtY2IxMDU2YTliMTQwIiwiRnVsbE5hbWUiOiJNb3VsYSBJbWVuIiwiTm9tIjoiTW91bGEiLCJQcmVub20iOiJJbWVuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3NDYwMTMxMTMsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwNiJ9.py4ymQUIc_P9CY0g_F4kGBaCe4jXU_UWDaiu5DNfbgY"
+    },
+    {
+        "email": "imenPoulinaRecrute@gamil.com",
+        "password": "mi2025$",
+        "confirmPassword": "mi2025$",
+        "fullName": "belhaj Imen",
+        "nom": "belhaj",
+        "prenom": "Imen",
+        "role": "Recruteur",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaW1lblBvdWxpbmFSZWNydXRlQGdhbWlsLmNvbSIsInVzZXJJZCI6IjgxNzkxYzM1LWEwMjctNDI2NC02YjdkLTA4ZGQ4N2MyNDU1YyIsImp0aSI6IjUzZTExOThhLTIxYzAtNDU2MS1iMTg5LTBlMTBhNWQ0ODdkYyIsIkZ1bGxOYW1lIjoiYmVsaGFqIEltZW4iLCJOb20iOiJiZWxoYWoiLCJQcmVub20iOiJJbWVuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiUmVjcnV0ZXVyIiwiZXhwIjoxNzQ2MDEzMjg5LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDYifQ.QNnTnV1FImMTufhvr1-2VGSWEhvSmSXK4vEwBCjKslo"
+    },
+    {
+        "email": "fatma.benamor@example.com",
+        "password": "fatma2002$",
+        "confirmPassword": "fatma2002$",
+        "fullName": "Fatma Ben Amor",
+        "nom": "Ben Amor",
+        "prenom": "Fatma",
+        "role": "Candidate",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZmF0bWEuYmVuYW1vckBleGFtcGxlLmNvbSIsInVzZXJJZCI6ImM2MTFkZDlkLTA5ZDEtNDM1OS1kMzg2LTA4ZGQ5M2FiMDg1ZiIsImp0aSI6IjdlMjU3NTExLTUxYmMtNDRjOC1iMjUwLWIwMWJlODE0NmUxNyIsIkZ1bGxOYW1lIjoiRmF0bWEgQmVuIEFtb3IiLCJOb20iOiJCZW4gQW1vciIsIlByZW5vbSI6IkZhdG1hIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FuZGlkYXRlIiwiZXhwIjoxNzQ3MzIyNTM2LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDYifQ.0tajsvhpRLGzIEhrovi2_HrsJvtTYdpPXefA6mVFyC4"
+
     }
+
+
 
 ]
