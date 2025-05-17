@@ -11,6 +11,25 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
+    // Ajout de la classe ResetPasswordDto manquante
+    public class ResetPasswordDto
+    {
+        [Required(ErrorMessage = "L'email est requis")]
+        [EmailAddress(ErrorMessage = "Email invalide")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Le token est requis")]
+        public string Token { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Le mot de passe est requis")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Le mot de passe doit contenir entre 6 et 100 caractères")]
+        public string Password { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La confirmation du mot de passe est requise")]
+        [Compare("Password", ErrorMessage = "Le mot de passe et la confirmation doivent correspondre")]
+        public string ConfirmPassword { get; set; } = string.Empty;
+    }
+
     public class UserRegistrationModel
     {
         [Required(ErrorMessage = "L'email est requis")]
@@ -59,6 +78,13 @@ namespace Backend_poulina_future_jobs.Controllers
                .AllowAnonymous();
 
             app.MapPost("/refresh-token", RefreshToken)
+               .AllowAnonymous();
+
+            app.MapPost("/reset-password", ResetPassword)
+               .AllowAnonymous();
+               
+            // Ajout de l'endpoint de demande de réinitialisation de mot de passe
+            app.MapPost("/request-reset-password", RequestResetPassword)
                .AllowAnonymous();
 
             return app;
@@ -240,6 +266,54 @@ namespace Backend_poulina_future_jobs.Controllers
                 Roles = userRoles,
                 Success = true
             });
+        }
+
+        [AllowAnonymous]
+        public static async Task<IResult> ResetPassword(
+            UserManager<AppUser> userManager,
+            [FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            if (!Validator.TryValidateObject(resetPasswordDto, new ValidationContext(resetPasswordDto), null, true))
+            {
+                return Results.BadRequest(new { message = "Requête invalide, données manquantes ou incorrectes." });
+            }
+
+            var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
+            if (user == null)
+            {
+                return Results.BadRequest(new { message = "Aucun utilisateur trouvé avec cet e-mail." });
+            }
+
+            // Decode token if sent via email (URL encoding)
+            string decodedToken = Uri.UnescapeDataString(resetPasswordDto.Token);
+
+            var resetPassResult = await userManager.ResetPasswordAsync(user, decodedToken, resetPasswordDto.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                var errors = resetPassResult.Errors.Select(e => e.Description).ToList();
+                return Results.BadRequest(new { message = "Échec de la réinitialisation du mot de passe", errors });
+            }
+
+            return Results.Ok(new { message = "Mot de passe réinitialisé avec succès" });
+        }
+     
+        // Conversion de la méthode d'instance en méthode statique
+        [AllowAnonymous]
+        public static async Task<IResult> RequestResetPassword(
+            UserManager<AppUser> userManager,
+            [FromBody] string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return Results.BadRequest(new { message = "Aucun utilisateur trouvé avec cet e-mail." });
+            }
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = Uri.EscapeDataString(token); // important for URLs
+
+            // Send this token via email or return it for testing
+            return Results.Ok(new { message = "Token généré", token = encodedToken });
         }
     }
 }
