@@ -368,7 +368,7 @@ namespace Backend_poulina_future_jobs.Controllers
             {
                 logger.LogWarning("Aucun utilisateur trouvé avec l'email: {Email}", requestResetPasswordDto.email);
                 // Message délibérément vague pour des raisons de sécurité (ne pas révéler qu'un compte existe ou non)
-                return Results.Ok(new { message = "Aucun utilisateur trouvé avec l'email: " + requestResetPasswordDto.email});
+                return Results.BadRequest(new { message = "Aucun utilisateur trouvé avec l'email: " + requestResetPasswordDto.email});
             }
 
             try
@@ -401,7 +401,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
                 logger.LogInformation("Email de réinitialisation envoyé avec succès à: {Email}", requestResetPasswordDto.email);
                 return Results.Ok(new { 
-                    message = "Si votre adresse email est enregistrée dans notre système, vous recevrez un email avec les instructions pour réinitialiser votre mot de passe.",
+                    message = "Vérifiez votre boîte mail, vous recevrez un email avec les instructions pour réinitialiser votre mot de passe.",
                     success = true 
                 });
             }
