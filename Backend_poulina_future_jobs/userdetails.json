@@ -180,6 +180,15 @@
         "role": "Candidate",
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiZmF0bWEuYmVuYW1vckBleGFtcGxlLmNvbSIsInVzZXJJZCI6ImM2MTFkZDlkLTA5ZDEtNDM1OS1kMzg2LTA4ZGQ5M2FiMDg1ZiIsImp0aSI6IjdlMjU3NTExLTUxYmMtNDRjOC1iMjUwLWIwMWJlODE0NmUxNyIsIkZ1bGxOYW1lIjoiRmF0bWEgQmVuIEFtb3IiLCJOb20iOiJCZW4gQW1vciIsIlByZW5vbSI6IkZhdG1hIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ2FuZGlkYXRlIiwiZXhwIjoxNzQ3MzIyNTM2LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDYifQ.0tajsvhpRLGzIEhrovi2_HrsJvtTYdpPXefA6mVFyC4"
 
+    },
+    {
+        "email": "moulaimen8@gmail.com",
+        "password": "mi298000044$",
+        "confirmPassword": "mi298000044$",
+        "fullName": "Moula Imen",
+        "nom": "Moula",
+        "prenom": "Imen",
+        "role": "Candidate"
     }
 
 

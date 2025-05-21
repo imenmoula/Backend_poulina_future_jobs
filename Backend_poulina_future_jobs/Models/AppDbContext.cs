@@ -354,6 +354,14 @@ namespace Backend_poulina_future_jobs.Models
                 .HasForeignKey(ru => ru.TentativeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<TentativeQuiz>()
+     .HasOne(t => t.Candidature)
+     .WithMany(c => c.Tentatives)
+     .HasForeignKey(t => t.CandidatureId)
+     .IsRequired(false) // Make the relationship optional
+     .OnDelete(DeleteBehavior.Restrict);
+            // Empêche la suppression en cascade
+
             // Relations ReponseUtilisateur
             modelBuilder.Entity<ReponseUtilisateur>()
                 .HasOne(ru => ru.Tentative)

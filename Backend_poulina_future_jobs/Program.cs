@@ -47,6 +47,9 @@ builder.Services.AddCors(options =>
                .AllowCredentials();
     });
 });
+// Configuration personnalisée des services
+builder.Services.AddTransient<IEmailService, EmailService>(); // Doit être avant Build()
+
 //ajouter les controlller
 var app = builder.Build();
 

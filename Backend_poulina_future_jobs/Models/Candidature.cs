@@ -22,5 +22,7 @@ namespace Backend_poulina_future_jobs.Models
 
         public AppUser AppUser { get; set; }
         public OffreEmploi Offre { get; set; }
+        // Nouvelle propriété de navigation pour la relation avec TentativeQuiz
+        public virtual ICollection<TentativeQuiz> Tentatives { get; set; } = new List<TentativeQuiz>();
     }
     }

@@ -91,7 +91,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // POST: api/Diplomes
         [HttpPost]
-        public async Task<ActionResult<object>> Create([FromBody] DiplomeDto dto)
+        public async Task<ActionResult<object>> Create([FromBody] DiplomerequestDto dto)
         {
             try
             {

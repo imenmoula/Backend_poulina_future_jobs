@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend_poulina_future_jobs.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250517200907_AjoutInstitutionDansDiplome")]
-    partial class AjoutInstitutionDansDiplome
+    [Migration("20250519090532_AjoutRelationTentativeQuizCandidature")]
+    partial class AjoutRelationTentativeQuizCandidature
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -744,6 +744,9 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<Guid>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CandidatureId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DateDebut")
                         .HasColumnType("datetime2");
 
@@ -762,6 +765,8 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.HasKey("TentativeId");
 
                     b.HasIndex("AppUserId");
+
+                    b.HasIndex("CandidatureId");
 
                     b.HasIndex("QuizId");
 
@@ -1343,6 +1348,11 @@ namespace Backend_poulina_future_jobs.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Backend_poulina_future_jobs.Models.Candidature", "Candidature")
+                        .WithMany("Tentatives")
+                        .HasForeignKey("CandidatureId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Backend_poulina_future_jobs.Models.Quiz", "Quiz")
                         .WithMany("Tentatives")
                         .HasForeignKey("QuizId")
@@ -1350,6 +1360,8 @@ namespace Backend_poulina_future_jobs.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("Candidature");
 
                     b.Navigation("Quiz");
                 });
@@ -1434,6 +1446,11 @@ namespace Backend_poulina_future_jobs.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Filiale");
+                });
+
+            modelBuilder.Entity("Backend_poulina_future_jobs.Models.Candidature", b =>
+                {
+                    b.Navigation("Tentatives");
                 });
 
             modelBuilder.Entity("Backend_poulina_future_jobs.Models.Competence", b =>
