@@ -37,12 +37,16 @@ namespace Backend_poulina_future_jobs.Models
     {
         [Key]
         public Guid IdOffreEmploi { get; set; } = Guid.NewGuid();
-
+      
         public string Specialite { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Le titre de l'offre est obligatoire.")]
+        public string TitreOffre { get; set; } = string.Empty;
 
-     
+        [Required(ErrorMessage = "La description de l'offre est obligatoire.")]
+        public string DescriptionOffre { get; set; } = string.Empty;
 
-     
+
+
         public DateTime DatePublication { get; set; } = DateTime.UtcNow;
 
         public DateTime? DateExpiration { get; set; }

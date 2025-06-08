@@ -82,7 +82,7 @@ namespace Backend_poulina_future_jobs.Controllers
                 var entity = new OffreCompetences
                 {
                     IdOffreEmploi = dto.IdOffreEmploi,
-                    IdCompetence = dto.IdCompetence,
+                    IdCompetence = (Guid)dto.IdCompetence,
                     NiveauRequis = dto.NiveauRequis
                 };
 

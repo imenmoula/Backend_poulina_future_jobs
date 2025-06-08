@@ -22,40 +22,28 @@ namespace Backend_poulina_future_jobs.Models
       
         [PersonalData]
         [Column(TypeName = "nvarchar(255)")]
-        public string Photo { get; set; } = string.Empty;
+        public string ?Photo { get; set; } = string.Empty;
 
        
 
         [PersonalData]
         public DateTime? DateNaissance { get; set; }
 
-        public string Adresse { get; set; } = string.Empty;
-        public string Ville { get; set; } = string.Empty;
-        public string Pays { get; set; } = string.Empty;
-        public string phone { get; set; } = string.Empty;
-       
-
-        public string cv { get; set; } = string.Empty;
-        public string linkedIn { get; set; } = string.Empty;
-        
-        public string github { get; set; } = string.Empty;
-        public string portfolio { get; set; } = string.Empty;
-        public string Entreprise { get; set; } = string.Empty;
-        public string  Poste { get; set; } = string.Empty;
+         public string Adresse { get; set; }
+        public string Ville { get; set; }
+        public string Pays { get; set; }
+        public string phone { get; set; }
+        public string? Entreprise { get; set; }
+        public string? Poste { get; set; }
 
 
 
-        [Required]
-        [MaxLength(20)]
-        public string Statut { get; set; } = "Debutant";
 
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
 
-      // Adjust length as needed
-        public string LettreMotivation { get; set; } = string.Empty;
+     
 
-        /************relatione with departement -**********************************/
         // Nouvelle relation avec Filiale
         public Guid? IdFiliale { get; set; }
         [ForeignKey("IdFiliale")]

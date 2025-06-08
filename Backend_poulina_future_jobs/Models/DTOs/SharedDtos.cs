@@ -10,6 +10,11 @@ namespace Backend_poulina_future_jobs.Dtos
         public Guid IdOffreEmploi { get; set; }
         [Required(ErrorMessage = "La spécialité est obligatoire.")]
         public string Specialite { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Le titre de l'offre est obligatoire.")]
+        public string TitreOffre { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La description de l'offre est obligatoire.")]
+        public string DescriptionOffre { get; set; } = string.Empty;
         public DateTime DatePublication { get; set; }
         [Required(ErrorMessage = "La date d'expiration est obligatoire.")]
         public DateTime? DateExpiration { get; set; }
@@ -73,7 +78,7 @@ namespace Backend_poulina_future_jobs.Dtos
     {
         public Guid IdOffreEmploi { get; set; }
         [Required(ErrorMessage = "L'ID de la compétence est obligatoire.")]
-        public Guid IdCompetence { get; set; }
+        public Guid? IdCompetence { get; set; }
         [Required(ErrorMessage = "Le niveau requis est obligatoire.")]
         public NiveauRequisType NiveauRequis { get; set; }
         public CompetenceDto? Competence { get; set; }

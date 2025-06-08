@@ -43,7 +43,7 @@
 //                    Ordre = q.Ordre,
 //                    TempsRecommande = q.TempsRecommande,
 //                    QuizId = q.QuizId,
-//                    Reponses = q.Reponses.OrderBy(r => r.Ordre).Select(r => new ReponseResponseDto
+//                    Reponses = q.Reponses.OrderBy(r => r.Ordre).Select(r => new ReponseResponseDtos
 //                    {
 //                        ReponseId = r.ReponseId,
 //                        Texte = r.Texte,
@@ -74,7 +74,7 @@
 //                    Ordre = q.Ordre,
 //                    TempsRecommande = q.TempsRecommande,
 //                    QuizId = q.QuizId,
-//                    Reponses = q.Reponses.OrderBy(r => r.Ordre).Select(r => new ReponseResponseDto
+//                    Reponses = q.Reponses.OrderBy(r => r.Ordre).Select(r => new ReponseResponseDtos
 //                    {
 //                        ReponseId = r.ReponseId,
 //                        Texte = r.Texte,
@@ -147,14 +147,14 @@
 //                Ordre = question.Ordre,
 //                TempsRecommande = question.TempsRecommande,
 //                QuizId = question.QuizId,
-//                Reponses = question.Reponses?.Select(r => new ReponseResponseDto
+//                Reponses = question.Reponses?.Select(r => new ReponseResponseDtos
 //                {
 //                    ReponseId = r.ReponseId,
 //                    Texte = r.Texte,
 //                    EstCorrecte = r.EstCorrecte,
 //                    Ordre = r.Ordre,
 //                    Explication = r.Explication
-//                }).ToList() ?? new List<ReponseResponseDto>()
+//                }).ToList() ?? new List<ReponseResponseDtos>()
 //            };
 
 //            return CreatedAtAction(nameof(GetQuestion), new { id = question.QuestionId }, questionDto);
@@ -289,7 +289,8 @@
 //        public int Ordre { get; set; }
 //        public int? TempsRecommande { get; set; }
 //        public Guid QuizId { get; set; }
-//        public List<ReponseResponseDto> Reponses { get; set; }
+//        public List<ReponseResponseDtos> Reponses { get; set; }
 //    }
 //}
+
 

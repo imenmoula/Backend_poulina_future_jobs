@@ -3,508 +3,691 @@
 //using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNetCore.Mvc;
 //using Microsoft.EntityFrameworkCore;
+//using System;
 //using System.Security.Claims;
+//using System.Threading.Tasks;
+//using Microsoft.Extensions.Logging;
+//using System.ComponentModel.DataAnnotations;
+//using System.IdentityModel.Tokens.Jwt;
+//using System.Linq;
+//using Microsoft.AspNetCore.Http;
+//using System.Text.Json;
+//using Microsoft.IdentityModel.Tokens;
+//using System.Collections.Generic;
 
 //namespace Backend_poulina_future_jobs.Controllers
 //{
+//    [Authorize]
 //    public static class AccountEndpoints
 //    {
 //        public static IEndpointRouteBuilder MapAccountEndpoints(this IEndpointRouteBuilder app)
 //        {
-//            app.MapGet("/UserProfile", GetUserProfile);
-//            app.MapPut("/EditProfile", EditUserProfile);
-//            app.MapPost("/UploadImage", UploadImage);
-//            app.MapPost("/UploadCV", UploadCV);
+//            app.MapGet("/api/account/profile", GetUserProfile);
+//            app.MapPut("/api/account/profile", EditUserProfile);
+//            app.MapPost("/api/account/assign-role", AssignRole);
+
 //            return app;
 //        }
 
 //        private static async Task<dynamic> GetUserDetails(UserManager<AppUser> userManager, string userId)
 //        {
+//            if (string.IsNullOrEmpty(userId))
+//                throw new ArgumentNullException(nameof(userId));
+
 //            return await userManager.Users
+//                .Include(u => u.Filiale)
 //                .Where(u => u.Id.ToString() == userId)
 //                .Select(u => new
 //                {
 //                    u.Email,
-//                    u.FullName,
 //                    u.Nom,
 //                    u.Prenom,
-//                    u.Photo,
-//                    u.cv,
-//                    u.DateNaissance,
+//                    u.PhoneNumber,
 //                    u.Adresse,
 //                    u.Ville,
 //                    u.Pays,
-//                    u.phone,
-//                    u.NiveauEtude,
-//                    u.Diplome,
-//                    u.Universite,
-//                    u.specialite,
-//                    u.linkedIn,
-//                    u.github,
-//                    u.portfolio,
-//                    u.Poste,
-//                    u.Statut,
-//                    Filiale = u.Filiale != null
-//                        ? new { u.Filiale.IdFiliale, u.Filiale.Nom, u.Filiale.Description }
-//                        : null
+//                    u.Photo,
+//                    u.DateNaissance,
+//                    Filiale = u.Filiale != null ? new { u.Filiale.IdFiliale, u.Filiale.Nom } : null
 //                })
 //                .FirstOrDefaultAsync();
 //        }
 
 //        [Authorize]
 //        private static async Task<IResult> GetUserProfile(
-//            ClaimsPrincipal user,
-//            UserManager<AppUser> userManager,
-//            IConfiguration configuration,
 //            HttpContext context,
-//            ApplicationDbContext dbContext,
+//            UserManager<AppUser> userManager,
 //            ILoggerFactory loggerFactory)
 //        {
 //            var logger = loggerFactory.CreateLogger("AccountEndpoints.GetUserProfile");
 //            try
 //            {
-//                logger.LogInformation("GetUserProfile called for user ID: {UserId}", user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-//                string userID = user.Claims.First(x => x.Type == "userId").Value;
-//                logger.LogInformation("Fetching user with ID: {UserId}", userID);
+//                // Enhanced token debugging
+//                var authHeader = context.Request.Headers["Authorization"].ToString();
+//                logger.LogInformation("Authorization Header: {AuthHeader}", authHeader);
 
-//                var userDetails = await GetUserDetails(userManager, userID);
+//                if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+//                {
+//                    logger.LogWarning("Missing or invalid Authorization header");
+//                    return Results.Unauthorized();
+//                }
 
+//                // Extract token for debugging
+//                var token = authHeader.Substring("Bearer ".Length).Trim();
+//                logger.LogDebug("JWT Token: {Token}", token);
+
+//                // Log all claims
+//                var claims = context.User.Claims
+//                    .Select(c => new { Type = c.Type, Value = c.Value })
+//                    .ToList();
+
+//                logger.LogInformation("User claims: {@Claims}", claims);
+
+//                // Try multiple claim types
+//                string userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+//                                context.User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+//                                context.User.FindFirstValue("sub") ??
+//                                context.User.FindFirstValue("uid") ??
+//                                context.User.FindFirstValue("userId") ??
+//                                context.User.FindFirstValue("nameid");
+
+//                if (string.IsNullOrEmpty(userId))
+//                {
+//                    logger.LogWarning("User ID not found in token. Available claims: {@Claims}", claims);
+//                    return Results.Unauthorized();
+//                }
+
+//                logger.LogInformation("Extracted User ID: {UserId}", userId);
+
+//                var userDetails = await GetUserDetails(userManager, userId);
 //                if (userDetails == null)
 //                {
-//                    logger.LogWarning("User not found for ID: {UserId}", userID);
+//                    logger.LogWarning("User not found for ID: {UserId}", userId);
 //                    return Results.NotFound(new { message = "Utilisateur introuvable." });
 //                }
 
-//                logger.LogInformation("User fetched successfully for ID: {UserId}", userID);
-//                return Results.Ok(userDetails);
+//                // Construire l'URL complète de la photo
+//                var baseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
+//                var photoUrl = !string.IsNullOrEmpty(userDetails.Photo)
+//                    ? $"{baseUrl}/api/FileUpload/files/{userDetails.Photo}"
+//                    : null;
+
+//                return Results.Ok(new
+//                {
+//                    userDetails.Email,
+//                    userDetails.Nom,
+//                    userDetails.Prenom,
+//                    userDetails.PhoneNumber,
+//                    userDetails.Adresse,
+//                    userDetails.Ville,
+//                    userDetails.Pays,
+//                    Photo = userDetails.Photo,   // Chemin relatif
+//                    PhotoUrl = photoUrl,          // URL complète
+//                    userDetails.DateNaissance,
+//                    userDetails.Filiale
+//                });
 //            }
 //            catch (Exception ex)
 //            {
-//                logger.LogError(ex, "Error in GetUserProfile for user ID: {UserId}", user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-//                if (ex.Message.Contains("The token expired"))
-//                {
-//                    return await HandleTokenRefresh(user, userManager, configuration, context, logger, async () =>
-//                    {
-//                        string userID = user.Claims.First(x => x.Type == "userId").Value;
-//                        var userDetails = await GetUserDetails(userManager, userID);
-
-//                        if (userDetails == null)
-//                        {
-//                            logger.LogWarning("User not found for ID: {UserId}", userID);
-//                            return Results.NotFound(new { message = "Utilisateur introuvable." });
-//                        }
-
-//                        return Results.Ok(userDetails);
-//                    });
-//                }
-
-//                return Results.Problem(
-//                    detail: "Une erreur est survenue : " + ex.Message,
-//                    statusCode: 500,
-//                    title: "Erreur serveur"
-//                );
+//                logger.LogError(ex, "Error in GetUserProfile");
+//                return Results.Problem(detail: "Une erreur est survenue lors du traitement de votre demande.", statusCode: 500);
 //            }
 //        }
 
 //        [Authorize]
 //        private static async Task<IResult> EditUserProfile(
-//            ClaimsPrincipal user,
-//            UserManager<AppUser> userManager,
-//            IConfiguration configuration,
 //            HttpContext context,
-//            ApplicationDbContext dbContext,
+//            UserManager<AppUser> userManager,
 //            ILoggerFactory loggerFactory,
 //            [FromBody] EditProfileRequest model)
 //        {
 //            var logger = loggerFactory.CreateLogger("AccountEndpoints.EditUserProfile");
 //            try
 //            {
-//                logger.LogInformation("EditUserProfile called for user ID: {UserId}", user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-//                string userID = user.Claims.First(x => x.Type == "userId").Value;
-//                var userDetails = await userManager.FindByIdAsync(userID);
+//                // Extract user ID with multiple fallbacks
+//                string userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+//                                context.User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+//                                context.User.FindFirstValue("sub") ??
+//                                context.User.FindFirstValue("uid") ??
+//                                context.User.FindFirstValue("userId") ??
+//                                context.User.FindFirstValue("nameid");
 
+//                if (string.IsNullOrEmpty(userId))
+//                {
+//                    logger.LogWarning("User ID not found in token");
+//                    return Results.Unauthorized();
+//                }
+
+//                logger.LogInformation("Editing profile for User ID: {UserId}", userId);
+
+//                var userDetails = await userManager.FindByIdAsync(userId);
 //                if (userDetails == null)
 //                {
-//                    logger.LogWarning("User not found for ID: {UserId}", userID);
+//                    logger.LogWarning("User not found for ID: {UserId}", userId);
 //                    return Results.NotFound(new { message = "Utilisateur introuvable." });
 //                }
 
-//                if (model.IdFiliale.HasValue)
+//                // Validation checks remain the same
+//                if (string.IsNullOrEmpty(model.Nom) || string.IsNullOrEmpty(model.Prenom) ||
+//                    string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.PhoneNumber) ||
+//                    string.IsNullOrEmpty(model.Adresse) || string.IsNullOrEmpty(model.Ville) ||
+//                    string.IsNullOrEmpty(model.Pays))
 //                {
-//                    logger.LogInformation("Validating IdFiliale: {IdFiliale}", model.IdFiliale);
-//                    //var filiale = await dbContext.Filiales.FindAsync(model.IdFiliale);
-//                    //if (filiale == null)
-//                    //{
-//                    //    logger.LogWarning("Invalid IdFiliale: {IdFiliale}", model.IdFiliale);
-//                    //    return Results.BadRequest(new { message = "Le IdFiliale spécifié est invalide ou n'existe pas." });
-//                    //}
+//                    return Results.BadRequest(new { message = "Tous les champs obligatoires doivent être remplis." });
 //                }
 
-//                // Update user properties
-//                userDetails.FullName = model.FullName ?? userDetails.FullName;
-//                userDetails.Nom = model.Nom ?? userDetails.Nom;
-//                userDetails.Prenom = model.Prenom ?? userDetails.Prenom;
-//                userDetails.DateNaissance = model.DateNaissance ?? userDetails.DateNaissance;
-//                userDetails.Adresse = model.Adresse ?? userDetails.Adresse;
-//                userDetails.Ville = model.Ville ?? userDetails.Ville;
-//                userDetails.Pays = model.Pays ?? userDetails.Pays;
-//                userDetails.phone = model.phone ?? userDetails.phone;
-//                userDetails.NiveauEtude = model.NiveauEtude ?? userDetails.NiveauEtude;
-//                userDetails.Diplome = model.Diplome ?? userDetails.Diplome;
-//                userDetails.Universite = model.Universite ?? userDetails.Universite;
-//                userDetails.specialite = model.specialite ?? userDetails.specialite;
-//                userDetails.linkedIn = model.linkedIn ?? userDetails.linkedIn;
-//                userDetails.github = model.github ?? userDetails.github;
-//                userDetails.portfolio = model.portfolio ?? userDetails.portfolio;
-//                userDetails.Poste = model.Poste ?? userDetails.Poste;
-//                userDetails.Statut = model.Statut ?? userDetails.Statut;
-//                userDetails.Photo = model.Photo ?? userDetails.Photo;
-//                userDetails.cv = model.cv ?? userDetails.cv;
-//                userDetails.IdFiliale = model.IdFiliale ?? userDetails.IdFiliale;
+//                if (await userManager.IsInRoleAsync(userDetails, "Recruteur"))
+//                {
+//                    if (!model.IdFiliale.HasValue)
+//                    {
+//                        return Results.BadRequest(new { message = "IdFiliale est obligatoire pour un Recruteur." });
+//                    }
+//                    if (!model.DateNaissance.HasValue)
+//                    {
+//                        return Results.BadRequest(new { message = "DateNaissance est obligatoire pour un Recruteur." });
+//                    }
+//                }
 
-//                logger.LogInformation("Updating user profile for ID: {UserId}", userID);
+//                if (await userManager.IsInRoleAsync(userDetails, "Admin") && !model.DateNaissance.HasValue)
+//                {
+//                    return Results.BadRequest(new { message = "DateNaissance est obligatoire pour un Admin." });
+//                }
+
+//                // Update properties
+//                userDetails.Nom = model.Nom;
+//                userDetails.Prenom = model.Prenom;
+//                userDetails.Email = model.Email;
+//                userDetails.PhoneNumber = model.PhoneNumber;
+//                userDetails.Adresse = model.Adresse;
+//                userDetails.Ville = model.Ville;
+//                userDetails.Pays = model.Pays;
+//                userDetails.IdFiliale = model.IdFiliale;
+//                userDetails.DateNaissance = model.DateNaissance;
+
+//                // Mettre à jour la photo si fournie
+//                if (!string.IsNullOrEmpty(model.Photo))
+//                {
+//                    userDetails.Photo = model.Photo;
+//                }
+
 //                var result = await userManager.UpdateAsync(userDetails);
 //                if (!result.Succeeded)
 //                {
-//                    logger.LogWarning("Failed to update user profile: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
-//                    return Results.BadRequest(new { message = "Erreur lors de la mise à jour du profil", errors = result.Errors });
+//                    logger.LogWarning("Failed to update user profile: {Errors}",
+//                        string.Join(", ", result.Errors.Select(e => e.Description)));
+
+//                    return Results.BadRequest(new
+//                    {
+//                        message = "Erreur lors de la mise à jour du profil",
+//                        errors = result.Errors.Select(e => e.Description)
+//                    });
 //                }
 
-//                logger.LogInformation("Profile updated successfully for user ID: {UserId}", userID);
 //                return Results.Ok(new { message = "Profil mis à jour avec succès." });
 //            }
 //            catch (Exception ex)
 //            {
-//                logger.LogError(ex, "Error in EditUserProfile for user ID: {UserId}", user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-//                if (ex.Message.Contains("The token expired"))
+//                logger.LogError(ex, "Error in EditUserProfile for user");
+//                return Results.Problem(detail: "Une erreur est survenue lors de la mise à jour du profil.", statusCode: 500);
+//            }
+//        }
+
+//        [Authorize(Roles = "Admin")]
+//        private static async Task<IResult> AssignRole(
+//            HttpContext context,
+//            UserManager<AppUser> userManager,
+//            ILoggerFactory loggerFactory,
+//            [FromBody] AssignRoleRequest model)
+//        {
+//            var logger = loggerFactory.CreateLogger("AccountEndpoints.AssignRole");
+//            try
+//            {
+//                // Extract admin ID with multiple fallbacks
+//                string adminId = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+//                                 context.User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+//                                 context.User.FindFirstValue("sub") ??
+//                                 context.User.FindFirstValue("uid") ??
+//                                 context.User.FindFirstValue("userId") ??
+//                                 context.User.FindFirstValue("nameid");
+
+//                if (string.IsNullOrEmpty(adminId))
 //                {
-//                    return await HandleTokenRefresh(user, userManager, configuration, context, logger, async () =>
+//                    logger.LogWarning("Admin ID not found in token");
+//                    return Results.Unauthorized();
+//                }
+
+//                logger.LogInformation("Admin action by User ID: {AdminId}", adminId);
+
+//                var targetUser = await userManager.FindByIdAsync(model.UserId.ToString());
+//                if (targetUser == null)
+//                {
+//                    logger.LogWarning("Target user not found for ID: {UserId}", model.UserId);
+//                    return Results.NotFound(new { message = "Utilisateur cible introuvable." });
+//                }
+
+//                if (string.IsNullOrEmpty(model.Role))
+//                {
+//                    return Results.BadRequest(new { message = "Le rôle est obligatoire." });
+//                }
+
+//                var validRoles = new[] { "Candidat", "Recruteur", "Admin" };
+//                if (!validRoles.Contains(model.Role))
+//                {
+//                    return Results.BadRequest(new
 //                    {
-//                        string userID = user.Claims.First(x => x.Type == "userId").Value;
-//                        var userDetails = await userManager.FindByIdAsync(userID);
-
-//                        if (userDetails == null)
-//                        {
-//                            logger.LogWarning("User not found for ID: {UserId}", userID);
-//                            return Results.NotFound(new { message = "Utilisateur introuvable." });
-//                        }
-
-//                        // Update user properties again after token refresh
-//                        userDetails.FullName = model.FullName ?? userDetails.FullName;
-//                        userDetails.Nom = model.Nom ?? userDetails.Nom;
-//                        userDetails.Prenom = model.Prenom ?? userDetails.Prenom;
-//                        userDetails.DateNaissance = model.DateNaissance ?? userDetails.DateNaissance;
-//                        userDetails.Adresse = model.Adresse ?? userDetails.Adresse;
-//                        userDetails.Ville = model.Ville ?? userDetails.Ville;
-//                        userDetails.Pays = model.Pays ?? userDetails.Pays;
-//                        userDetails.phone = model.phone ?? userDetails.phone;
-//                        userDetails.NiveauEtude = model.NiveauEtude ?? userDetails.NiveauEtude;
-//                        userDetails.Diplome = model.Diplome ?? userDetails.Diplome;
-//                        userDetails.Universite = model.Universite ?? userDetails.Universite;
-//                        userDetails.specialite = model.specialite ?? userDetails.specialite;
-//                        userDetails.linkedIn = model.linkedIn ?? userDetails.linkedIn;
-//                        userDetails.github = model.github ?? userDetails.github;
-//                        userDetails.portfolio = model.portfolio ?? userDetails.portfolio;
-//                        userDetails.Poste = model.Poste ?? userDetails.Poste;
-//                        userDetails.Statut = model.Statut ?? userDetails.Statut;
-//                        userDetails.Photo = model.Photo ?? userDetails.Photo;
-//                        userDetails.cv = model.cv ?? userDetails.cv;
-//                        userDetails.IdFiliale = model.IdFiliale ?? userDetails.IdFiliale;
-
-//                        var result = await userManager.UpdateAsync(userDetails);
-//                        if (!result.Succeeded)
-//                        {
-//                            logger.LogWarning("Failed to update user profile after token refresh: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
-//                            return Results.BadRequest(new { message = "Erreur lors de la mise à jour du profil", errors = result.Errors });
-//                        }
-
-//                        return Results.Ok(new { message = "Profil mis à jour avec succès." });
+//                        message = "Rôle invalide. Les rôles autorisés sont : Candidat, Recruteur, Admin."
 //                    });
 //                }
 
-//                return Results.Problem(
-//                    detail: "Une erreur est survenue : " + ex.Message,
-//                    statusCode: 500,
-//                    title: "Erreur serveur"
-//                );
-//            }
-//        }
+//                var currentRoles = await userManager.GetRolesAsync(targetUser);
+//                await userManager.RemoveFromRolesAsync(targetUser, currentRoles);
+//                var result = await userManager.AddToRoleAsync(targetUser, model.Role);
 
-//        private static async Task<IResult> HandleTokenRefresh(
-//            ClaimsPrincipal user,
-//            UserManager<AppUser> userManager,
-//            IConfiguration configuration,
-//            HttpContext context,
-//            ILogger logger,
-//            Func<Task<IResult>> actionAfterRefresh)
-//        {
-//            var refreshToken = context.Request.Headers["X-Refresh-Token"].FirstOrDefault();
-//            if (string.IsNullOrEmpty(refreshToken))
-//            {
-//                logger.LogWarning("Refresh token missing in header.");
-//                return Results.Unauthorized();
-//            }
-
-//            var refreshResult = await IdentityUserEndpoints.RefreshToken(
-//                userManager,
-//                configuration,
-//                new RefreshTokenRequest { RefreshToken = refreshToken });
-
-//            if (refreshResult is IResult okResult && okResult.GetType().GetProperty("Value")?.GetValue(okResult) is { } newTokenResponse)
-//            {
-//                var tokenResponse = (dynamic)newTokenResponse;
-//                if (tokenResponse.Success)
+//                if (!result.Succeeded)
 //                {
-//                    logger.LogInformation("Token refreshed successfully. New token issued.");
-//                    context.Response.Headers.Add("X-New-Token", tokenResponse.Token);
-//                    return await actionAfterRefresh();
+//                    logger.LogWarning("Failed to assign role: {Errors}",
+//                        string.Join(", ", result.Errors.Select(e => e.Description)));
+
+//                    return Results.BadRequest(new
+//                    {
+//                        message = "Erreur lors de l'attribution du rôle",
+//                        errors = result.Errors.Select(e => e.Description)
+//                    });
 //                }
-//            }
 
-//            logger.LogWarning("Token refresh failed.");
-//            return Results.Unauthorized();
-//        }
-
-//        [Authorize]
-//        private static async Task<IResult> UploadImage(
-//            ClaimsPrincipal user,
-//            UserManager<AppUser> userManager,
-//            HttpContext context,
-//            IConfiguration configuration,
-//            ILoggerFactory loggerFactory)
-//        {
-//            var logger = loggerFactory.CreateLogger("AccountEndpoints.UploadImage");
-//            try
-//            {
-//                return await HandleFileUpload(
-//                    user: user,
-//                    userManager: userManager,
-//                    context: context,
-//                    configuration: configuration,
-//                    logger: logger,
-//                    fileType: "image",
-//                    allowedExtensions: new[] { ".png", ".jfif", ".jpeg", ".jpg", ".gif", ".bmp" },
-//                    maxFileSize: 5 * 1024 * 1024, // 5MB
-//                    propertySetter: (user, path) => user.Photo = path,
-//                    subFolder: "images");
+//                return Results.Ok(new { message = $"Rôle {model.Role} attribué avec succès à l'utilisateur." });
 //            }
 //            catch (Exception ex)
 //            {
-//                logger.LogError(ex, "Error occurred during image upload for user ID: {UserId}", user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-//                if (ex.Message.Contains("The token expired"))
-//                {
-//                    return await HandleTokenRefresh(user, userManager, configuration, context, logger, async () =>
-//                    {
-//                        return await HandleFileUpload(
-//                            user: user,
-//                            userManager: userManager,
-//                            context: context,
-//                            configuration: configuration,
-//                            logger: logger,
-//                            fileType: "image",
-//                            allowedExtensions: new[] { ".png", ".jfif", ".jpeg", ".jpg", ".gif", ".bmp" },
-//                            maxFileSize: 5 * 1024 * 1024, // 5MB
-//                            propertySetter: (user, path) => user.Photo = path,
-//                            subFolder: "images");
-//                    });
-//                }
-
-//                return Results.Problem(
-//                    detail: "Une erreur est survenue lors du téléchargement : " + ex.Message,
-//                    statusCode: 500,
-//                    title: "Erreur serveur"
-//                );
+//                logger.LogError(ex, "Error in AssignRole for admin");
+//                return Results.Problem(detail: "Une erreur est survenue lors de l'attribution du rôle.", statusCode: 500);
 //            }
-//        }
-
-//        [Authorize]
-//        private static async Task<IResult> UploadCV(
-//            ClaimsPrincipal user,
-//            UserManager<AppUser> userManager,
-//            HttpContext context,
-//            IConfiguration configuration,
-//            ILoggerFactory loggerFactory)
-//        {
-//            var logger = loggerFactory.CreateLogger("AccountEndpoints.UploadCV");
-//            try
-//            {
-//                return await HandleFileUpload(
-//                    user: user,
-//                    userManager: userManager,
-//                    context: context,
-//                    configuration: configuration,
-//                    logger: logger,
-//                    fileType: "CV",
-//                    allowedExtensions: new[] { ".pdf", ".doc", ".docx" },
-//                    maxFileSize: 5 * 1024 * 1024, // 5MB
-//                    propertySetter: (user, path) => user.cv = path,
-//                    subFolder: "cvs");
-//            }
-//            catch (Exception ex)
-//            {
-//                logger.LogError(ex, "Error occurred during CV upload for user ID: {UserId}", user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-//                if (ex.Message.Contains("The token expired"))
-//                {
-//                    return await HandleTokenRefresh(user, userManager, configuration, context, logger, async () =>
-//                    {
-//                        return await HandleFileUpload(
-//                            user: user,
-//                            userManager: userManager,
-//                            context: context,
-//                            configuration: configuration,
-//                            logger: logger,
-//                            fileType: "CV",
-//                            allowedExtensions: new[] { ".pdf", ".doc", ".docx" },
-//                            maxFileSize: 5 * 1024 * 1024, // 5MB
-//                            propertySetter: (user, path) => user.cv = path,
-//                            subFolder: "cvs");
-//                    });
-//                }
-
-//                return Results.Problem(
-//                    detail: "Une erreur est survenue lors du téléchargement : " + ex.Message,
-//                    statusCode: 500,
-//                    title: "Erreur serveur"
-//                );
-//            }
-//        }
-
-//        private static async Task<IResult> HandleFileUpload(
-//            ClaimsPrincipal user,
-//            UserManager<AppUser> userManager,
-//            HttpContext context,
-//            IConfiguration configuration,
-//            ILogger logger,
-//            string fileType,
-//            string[] allowedExtensions,
-//            long maxFileSize,
-//            Action<AppUser, string> propertySetter,
-//            string subFolder)
-//        {
-//            logger.LogInformation("Upload{FileType} endpoint called for user ID: {UserId}", fileType, user.Claims.FirstOrDefault(x => x.Type == "userId")?.Value);
-
-//            if (!user.Identity.IsAuthenticated)
-//            {
-//                logger.LogWarning("User is not authenticated.");
-//                return Results.Unauthorized();
-//            }
-
-//            logger.LogInformation("Request Content-Type: {ContentType}", context.Request.ContentType);
-
-//            if (string.IsNullOrEmpty(context.Request.ContentType) || !context.Request.ContentType.ToLower().Contains("multipart/form-data"))
-//            {
-//                logger.LogWarning("Invalid Content-Type: {ContentType}. Expected multipart/form-data.", context.Request.ContentType);
-//                return Results.BadRequest(new { message = $"Requête invalide : Content-Type doit être multipart/form-data." });
-//            }
-
-//            if (context.Request.Form.Files.Count == 0)
-//            {
-//                logger.LogWarning("No files found in the request.");
-//                return Results.BadRequest(new { message = $"Aucun fichier {fileType} sélectionné. Assurez-vous que la clé du fichier est 'file'." });
-//            }
-
-//            var file = context.Request.Form.Files.GetFile("file");
-//            if (file == null || file.Length == 0)
-//            {
-//                logger.LogWarning("No file found with key 'file' or file is empty.");
-//                return Results.BadRequest(new { message = $"Aucun fichier {fileType} sélectionné. Assurez-vous que la clé du fichier est 'file'." });
-//            }
-
-//            logger.LogInformation("File received: Name={FileName}, Size={FileSize} bytes", file.FileName, file.Length);
-
-//            var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
-//            if (string.IsNullOrEmpty(extension) || !allowedExtensions.Contains(extension))
-//            {
-//                logger.LogWarning("Unsupported file extension: {Extension}. Allowed: {AllowedExtensions}", extension, string.Join(", ", allowedExtensions));
-//                return Results.BadRequest(new { message = $"Format de fichier non pris en charge. Formats autorisés : {string.Join(", ", allowedExtensions)}" });
-//            }
-
-//            if (file.Length > maxFileSize)
-//            {
-//                logger.LogWarning("File size exceeds limit: {FileSize} bytes. Max allowed: {MaxFileSize} bytes", file.Length, maxFileSize);
-//                return Results.BadRequest(new { message = $"La taille du fichier dépasse la limite de {maxFileSize / (1024 * 1024)} Mo." });
-//            }
-
-//            string userID = user.Claims.First(x => x.Type == "userId").Value;
-//            var userDetails = await userManager.FindByIdAsync(userID);
-//            if (userDetails == null)
-//            {
-//                logger.LogWarning("User not found for ID: {UserId}", userID);
-//                return Results.NotFound(new { message = "Utilisateur introuvable." });
-//            }
-
-//            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", subFolder);
-//            logger.LogInformation("Creating directory if not exists: {UploadsFolder}", uploadsFolder);
-//            Directory.CreateDirectory(uploadsFolder);
-
-//            // Delete old file if exists
-//            var oldFilePath = propertySetter.Target == null ? null : propertySetter.Method.Invoke(userDetails, new object[] { null }) as string;
-//            if (!string.IsNullOrEmpty(oldFilePath))
-//            {
-//                var oldFullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", oldFilePath.TrimStart('/'));
-//                if (File.Exists(oldFullPath))
-//                {
-//                    logger.LogInformation("Deleting existing file: {OldFilePath}", oldFullPath);
-//                    File.Delete(oldFullPath);
-//                }
-//                else
-//                {
-//                    logger.LogWarning("Old file not found at path: {OldFilePath}", oldFullPath);
-//                }
-//            }
-
-//            var fileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}_{Guid.NewGuid()}{extension}";
-//            var filePath = Path.Combine(uploadsFolder, fileName);
-//            logger.LogInformation("Saving file to: {FilePath}", filePath);
-
-//            using (var stream = new FileStream(filePath, FileMode.Create))
-//            {
-//                await file.CopyToAsync(stream);
-//            }
-
-//            var fileUrl = $"{context.Request.Scheme}://{context.Request.Host}/Uploads/{subFolder}/{fileName}";
-//            var relativePath = $"/Uploads/{subFolder}/{fileName}";
-//            propertySetter(userDetails, relativePath);
-
-//            var result = await userManager.UpdateAsync(userDetails);
-//            if (!result.Succeeded)
-//            {
-//                logger.LogWarning("Failed to update user profile with new file: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
-//                // Try to delete the uploaded file since the update failed
-//                try { File.Delete(filePath); } catch { /* Ignore deletion errors */ }
-//                return Results.BadRequest(new { message = "Erreur lors de la mise à jour du profil", errors = result.Errors });
-//            }
-
-//            logger.LogInformation("{FileType} uploaded successfully for user ID: {UserId}. URL: {FileUrl}", fileType, userID, fileUrl);
-//            return Results.Ok(new
-//            {
-//                message = "Téléchargement réussi!",
-//                url = fileUrl
-//            });
 //        }
 
 //        public class EditProfileRequest
 //        {
-//            public string? FullName { get; set; }
-//            public string? Nom { get; set; }
-//            public string? Prenom { get; set; }
-//            public DateTime? DateNaissance { get; set; }
-//            public string? Adresse { get; set; }
-//            public string? Ville { get; set; }
-//            public string? Pays { get; set; }
-//            public string? phone { get; set; }
-//            public string? NiveauEtude { get; set; }
-//            public string? Diplome { get; set; }
-//            public string? Universite { get; set; }
-//            public string? specialite { get; set; }
-//            public string? linkedIn { get; set; }
-//            public string? github { get; set; }
-//            public string? portfolio { get; set; }
-//            public string? Poste { get; set; }
-//            public string? Statut { get; set; }
-//            public string? Photo { get; set; }
-//            public string? cv { get; set; }
+//            [Required] public string Nom { get; set; }
+//            [Required] public string Prenom { get; set; }
+//            [Required, EmailAddress] public string Email { get; set; }
+//            [Required, Phone] public string PhoneNumber { get; set; }
+//            [Required] public string Adresse { get; set; }
+//            [Required] public string Ville { get; set; }
+//            [Required] public string Pays { get; set; }
 //            public Guid? IdFiliale { get; set; }
+//            public DateTime? DateNaissance { get; set; }
+//            public string Photo { get; set; } // Nouvelle propriété pour la photo
+//        }
+
+//        public class AssignRoleRequest
+//        {
+//            public Guid UserId { get; set; }
+//            public string Role { get; set; }
 //        }
 //    }
 //}
+using Backend_poulina_future_jobs.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
+
+namespace Backend_poulina_future_jobs.Controllers
+{
+    [Authorize]
+    public static class AccountEndpoints
+    {
+        public static IEndpointRouteBuilder MapAccountEndpoints(this IEndpointRouteBuilder app)
+        {
+            app.MapGet("/api/account/profile", GetUserProfile);
+            app.MapPut("/api/account/profile", EditUserProfile);
+            app.MapPost("/api/account/assign-role", AssignRole);
+
+            return app;
+        }
+
+        private static async Task<dynamic> GetUserDetails(UserManager<AppUser> userManager, string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
+            return await userManager.Users
+                .Include(u => u.Filiale)
+                .Where(u => u.Id.ToString() == userId)
+                .Select(u => new
+                {
+                    u.Email,
+                    u.Nom,
+                    u.Prenom,
+                    u.PhoneNumber,
+                    u.Adresse,
+                    u.Ville,
+                    u.Pays,
+                    u.Photo,
+                    u.DateNaissance,
+                    Filiale = u.Filiale != null ? new { u.Filiale.IdFiliale, u.Filiale.Nom } : null
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        [Authorize]
+        private static async Task<IResult> GetUserProfile(
+            HttpContext context,
+            UserManager<AppUser> userManager,
+            ILoggerFactory loggerFactory)
+        {
+            var logger = loggerFactory.CreateLogger("AccountEndpoints.GetUserProfile");
+            try
+            {
+                // Enhanced token debugging
+                var authHeader = context.Request.Headers["Authorization"].ToString();
+                logger.LogInformation("Authorization Header: {AuthHeader}", authHeader);
+
+                if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+                {
+                    logger.LogWarning("Missing or invalid Authorization header");
+                    return Results.Unauthorized();
+                }
+
+                // Extract token for debugging
+                var token = authHeader.Substring("Bearer ".Length).Trim();
+                logger.LogDebug("JWT Token: {Token}", token);
+
+                // Log all claims
+                var claims = context.User.Claims
+                    .Select(c => new { Type = c.Type, Value = c.Value })
+                    .ToList();
+
+                logger.LogInformation("User claims: {@Claims}", claims);
+
+                // Try multiple claim types
+                string userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                                context.User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+                                context.User.FindFirstValue("sub") ??
+                                context.User.FindFirstValue("uid") ??
+                                context.User.FindFirstValue("userId") ??
+                                context.User.FindFirstValue("nameid");
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    logger.LogWarning("User ID not found in token. Available claims: {@Claims}", claims);
+                    return Results.Unauthorized();
+                }
+
+                logger.LogInformation("Extracted User ID: {UserId}", userId);
+
+                var userDetails = await GetUserDetails(userManager, userId);
+                if (userDetails == null)
+                {
+                    logger.LogWarning("User not found for ID: {UserId}", userId);
+                    return Results.NotFound(new { message = "Utilisateur introuvable." });
+                }
+
+                // Construire l'URL complète de la photo
+                var baseUrl = $"{context.Request.Scheme}://{context.Request.Host}";
+                var photoUrl = !string.IsNullOrEmpty(userDetails.Photo)
+                    ? $"{baseUrl}/api/FileUpload/files/{userDetails.Photo}"
+                    : null;
+
+                return Results.Ok(new
+                {
+                    userDetails.Email,
+                    userDetails.Nom,
+                    userDetails.Prenom,
+                    userDetails.PhoneNumber,
+                    userDetails.Adresse,
+                    userDetails.Ville,
+                    userDetails.Pays,
+                    Photo = userDetails.Photo,
+                    PhotoUrl = photoUrl,
+                    userDetails.DateNaissance,
+                    userDetails.Filiale
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error in GetUserProfile");
+                return Results.Problem(detail: "Une erreur est survenue lors du traitement de votre demande.", statusCode: 500);
+            }
+        }
+
+        [Authorize]
+        private static async Task<IResult> EditUserProfile(
+            HttpContext context,
+            UserManager<AppUser> userManager,
+            ILoggerFactory loggerFactory,
+            [FromBody] EditProfileRequest model)
+        {
+            var logger = loggerFactory.CreateLogger("AccountEndpoints.EditUserProfile");
+            try
+            {
+                // Extract user ID with multiple fallbacks
+                string userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                                context.User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+                                context.User.FindFirstValue("sub") ??
+                                context.User.FindFirstValue("uid") ??
+                                context.User.FindFirstValue("userId") ??
+                                context.User.FindFirstValue("nameid");
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    logger.LogWarning("User ID not found in token");
+                    return Results.Unauthorized();
+                }
+
+                logger.LogInformation("Editing profile for User ID: {UserId}", userId);
+
+                var userDetails = await userManager.FindByIdAsync(userId);
+                if (userDetails == null)
+                {
+                    logger.LogWarning("User not found for ID: {UserId}", userId);
+                    return Results.NotFound(new { message = "Utilisateur introuvable." });
+                }
+
+                // Validation checks for required fields
+                if (string.IsNullOrEmpty(model.Nom) || string.IsNullOrEmpty(model.Prenom) ||
+                    string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.PhoneNumber) ||
+                    string.IsNullOrEmpty(model.Adresse) || string.IsNullOrEmpty(model.Ville) ||
+                    string.IsNullOrEmpty(model.Pays))
+                {
+                    return Results.BadRequest(new { message = "Tous les champs obligatoires doivent être remplis." });
+                }
+
+                if (await userManager.IsInRoleAsync(userDetails, "Recruteur"))
+                {
+                    if (!model.IdFiliale.HasValue)
+                    {
+                        return Results.BadRequest(new { message = "IdFiliale est obligatoire pour un Recruteur." });
+                    }
+                    if (!model.DateNaissance.HasValue)
+                    {
+                        return Results.BadRequest(new { message = "DateNaissance est obligatoire pour un Recruteur." });
+                    }
+                }
+
+                if (await userManager.IsInRoleAsync(userDetails, "Admin") && !model.DateNaissance.HasValue)
+                {
+                    return Results.BadRequest(new { message = "DateNaissance est obligatoire pour un Admin." });
+                }
+
+                // Update properties
+                userDetails.Nom = model.Nom;
+                userDetails.Prenom = model.Prenom;
+                userDetails.Email = model.Email;
+                userDetails.PhoneNumber = model.PhoneNumber;
+                userDetails.Adresse = model.Adresse;
+                userDetails.Ville = model.Ville;
+                userDetails.Pays = model.Pays;
+                userDetails.IdFiliale = model.IdFiliale;
+                userDetails.DateNaissance = model.DateNaissance;
+
+                // Update photo if provided
+                if (!string.IsNullOrEmpty(model.Photo))
+                {
+                    userDetails.Photo = model.Photo;
+                }
+
+                // Handle password update if provided
+                if (!string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword))
+                {
+                    // Validate current password
+                    var passwordCheck = await userManager.CheckPasswordAsync(userDetails, model.CurrentPassword);
+                    if (!passwordCheck)
+                    {
+                        logger.LogWarning("Invalid current password for User ID: {UserId}", userId);
+                        return Results.BadRequest(new { message = "Mot de passe actuel incorrect." });
+                    }
+
+                    // Validate new password
+                    if (model.NewPassword.Length < 6)
+                    {
+                        return Results.BadRequest(new { message = "Le nouveau mot de passe doit contenir au moins 6 caractères." });
+                    }
+
+                    // Update password
+                    var passwordResult = await userManager.ChangePasswordAsync(userDetails, model.CurrentPassword, model.NewPassword);
+                    if (!passwordResult.Succeeded)
+                    {
+                        logger.LogWarning("Failed to update password: {Errors}",
+                            string.Join(", ", passwordResult.Errors.Select(e => e.Description)));
+                        return Results.BadRequest(new
+                        {
+                            message = "Erreur lors de la mise à jour du mot de passe",
+                            errors = passwordResult.Errors.Select(e => e.Description)
+                        });
+                    }
+                    logger.LogInformation("Password updated successfully for User ID: {UserId}", userId);
+                }
+                else if (string.IsNullOrEmpty(model.CurrentPassword) && !string.IsNullOrEmpty(model.NewPassword) ||
+                         !string.IsNullOrEmpty(model.CurrentPassword) && string.IsNullOrEmpty(model.NewPassword))
+                {
+                    return Results.BadRequest(new { message = "Le mot de passe actuel et le nouveau mot de passe doivent être fournis ensemble." });
+                }
+
+                var result = await userManager.UpdateAsync(userDetails);
+                if (!result.Succeeded)
+                {
+                    logger.LogWarning("Failed to update user profile: {Errors}",
+                        string.Join(", ", result.Errors.Select(e => e.Description)));
+
+                    return Results.BadRequest(new
+                    {
+                        message = "Erreur lors de la mise à jour du profil",
+                        errors = result.Errors.Select(e => e.Description)
+                    });
+                }
+
+                return Results.Ok(new { message = "Profil mis à jour avec succès." });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error in EditUserProfile for user");
+                return Results.Problem(detail: "Une erreur est survenue lors de la mise à jour du profil.", statusCode: 500);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        private static async Task<IResult> AssignRole(
+            HttpContext context,
+            UserManager<AppUser> userManager,
+            ILoggerFactory loggerFactory,
+            [FromBody] AssignRoleRequest model)
+        {
+            var logger = loggerFactory.CreateLogger("AccountEndpoints.AssignRole");
+            try
+            {
+                // Extract admin ID with multiple fallbacks
+                string adminId = context.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                                 context.User.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+                                 context.User.FindFirstValue("sub") ??
+                                 context.User.FindFirstValue("uid") ??
+                                 context.User.FindFirstValue("userId") ??
+                                 context.User.FindFirstValue("nameid");
+
+                if (string.IsNullOrEmpty(adminId))
+                {
+                    logger.LogWarning("Admin ID not found in token");
+                    return Results.Unauthorized();
+                }
+
+                logger.LogInformation("Admin action by User ID: {AdminId}", adminId);
+
+                var targetUser = await userManager.FindByIdAsync(model.UserId.ToString());
+                if (targetUser == null)
+                {
+                    logger.LogWarning("Target user not found for ID: {UserId}", model.UserId);
+                    return Results.NotFound(new { message = "Utilisateur cible introuvable." });
+                }
+
+                if (string.IsNullOrEmpty(model.Role))
+                {
+                    return Results.BadRequest(new { message = "Le rôle est obligatoire." });
+                }
+
+                var validRoles = new[] { "Candidat", "Recruteur", "Admin" };
+                if (!validRoles.Contains(model.Role))
+                {
+                    return Results.BadRequest(new
+                    {
+                        message = "Rôle invalide. Les rôles autorisés sont : Candidat, Recruteur, Admin."
+                    });
+                }
+
+                var currentRoles = await userManager.GetRolesAsync(targetUser);
+                await userManager.RemoveFromRolesAsync(targetUser, currentRoles);
+                var result = await userManager.AddToRoleAsync(targetUser, model.Role);
+
+                if (!result.Succeeded)
+                {
+                    logger.LogWarning("Failed to assign role: {Errors}",
+                        string.Join(", ", result.Errors.Select(e => e.Description)));
+
+                    return Results.BadRequest(new
+                    {
+                        message = "Erreur lors de l'attribution du rôle",
+                        errors = result.Errors.Select(e => e.Description)
+                    });
+                }
+
+                return Results.Ok(new { message = $"Rôle {model.Role} attribué avec succès à l'utilisateur." });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error in AssignRole for admin");
+                return Results.Problem(detail: "Une erreur est survenue lors de l'attribution du rôle.", statusCode: 500);
+            }
+        }
+
+        public class EditProfileRequest
+        {
+            [Required] public string Nom { get; set; }
+            [Required] public string Prenom { get; set; }
+            [Required, EmailAddress] public string Email { get; set; }
+            [Required, Phone] public string PhoneNumber { get; set; }
+            [Required] public string Adresse { get; set; }
+            [Required] public string Ville { get; set; }
+            [Required] public string Pays { get; set; }
+            public Guid? IdFiliale { get; set; }
+            public DateTime? DateNaissance { get; set; }
+            public string Photo { get; set; }
+            public string CurrentPassword { get; set; } // Added for current password
+            public string NewPassword { get; set; } // Added for new password
+        }
+
+        public class AssignRoleRequest
+        {
+            public Guid UserId { get; set; }
+            public string Role { get; set; }
+        }
+    }
+}

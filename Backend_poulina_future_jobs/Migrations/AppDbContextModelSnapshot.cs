@@ -61,8 +61,24 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<Guid>("AppUserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CvFilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateSoumission")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Github")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LettreMotivation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkedIn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MessageMotivation")
                         .IsRequired()
@@ -72,10 +88,19 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<Guid>("OffreId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Portfolio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Statut")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("StatutCandidate")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("IdCandidature");
 
@@ -388,6 +413,10 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<DateTime>("DatePublication")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DescriptionOffre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("IdDepartement")
                         .HasColumnType("uniqueidentifier");
 
@@ -418,6 +447,10 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.Property<int>("Statut")
                         .HasColumnType("int");
+
+                    b.Property<string>("TitreOffre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TypeContrat")
                         .HasColumnType("int");
@@ -1007,7 +1040,6 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Entreprise")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
@@ -1016,10 +1048,6 @@ namespace Backend_poulina_future_jobs.Migrations
 
                     b.Property<Guid?>("IdFiliale")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("LettreMotivation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
                         .IsRequired()
@@ -1030,11 +1058,9 @@ namespace Backend_poulina_future_jobs.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Poste")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Prenom")
@@ -1047,32 +1073,11 @@ namespace Backend_poulina_future_jobs.Migrations
                     b.Property<DateTime?>("RefreshTokenExpiryTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Statut")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("Ville")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("cv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("github")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("linkedIn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("portfolio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

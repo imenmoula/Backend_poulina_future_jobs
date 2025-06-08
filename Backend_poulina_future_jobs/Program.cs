@@ -58,7 +58,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
-
 app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -92,6 +91,8 @@ app.MapGroup("/api")
 app.MapGroup("/api")
     .MapIdentityUserEndpoints()
     .MapAuthorizationDemoEndpoints();
+app.MapAccountEndpoints(); // Ajout des endpoints définis dans AccountEndpoints.cs
+
 
 app.Run();
 

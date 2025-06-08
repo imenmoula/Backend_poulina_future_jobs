@@ -380,6 +380,8 @@ namespace Backend_poulina_future_jobs.DTOs
         public int Ordre { get; set; }
 
         public int? TempsRecommande { get; set; }
+        public Guid QuizId { get; set; } // Added property to fix CS1061  
+
 
         public List<ReponseCreateDto> Reponses { get; set; }
     }
@@ -480,6 +482,8 @@ namespace Backend_poulina_future_jobs.DTOs
     /// </summary>
     public class ReponseUtilisateurCreateDto
     {
+        public Guid TentativeId { get; set; } // Added this property to fix CS1061  
+
         [Required(ErrorMessage = "L'ID de question est obligatoire")]
         public Guid QuestionId { get; set; }
 
@@ -687,4 +691,5 @@ namespace Backend_poulina_future_jobs.DTOs
         public int Ordre { get; set; }
         public string? Explication { get; set; }
     }
+   
 }

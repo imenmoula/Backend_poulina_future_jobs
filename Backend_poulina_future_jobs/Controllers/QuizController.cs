@@ -716,7 +716,216 @@ namespace Backend_poulina_future_jobs.Controllers
 
             return Ok(resultatDetailDto);
         }
+
+        // DELETE: api/Quiz/{id}
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Recruteur")]
+        public async Task<IActionResult> DeleteQuiz(Guid id)
+        {
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                    .ThenInclude(q => q.Reponses)
+                .FirstOrDefaultAsync(q => q.QuizId == id);
+
+            if (quiz == null)
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Quiz non trouvé"
+                });
+
+            // Vérifier s'il y a des tentatives associées
+            var hasTentatives = await _context.TentativesQuiz.AnyAsync(t => t.QuizId == id);
+            if (hasTentatives)
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Impossible de supprimer ce quiz car il a des tentatives associées."
+                });
+
+            try
+            {
+                // Supprimer d'abord les réponses
+                foreach (var question in quiz.Questions)
+                {
+                    _context.Reponses.RemoveRange(question.Reponses);
+                }
+
+                // Puis les questions
+                _context.Questions.RemoveRange(quiz.Questions);
+
+                // Enfin le quiz lui-même
+                _context.Quizzes.Remove(quiz);
+
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors de la suppression du quiz {QuizId}", id);
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Une erreur est survenue lors de la suppression du quiz"
+                });
+            }
+        }
+
+
+        // GET: api/Quiz/Recherche?titre={titre}
+        [HttpGet("Recherche")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<QuizResponseDto>>> RechercherQuizParTitre([FromQuery] string titre)
+        {
+            if (string.IsNullOrWhiteSpace(titre))
+                return BadRequest("Le paramètre 'titre' est requis.");
+
+            var quizzes = await _context.Quizzes
+                .Where(q => q.Titre.Contains(titre))
+                .Select(q => new QuizResponseDto
+                {
+                    QuizId = q.QuizId,
+                    Titre = q.Titre,
+                    Description = q.Description,
+                    DateCreation = q.DateCreation,
+                    EstActif = q.EstActif,
+                    Duree = q.Duree,
+                    ScoreMinimum = q.ScoreMinimum,
+                    OffreEmploiId = q.OffreEmploiId
+                })
+                .ToListAsync();
+
+            return Ok(quizzes);
+        }
+
+        // QuizController.cs
+        [HttpGet("Demarrer/{tentativeId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<QuizPourCandidatDto>> DemarrerQuiz(
+            Guid tentativeId,
+            [FromQuery] string token)
+        {
+            // 1. Valider le token
+            var tentative = await _context.TentativesQuiz
+                .Include(t => t.Quiz)
+                .FirstOrDefaultAsync(t => t.TentativeId == tentativeId);
+
+            if (tentative == null) return NotFound("Tentative non trouvée");
+            if (tentative.Token != token) return Unauthorized("Token invalide");
+            if (tentative.DateDebut != null) return BadRequest("Quiz déjà commencé");
+            if (tentative.DateFin < DateTime.UtcNow) return BadRequest("Lien expiré");
+
+            // 2. Mettre à jour la tentative
+            tentative.DateDebut = DateTime.UtcNow;
+            tentative.Statut = StatutTentative.EnCours;
+
+            // 3. Récupérer le quiz (sans réponses correctes)
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                    .ThenInclude(q => q.Reponses)
+                .FirstOrDefaultAsync(q => q.QuizId == tentative.QuizId);
+
+            var quizDto = new QuizPourCandidatDto
+            {
+                QuizId = quiz.QuizId,
+                Titre = quiz.Titre,
+                Description = quiz.Description,
+                Duree = quiz.Duree,
+                Questions = quiz.Questions.Select(q => new QuestionPourCandidatDto
+                {
+                    QuestionId = q.QuestionId,
+                    Texte = q.Texte,
+                    Type = q.Type,
+                    Points = q.Points,
+                    Ordre = q.Ordre,
+                    TempsRecommande = q.TempsRecommande,
+                    Reponses = q.Reponses.Select(r => new ReponsePourCandidatDto
+                    {
+                        ReponseId = r.ReponseId,
+                        Texte = r.Texte,
+                        Ordre = r.Ordre,
+                        Explication = null // Cacher l'explication
+                    }).ToList()
+                }).ToList()
+            };
+
+            await _context.SaveChangesAsync();
+            return Ok(quizDto);
+        }
+        //// QuizController.cs
+        //[HttpGet("ForCandidate/{tentativeId}")]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<QuizPourCandidatDto>> GetQuizForCandidate(
+        //    Guid tentativeId,
+        //    [FromQuery] string token)
+        //{
+        //    // Valider le token
+        //    var tentative = await _context.TentativesQuiz
+        //        .Include(t => t.Quiz)
+        //        .ThenInclude(q => q.Questions)
+        //        .ThenInclude(q => q.Reponses)
+        //        .FirstOrDefaultAsync(t => t.TentativeId == tentativeId);
+
+        //    if (tentative == null) return NotFound();
+        //    if (tentative.Token != token) return Unauthorized();
+        //    if (tentative.Statut != StatutTentative.EnCours) return BadRequest("Tentative non active");
+
+        //    // Retourner le quiz sans réponses correctes
+        //    return new QuizPourCandidatDto
+        //    {
+        //        QuizId = tentative.Quiz.QuizId,
+        //        Titre = tentative.Quiz.Titre,
+        //        Duree = tentative.Quiz.Duree,
+        //        Questions = tentative.Quiz.Questions.Select(q => new QuestionPourCandidatDto
+        //        {
+        //            QuestionId = q.QuestionId,
+        //            Texte = q.Texte,
+        //            Type = q.Type,
+        //            Points = q.Points,
+        //            Ordre = q.Ordre,
+        //            TempsRecommande = q.TempsRecommande,
+        //            Reponses = q.Reponses.Select(r => new ReponsePourCandidatDto
+        //            {
+        //                ReponseId = r.ReponseId,
+        //                Texte = r.Texte,
+        //                Ordre = r.Ordre
+        //            }).ToList()
+        //        }).ToList()
+        //    };
+        //}
+
+        // DTOs supplémentaires
+        public class QuizPourCandidatDto
+        {
+            public Guid QuizId { get; set; }
+            public string Titre { get; set; }
+            public string Description { get; set; }
+            public int Duree { get; set; }
+            public List<QuestionPourCandidatDto> Questions { get; set; }
+        }
+
+        public class QuestionPourCandidatDto
+        {
+            public Guid QuestionId { get; set; }
+            public string Texte { get; set; }
+            public TypeQuestion Type { get; set; }
+            public int Points { get; set; }
+            public int Ordre { get; set; }
+            public int? TempsRecommande { get; set; }
+            public List<ReponsePourCandidatDto> Reponses { get; set; }
+        }
+
+        public class ReponsePourCandidatDto
+        {
+            public Guid ReponseId { get; set; }
+            public string Texte { get; set; }
+            public int Ordre { get; set; }
+            public string Explication { get; set; } // Toujours null pour candidat
+        }
     }
+
+
 }
 
 

@@ -80,6 +80,7 @@ namespace Backend_poulina_future_jobs.Extensions
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
             
             return app;
         }

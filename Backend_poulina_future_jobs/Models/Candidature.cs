@@ -20,6 +20,26 @@ namespace Backend_poulina_future_jobs.Models
         [Required]
         public DateTime DateSoumission { get; set; }
 
+
+        public string CvFilePath { get; set; }  // Chemin d'accès physique
+        public string LettreMotivation { get; set; } = string.Empty;
+
+
+        [Url(ErrorMessage = "URL LinkedIn invalide")]
+        public string LinkedIn { get; set; } = string.Empty;
+
+        [Url(ErrorMessage = "URL GitHub invalide")]
+        public string Github { get; set; } = string.Empty;
+
+        [Url(ErrorMessage = "URL Portfolio invalide")]
+        public string Portfolio { get; set; } = string.Empty;
+
+       
+
+        [Required]
+        [MaxLength(20)]
+        public string StatutCandidate { get; set; } = "Debutant";
+
         public AppUser AppUser { get; set; }
         public OffreEmploi Offre { get; set; }
         // Nouvelle propriété de navigation pour la relation avec TentativeQuiz
