@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Backend_poulina_future_jobs.DTOs;
 using Backend_poulina_future_jobs.Services;
 using System.Security.Claims;
+using static Backend_poulina_future_jobs.Controllers.TentativeQuizController;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
@@ -895,6 +896,23 @@ namespace Backend_poulina_future_jobs.Controllers
         //    };
         //}
 
+
+        [HttpGet("Status/{tentativeId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<TentativeStatusDto>> GetTentativeStatus(Guid tentativeId)
+        {
+            var tentative = await _context.TentativesQuiz.FindAsync(tentativeId);
+
+            if (tentative == null) return NotFound();
+
+            return new TentativeStatusDto
+            {
+                Statut = tentative.Statut,
+                TempsRestant = tentative.DateDebut.HasValue
+                    ? tentative.Quiz.Duree * 60 - (int)(DateTime.UtcNow - tentative.DateDebut.Value).TotalSeconds
+                    : null
+            };
+        }
         // DTOs supplémentaires
         public class QuizPourCandidatDto
         {

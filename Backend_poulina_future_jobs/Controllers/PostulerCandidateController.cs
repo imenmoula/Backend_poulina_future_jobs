@@ -16,7 +16,7 @@ namespace Backend_poulina_future_jobs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [AllowAnonymous]
     public class PostulerCandidateController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -33,7 +33,7 @@ namespace Backend_poulina_future_jobs.Controllers
         }
         // Rechercher les candidats par statut de candidature
         [HttpGet("GetCandidatesByStatus/{statut}")]
-        [Authorize(Roles = "Recruteur")]
+[AllowAnonymous]        
         public async Task<ActionResult<IEnumerable<CandidatureDto>>> GetCandidatesByStatus(string statut)
         {
             try
@@ -362,7 +362,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // Récupérer une candidature
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<ActionResult<CandidatureDto>> GetCandidature(Guid id)
         {
             try
@@ -388,7 +388,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // Supprimer une candidature
         [HttpDelete("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteCandidature(Guid id)
         {
             try
@@ -417,7 +417,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // Récupérer les candidats pour une offre
         [HttpGet("GetCandidatesForOffre/{offreId}")]
-        [Authorize(Roles = "Recruteur")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<CandidatureDto>>> GetCandidatesForOffre(Guid offreId)
         {
             try
@@ -451,7 +451,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // Filtrer les candidats selon les compétences requises
         [HttpGet("GetFilteredCandidates/{offreId}")]
-        [Authorize(Roles = "Recruteur")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<UserInfoDto>>> GetFilteredCandidatesByOffer(Guid offreId)
         {
             try
@@ -511,7 +511,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // Mettre à jour le statut d'une candidature (par un recruteur)
         [HttpPatch("UpdateCandidatureStatus/{id}")]
-        [Authorize(Roles = "Recruteur")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateCandidatureStatus(Guid id, [FromBody] StatutUpdateRequest request)
         {
             if (string.IsNullOrEmpty(request?.Statut) || request.Statut.Length > 50)
@@ -734,6 +734,41 @@ namespace Backend_poulina_future_jobs.Controllers
                 )).ToList() ?? new List<CandidatureCertificatDto>()
             };
         }
+        [HttpPost("upload-documents/{candidatureId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UploadDocuments(string candidatureId, [FromForm] List<IFormFile> files)
+        {
+            if (files == null || files.Count == 0)
+                return BadRequest("Aucun fichier reçu.");
+
+            string uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", candidatureId);
+
+            if (!Directory.Exists(uploadPath))
+                Directory.CreateDirectory(uploadPath);
+
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+                    // Optionnel : filtrer les formats autorisés
+                    var allowedExtensions = new[] { ".pdf", ".doc", ".docx", ".odt", ".rtf", ".txt" };
+                    if (!allowedExtensions.Contains(extension))
+                        return BadRequest($"Format non autorisé : {extension}");
+
+                    var filePath = Path.Combine(uploadPath, Path.GetFileName(file.FileName));
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+
+            return Ok(new { message = "Fichiers téléchargés avec succès." });
+        }
+
         #endregion
 
         #region DTOs

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Backend_poulina_future_jobs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_poulina_future_jobs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class CompetencesController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -29,6 +31,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // GET: api/Competences/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Competence>> GetCompetence(Guid id)
         {
             var competence = await _context.Competences.FindAsync(id);
@@ -43,6 +46,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // PUT: api/Competences/5
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> PutCompetence(Guid id, Competence competence)
         {
             if (id != competence.Id)
@@ -79,6 +83,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // POST: api/Competences
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Competence>> PostCompetence(Competence competence)
         {
             if (!ModelState.IsValid)
@@ -96,6 +101,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // DELETE: api/Competences/5
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteCompetence(Guid id)
         {
             var competence = await _context.Competences.FindAsync(id);

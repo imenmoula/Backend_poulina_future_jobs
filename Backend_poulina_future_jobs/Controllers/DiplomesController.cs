@@ -23,6 +23,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // GET: api/Diplomes
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<object>> GetDiplomes()
         {
             var diplomes = await _context.Diplomes.ToListAsync();
@@ -43,6 +44,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // PUT: api/Diplomes/5
         [HttpPut("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<object>> Update(Guid id, [FromBody] DiplomerequestDto dto)
         {
             try
@@ -91,6 +93,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // POST: api/Diplomes
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<object>> Create([FromBody] DiplomerequestDto dto)
         {
             try
@@ -137,6 +140,7 @@ namespace Backend_poulina_future_jobs.Controllers
 
         // DELETE: api/Diplomes/5
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteDiplome(Guid id)
         {
             var diplome = await _context.Diplomes.FindAsync(id);
@@ -204,7 +208,7 @@ namespace Backend_poulina_future_jobs.Controllers
             public string NomDiplome { get; set; }
             public string Niveau { get; set; }
             public string Domaine { get; set; }
-            public string Institution { get; set; }
+            public string ?Institution { get; set; }
         }
     }
 }
