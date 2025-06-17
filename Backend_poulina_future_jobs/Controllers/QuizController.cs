@@ -1,5 +1,6 @@
 ﻿
 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -209,7 +210,6 @@ namespace Backend_poulina_future_jobs.Controllers
         [Authorize(Roles = "Admin,Recruteur")]
         public async Task<ActionResult<QuizFullResponseDto>> CreateFullQuiz(CreateFullQuizDto dto)
         {
-            // Optionnel : récupérer l'utilisateur connecté
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             _logger.LogInformation("Creating full quiz with title {Titre} by user {UserId}", dto.Titre, userId);
@@ -354,7 +354,6 @@ namespace Backend_poulina_future_jobs.Controllers
             if (quiz == null)
                 return NotFound();
 
-            // Mettre à jour les propriétés du quiz si fourni
             if (!string.IsNullOrEmpty(dto.Titre))
                 quiz.Titre = dto.Titre;
             if (!string.IsNullOrEmpty(dto.Description))
@@ -366,7 +365,6 @@ namespace Backend_poulina_future_jobs.Controllers
             if (dto.OffreEmploiId.HasValue)
                 quiz.OffreEmploiId = dto.OffreEmploiId;
 
-            // Supprimer anciennes questions/réponses (optionnel selon stratégie)
             var oldQuestions = quiz.Questions.ToList();
             foreach (var oldQ in oldQuestions)
             {
@@ -374,7 +372,6 @@ namespace Backend_poulina_future_jobs.Controllers
             }
             _context.Questions.RemoveRange(oldQuestions);
 
-            // Ajouter les nouvelles questions/réponses
             var newQuestions = new List<Question>();
             var newReponses = new List<Reponse>();
             foreach (var questionDto in dto.Questions)
@@ -421,7 +418,6 @@ namespace Backend_poulina_future_jobs.Controllers
         {
             try
             {
-                // Récupérer la candidature avec le candidat et l'offre
                 var candidature = await _context.Candidatures
                     .Include(c => c.AppUser)
                     .Include(c => c.Offre)
@@ -430,7 +426,6 @@ namespace Backend_poulina_future_jobs.Controllers
                 if (candidature == null)
                     return NotFound("Candidature non trouvée");
 
-                // Si refusée, envoyer un email de refus
                 if (candidature.Statut == "Refusé")
                 {
                     var subject = "Retour sur votre candidature";
@@ -446,42 +441,35 @@ namespace Backend_poulina_future_jobs.Controllers
                     return BadRequest("Candidat refusé. Email de feedback envoyé.");
                 }
 
-                // Autoriser uniquement si accepté
-                if (candidature.Statut != "Accepté")
+                if (candidature.Statut != "Acceptée")
                     return BadRequest("Seuls les candidats acceptés peuvent recevoir une convocation");
 
-                // Vérifier que l'offre et le quiz sont valides
                 var quiz = await _context.Quizzes.FindAsync(dto.QuizId);
                 if (quiz == null)
                     return NotFound("Quiz non trouvé");
 
-                // Créer un token unique pour sécuriser le lien
                 var token = Guid.NewGuid().ToString();
 
-                // Construire le lien du quiz
-                string baseUrl = dto.BaseUrl ?? "https://votresite.com"; // URL de votre frontend
+                string baseUrl = dto.BaseUrl ?? "https://votresite.com";
 
-                // Créer une nouvelle tentative de quiz
                 var tentative = new TentativeQuiz
                 {
                     TentativeId = Guid.NewGuid(),
                     QuizId = quiz.QuizId,
                     AppUserId = candidature.AppUserId,
                     CandidatureId = candidature.IdCandidature,
-                    DateDebut = null, // Pas encore commencé
-                    DateFin = DateTime.UtcNow.AddDays(7), // Lien valable 7 jours
+                    DateDebut = null,
+                    DateFin = DateTime.UtcNow.AddDays(7),
                     Score = null,
                     Statut = StatutTentative.Expiree,
-                    Token = token // Sauvegarder le token pour vérification
+                    Token = token
                 };
 
                 _context.TentativesQuiz.Add(tentative);
                 await _context.SaveChangesAsync();
 
-                // Construire l'URL avec l'ID de tentative et le token
                 var lienQuiz = $"{baseUrl}/quiz/start/{tentative.TentativeId}?token={token}";
 
-                // Préparer l'email
                 var subjectQuiz = $"Convocation pour passer le quiz: {quiz.Titre}";
                 var bodyQuiz = $@"
             <html>
@@ -501,13 +489,11 @@ namespace Backend_poulina_future_jobs.Controllers
             </body>
             </html>";
 
-                // Envoyer l'email via votre service
                 var emailEnvoye = await _emailService.EnvoyerEmailAsync(candidature.AppUser.Email, subjectQuiz, bodyQuiz, true);
 
                 if (!emailEnvoye)
                     return StatusCode(500, "Erreur lors de l'envoi de l'email");
 
-                // Mettre à jour le statut de la candidature si nécessaire
                 candidature.Statut = "Convoqué au quiz";
                 await _context.SaveChangesAsync();
 
@@ -676,9 +662,9 @@ namespace Backend_poulina_future_jobs.Controllers
             var userRoles = User.FindFirst("role")?.Value;
 
             if (userId == null ||
-         (tentative.AppUserId.ToString() != userId &&
-          userRoles != "Admin" &&
-          userRoles != "Recruteur"))
+                (tentative.AppUserId.ToString() != userId &&
+                 userRoles != "Admin" &&
+                 userRoles != "Recruteur"))
             {
                 return Forbid();
             }
@@ -718,61 +704,73 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(resultatDetailDto);
         }
 
-        // DELETE: api/Quiz/{id}
-        [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Recruteur")]
-        public async Task<IActionResult> DeleteQuiz(Guid id)
+        // NEW ENDPOINT: GET api/Quiz/ResultatsByQuizAndToken/{quizId}?token={token}
+        [HttpGet("ResultatsByQuizAndToken/{quizId}")]
+        [Authorize]
+        public async Task<ActionResult<ResultatDetailResponseDto>> GetResultatByQuizIdAndToken(Guid quizId, [FromQuery] string token)
         {
-            var quiz = await _context.Quizzes
-                .Include(q => q.Questions)
-                    .ThenInclude(q => q.Reponses)
-                .FirstOrDefaultAsync(q => q.QuizId == id);
-
+            // Validate the quiz exists
+            var quiz = await _context.Quizzes.FindAsync(quizId);
             if (quiz == null)
-                return NotFound(new
-                {
-                    success = false,
-                    message = "Quiz non trouvé"
-                });
+                return NotFound("Quiz non trouvé");
 
-            // Vérifier s'il y a des tentatives associées
-            var hasTentatives = await _context.TentativesQuiz.AnyAsync(t => t.QuizId == id);
-            if (hasTentatives)
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Impossible de supprimer ce quiz car il a des tentatives associées."
-                });
+            // Find the latest completed attempt for the quiz and token
+            var tentative = await _context.TentativesQuiz
+                .Include(t => t.Quiz)
+                .Include(t => t.Resultat)
+                .Include(t => t.ReponsesUtilisateur)
+                    .ThenInclude(ru => ru.Question)
+                .Include(t => t.ReponsesUtilisateur)
+                    .ThenInclude(ru => ru.Reponse)
+                .FirstOrDefaultAsync(t => t.QuizId == quizId && t.Token == token && t.Statut == StatutTentative.Terminee);
 
-            try
+            if (tentative == null)
+                return NotFound("Aucune tentative terminée trouvée pour ce quiz et ce token");
+
+            // Verify user authorization
+            var userId = User.FindFirst("sub")?.Value;
+            var userRoles = User.FindFirst("role")?.Value;
+
+            if (userId == null ||
+                (tentative.AppUserId.ToString() != userId &&
+                 userRoles != "Admin" &&
+                 userRoles != "Recruteur"))
             {
-                // Supprimer d'abord les réponses
-                foreach (var question in quiz.Questions)
-                {
-                    _context.Reponses.RemoveRange(question.Reponses);
-                }
-
-                // Puis les questions
-                _context.Questions.RemoveRange(quiz.Questions);
-
-                // Enfin le quiz lui-même
-                _context.Quizzes.Remove(quiz);
-
-                await _context.SaveChangesAsync();
-
-                return NoContent();
+                return Forbid();
             }
-            catch (Exception ex)
+
+            if (tentative.Resultat == null)
+                return NotFound("Résultat non trouvé pour cette tentative");
+
+            // Construct the response
+            var resultatDetailDto = new ResultatDetailResponseDto
             {
-                _logger.LogError(ex, "Erreur lors de la suppression du quiz {QuizId}", id);
-                return StatusCode(500, new
+                ResultatId = tentative.Resultat.ResultatId,
+                TentativeId = tentative.TentativeId,
+                QuizId = tentative.QuizId,
+                QuizTitre = tentative.Quiz.Titre,
+                Score = tentative.Resultat.Score,
+                QuestionsCorrectes = tentative.Resultat.QuestionsCorrectes,
+                NombreQuestions = tentative.Resultat.NombreQuestions,
+                TempsTotal = tentative.Resultat.TempsTotal,
+                Reussi = tentative.Resultat.Reussi,
+                DateResultat = tentative.Resultat.DateResultat,
+                ReponsesDetail = tentative.ReponsesUtilisateur.Select(ru => new ReponseDetailResponseDto
                 {
-                    success = false,
-                    message = "Une erreur est survenue lors de la suppression du quiz"
-                });
-            }
+                    QuestionId = ru.QuestionId,
+                    QuestionTexte = ru.Question.Texte,
+                    QuestionType = ru.Question.Type,
+                    EstCorrecte = ru.EstCorrecte,
+                    TempsReponse = ru.TempsReponse,
+                    TexteReponse = ru.TexteReponse,
+                    ReponseId = ru.ReponseId,
+                    ReponseTexte = ru.Reponse?.Texte,
+                    Explication = ru.Reponse?.Explication
+                }).ToList()
+            };
+
+            return Ok(resultatDetailDto);
         }
-
 
         // GET: api/Quiz/Recherche?titre={titre}
         [HttpGet("Recherche")]
@@ -800,32 +798,34 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(quizzes);
         }
 
-        // QuizController.cs
-        [HttpGet("Demarrer/{tentativeId}")]
-        [AllowAnonymous]
+        [HttpGet("StartQuiz/{tentativeId}")]
+        [Authorize(Roles = "Candidate")] // Requires Candidate role
         public async Task<ActionResult<QuizPourCandidatDto>> DemarrerQuiz(
-            Guid tentativeId,
-            [FromQuery] string token)
+            [FromQuery] Guid tentativeId)
         {
-            // 1. Valider le token
             var tentative = await _context.TentativesQuiz
                 .Include(t => t.Quiz)
                 .FirstOrDefaultAsync(t => t.TentativeId == tentativeId);
 
-            if (tentative == null) return NotFound("Tentative non trouvée");
-            if (tentative.Token != token) return Unauthorized("Token invalide");
-            if (tentative.DateDebut != null) return BadRequest("Quiz déjà commencé");
-            if (tentative.DateFin < DateTime.UtcNow) return BadRequest("Lien expiré");
+            if (tentative == null)
+                return NotFound("Tentative non trouvée");
 
-            // 2. Mettre à jour la tentative
+            if (tentative.DateDebut != null)
+                return BadRequest("Quiz déjà commencé");
+
+            if (tentative.DateFin < DateTime.UtcNow)
+                return BadRequest("Lien expiré");
+
             tentative.DateDebut = DateTime.UtcNow;
             tentative.Statut = StatutTentative.EnCours;
 
-            // 3. Récupérer le quiz (sans réponses correctes)
             var quiz = await _context.Quizzes
                 .Include(q => q.Questions)
                     .ThenInclude(q => q.Reponses)
                 .FirstOrDefaultAsync(q => q.QuizId == tentative.QuizId);
+
+            if (quiz == null)
+                return NotFound("Quiz introuvable");
 
             var quizDto = new QuizPourCandidatDto
             {
@@ -846,7 +846,7 @@ namespace Backend_poulina_future_jobs.Controllers
                         ReponseId = r.ReponseId,
                         Texte = r.Texte,
                         Ordre = r.Ordre,
-                        Explication = null // Cacher l'explication
+                        Explication = null
                     }).ToList()
                 }).ToList()
             };
@@ -854,47 +854,6 @@ namespace Backend_poulina_future_jobs.Controllers
             await _context.SaveChangesAsync();
             return Ok(quizDto);
         }
-        //// QuizController.cs
-        //[HttpGet("ForCandidate/{tentativeId}")]
-        //[AllowAnonymous]
-        //public async Task<ActionResult<QuizPourCandidatDto>> GetQuizForCandidate(
-        //    Guid tentativeId,
-        //    [FromQuery] string token)
-        //{
-        //    // Valider le token
-        //    var tentative = await _context.TentativesQuiz
-        //        .Include(t => t.Quiz)
-        //        .ThenInclude(q => q.Questions)
-        //        .ThenInclude(q => q.Reponses)
-        //        .FirstOrDefaultAsync(t => t.TentativeId == tentativeId);
-
-        //    if (tentative == null) return NotFound();
-        //    if (tentative.Token != token) return Unauthorized();
-        //    if (tentative.Statut != StatutTentative.EnCours) return BadRequest("Tentative non active");
-
-        //    // Retourner le quiz sans réponses correctes
-        //    return new QuizPourCandidatDto
-        //    {
-        //        QuizId = tentative.Quiz.QuizId,
-        //        Titre = tentative.Quiz.Titre,
-        //        Duree = tentative.Quiz.Duree,
-        //        Questions = tentative.Quiz.Questions.Select(q => new QuestionPourCandidatDto
-        //        {
-        //            QuestionId = q.QuestionId,
-        //            Texte = q.Texte,
-        //            Type = q.Type,
-        //            Points = q.Points,
-        //            Ordre = q.Ordre,
-        //            TempsRecommande = q.TempsRecommande,
-        //            Reponses = q.Reponses.Select(r => new ReponsePourCandidatDto
-        //            {
-        //                ReponseId = r.ReponseId,
-        //                Texte = r.Texte,
-        //                Ordre = r.Ordre
-        //            }).ToList()
-        //        }).ToList()
-        //    };
-        //}
 
 
         [HttpGet("Status/{tentativeId}")]
@@ -913,7 +872,8 @@ namespace Backend_poulina_future_jobs.Controllers
                     : null
             };
         }
-        // DTOs supplémentaires
+
+        // DTOs
         public class QuizPourCandidatDto
         {
             public Guid QuizId { get; set; }
@@ -942,8 +902,4 @@ namespace Backend_poulina_future_jobs.Controllers
             public string Explication { get; set; } // Toujours null pour candidat
         }
     }
-
-
 }
-
-
