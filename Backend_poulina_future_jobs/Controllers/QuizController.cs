@@ -798,62 +798,135 @@ namespace Backend_poulina_future_jobs.Controllers
             return Ok(quizzes);
         }
 
-        [HttpGet("StartQuiz/{tentativeId}")]
-        [Authorize(Roles = "Candidate")] // Requires Candidate role
-        public async Task<ActionResult<QuizPourCandidatDto>> DemarrerQuiz(
-            [FromQuery] Guid tentativeId)
+        
+
+       // Fixed version of the StartQuiz method in QuizController.cs
+
+         // Fixed version of the StartQuiz method in QuizController.cs
+
+[HttpGet("StartQuiz/{tentativeId}")]
+[Authorize] // Changed from [Authorize(Roles = "Candidate")] to just [Authorize]
+public async Task<ActionResult<QuizPourCandidatDto>> DemarrerQuiz(Guid tentativeId, [FromQuery] string token)
+{
+    try
+    {
+        _logger.LogInformation("Starting quiz for tentative: {TentativeId}, token: {Token}", tentativeId, token);
+
+        // Validate token parameter
+        if (string.IsNullOrEmpty(token))
         {
-            var tentative = await _context.TentativesQuiz
-                .Include(t => t.Quiz)
-                .FirstOrDefaultAsync(t => t.TentativeId == tentativeId);
+            _logger.LogWarning("Missing token for tentative: {TentativeId}", tentativeId);
+            return BadRequest("Token is required");
+        }
 
-            if (tentative == null)
-                return NotFound("Tentative non trouvée");
+_logger.LogInformation("DemarrerQuiz received: TentativeId={TentativeId}, Token={Token}", tentativeId, token);
 
-            if (tentative.DateDebut != null)
-                return BadRequest("Quiz déjà commencé");
+        // Vérifier le token en plus de l'ID avec Include pour Quiz
+        var tentative = await _context.TentativesQuiz
+            .Include(t => t.Quiz)
+            .FirstOrDefaultAsync(t => t.TentativeId == tentativeId && t.Token == token);
 
-            if (tentative.DateFin < DateTime.UtcNow)
-                return BadRequest("Lien expiré");
+        if (tentative == null)
+        {
+            _logger.LogWarning("Tentative not found for ID: {TentativeId} with token {Token}", tentativeId , token);
+            return NotFound("Tentative non trouvée ou token invalide");
+        }
 
-            tentative.DateDebut = DateTime.UtcNow;
-            tentative.Statut = StatutTentative.EnCours;
+        // Vérifier l'autorisation utilisateur
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null || tentative.AppUserId.ToString() != userId)
+        {
+            _logger.LogWarning("Unauthorized access attempt for tentative: {TentativeId} by user: {UserId}", tentativeId, userId);
+            return Forbid("Accès non autorisé");
+        }
 
-            var quiz = await _context.Quizzes
-                .Include(q => q.Questions)
-                    .ThenInclude(q => q.Reponses)
-                .FirstOrDefaultAsync(q => q.QuizId == tentative.QuizId);
+        // Vérifier si le quiz a déjà été commencé
+        if (tentative.DateDebut != null)
+        {
+            _logger.LogWarning("Quiz already started for tentative: {TentativeId}", tentativeId);
+            return BadRequest("Quiz déjà commencé");
+        }
 
-            if (quiz == null)
-                return NotFound("Quiz introuvable");
+        // Vérifier si le lien a expiré
+        if (tentative.DateFin < DateTime.UtcNow)
+        {
+            _logger.LogWarning("Quiz link expired for tentative: {TentativeId}", tentativeId);
+            tentative.Statut = StatutTentative.Expiree;
+            await _context.SaveChangesAsync();
+            return BadRequest("Lien expiré");
+        }
 
-            var quizDto = new QuizPourCandidatDto
+        // Vérifier le statut de la tentative
+        if (tentative.Statut != StatutTentative.Expiree) // Based on your logic in EnvoyerConvocation
+        {
+            _logger.LogWarning("Invalid tentative status for: {TentativeId}, Status: {Status}", tentativeId, tentative.Statut);
+            return BadRequest("Statut de tentative invalide");
+        }
+
+        // Obtenir le quiz complet avec questions et réponses
+        var quiz = await _context.Quizzes
+            .Include(q => q.Questions.OrderBy(q => q.Ordre))
+                .ThenInclude(q => q.Reponses.OrderBy(r => r.Ordre))
+            .FirstOrDefaultAsync(q => q.QuizId == tentative.QuizId);
+
+        if (quiz == null)
+        {
+            _logger.LogError("Quiz not found for ID: {QuizId}", tentative.QuizId);
+            return NotFound("Quiz introuvable");
+        }
+
+        // Vérifier si le quiz est actif
+        if (!quiz.EstActif)
+        {
+            _logger.LogWarning("Inactive quiz access attempt: {QuizId}", quiz.QuizId);
+            return BadRequest("Quiz non actif");
+        }
+
+        // Mettre à jour le statut de la tentative
+        tentative.DateDebut = DateTime.UtcNow;
+        tentative.Statut = StatutTentative.EnCours;
+        tentative.DateFin = DateTime.UtcNow.AddMinutes(quiz.Duree); // Recalculer la date de fin basée sur la durée
+
+        // Créer le DTO de réponse
+        var quizDto = new QuizPourCandidatDto
+        {
+            QuizId = quiz.QuizId,
+            Titre = quiz.Titre,
+            Description = quiz.Description,
+            Duree = quiz.Duree,
+            Questions = quiz.Questions.Select(q => new QuestionPourCandidatDto
             {
-                QuizId = quiz.QuizId,
-                Titre = quiz.Titre,
-                Description = quiz.Description,
-                Duree = quiz.Duree,
-                Questions = quiz.Questions.Select(q => new QuestionPourCandidatDto
-                {
-                    QuestionId = q.QuestionId,
-                    Texte = q.Texte,
-                    Type = q.Type,
-                    Points = q.Points,
-                    Ordre = q.Ordre,
-                    TempsRecommande = q.TempsRecommande,
-                    Reponses = q.Reponses.Select(r => new ReponsePourCandidatDto
+                QuestionId = q.QuestionId,
+                Texte = q.Texte,
+                Type = q.Type,
+                Points = q.Points,
+                Ordre = q.Ordre,
+                TempsRecommande = q.TempsRecommande,
+                Reponses = q.Type != TypeQuestion.ReponseTexte 
+                    ? q.Reponses.Select(r => new ReponsePourCandidatDto
                     {
                         ReponseId = r.ReponseId,
                         Texte = r.Texte,
                         Ordre = r.Ordre,
-                        Explication = null
+                        Explication = null // Ne pas envoyer les bonnes réponses au candidat
                     }).ToList()
-                }).ToList()
-            };
+                    : new List<ReponsePourCandidatDto>()
+            }).ToList()
+        };
 
-            await _context.SaveChangesAsync();
-            return Ok(quizDto);
-        }
+        // Sauvegarder les changements
+        await _context.SaveChangesAsync();
+        
+        _logger.LogInformation("Quiz started successfully for tentative: {TentativeId}", tentativeId);
+        
+        return Ok(quizDto);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error starting quiz for tentative: {TentativeId}", tentativeId);
+        return StatusCode(500, "Erreur interne du serveur");
+    }
+}
 
 
         [HttpGet("Status/{tentativeId}")]
